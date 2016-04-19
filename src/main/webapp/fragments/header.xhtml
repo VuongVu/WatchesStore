@@ -1,0 +1,325 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:a="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets" >
+
+        <!-- HEADER-TOP START -->
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <!-- HEADER-LEFT-MENU START -->
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="header-left-menu">
+                            <div class="welcome-info">
+                                Welcome <span>BStore</span>
+                            </div>
+                            <div class="currenty-converter">
+                                <form method="post" action="#" id="currency-set">
+                                    <div class="current-currency">
+                                        <span class="cur-label">Currency : </span><strong>USD</strong>
+                                    </div>
+                                </form>                                 
+                            </div>
+                            <div class="selected-language">
+                                <div class="current-lang">
+                                    <span class="current-lang-label">Language : </span><strong>English</strong>
+                                </div>                                       
+                            </div>
+                        </div>
+                    </div>
+                    <!-- HEADER-LEFT-MENU END -->
+                    <!-- HEADER-RIGHT-MENU START -->
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="header-right-menu">
+                            <nav class="main-nav">
+                                <ul class="list-inline">
+                                    <li><a href="checkout.html">Check Out</a></li>
+                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                    <li><a href="my-account.html">My Account</a></li>
+                                    <li><a href="cart.html">My Cart</a></li>
+                                    <li><a class="cd-signin" href="#modal1">Sign in</a></li>
+                                </ul>                                   
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- HEADER-RIGHT-MENU END -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+            <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+	            <ul class="cd-switcher">
+	                <li><a href="#modal1">Sign in</a></li>
+	                <li><a href="#modal1">Sign up</a></li>
+	            </ul>
+
+            <div id="cd-login"> <!-- log in form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signin-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail"/>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password"/>
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="remember-me" />
+                        <label for="remember-me">Remember me</label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width" type="submit" value="Login"/>
+                    </p>
+                </form>
+                
+                <p class="cd-form-bottom-message"><a href="#modal1">Forgot your password?</a></p>
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-login -->
+
+            <div id="cd-signup"> <!-- sign up form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username"/>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail"/>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password"/>
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms"/>
+                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Create account"/>
+                    </p>
+                </form>
+            </div>
+
+            <div id="cd-reset-password"> <!-- reset password form -->
+                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail"/>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Reset password"/>
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#modal1">Back to log-in</a></p>
+            </div>
+            <a href="#modal1" class="cd-close-form">Close</a>
+            </div> 
+        </div>
+        <!-- HEADER-TOP END -->
+        <!-- HEADER-MIDDLE START -->
+        <section class="header-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- LOGO START -->
+                        <div class="logo">
+                            <a href="index.html">
+                                <h:graphicImage library="img" name="logo.png" alt="Fashion Luxury Logo" />
+                            </a>
+                        </div>
+                        <!-- LOGO END -->
+                        <!-- HEADER-RIGHT-CALLUS START -->
+                        <div class="header-right-callus">
+                            <h3>call us free</h3>
+                            <span>01642-799-221</span>
+                        </div>
+                        <!-- HEADER-RIGHT-CALLUS END -->
+                        <!-- CATEGORYS-PRODUCT-SEARCH START -->
+                        <div class="categorys-product-search">
+                            <h:form prependId="false" styleClass="search-form-cat">
+                            <!-- <form action="#" method="get" class="search-form-cat"> -->
+                                <div class="search-product form-group">
+                                    <select name="catsearch" class="cat-search">
+                                        <option value="">Categories</option>
+                                        <option value="2">Women</option>
+                                        <option value="3">T-Shirts</option>
+                                        <option value="4">Men</option>
+                                        <option value="5">Shoose</option>
+                                        <option value="6">Dress</option>
+                                        <option value="7">Tops</option>
+                                        <option value="8">Casual</option>
+                                        <option value="9">Evening</option>
+                                        <option value="10">Summer</option>
+                                        <option value="11">sports</option>
+                                        <option value="12">day</option>
+                                        <option value="13">evening</option>
+                                        <option value="14">Blouse</option>
+                                        <option value="15">handba</option>
+                                        <option value="16">phone</option>
+                                        <option value="17">house</option>
+                                        <option value="18">Beauty</option>
+                                        <option value="19">health</option>
+                                        <option value="20">clothing</option>
+                                        <option value="21">kids</option>
+                                        <option value="22">Dresse</option>
+                                        <option value="22">Casual</option>
+                                        <option value="23">day</option>
+                                        <option value="24">evening</option>
+                                        <option value="24">Blouse</option>
+                                        <option value="25">handb</option>
+                                        <option value="66">phone</option>
+                                        <option value="27">house</option>                                    
+                                    </select>
+                                    <h:inputText styleClass="form-control search-form" p:placeholder="Enter your search key ... " />
+                                    <h:commandLink>
+                                        <button class="search-button" value="Search" name="s" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </h:commandLink>
+                                    <!-- <button class="search-button" value="Search" name="s" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button> -->                                   
+                                </div>
+                            <!-- </form> -->
+                            </h:form>
+                        </div>
+                        <!-- CATEGORYS-PRODUCT-SEARCH END -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- HEADER-MIDDLE END -->
+        <!-- MAIN-MENU-AREA START -->
+        <header class="main-menu-area">
+            <div class="container">
+                <div class="row">
+                    <!-- SHOPPING-CART START -->
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right shopingcartarea">
+                        <div class="shopping-cart-out pull-right">
+                            <div class="shopping-cart">
+                                <a class="shop-link" href="cart.html" title="View my shopping cart">
+                                    <i class="fa fa-shopping-cart cart-icon"></i>
+                                    <b>My Cart</b>
+                                    <span class="ajax-cart-quantity">2</span>
+                                </a>
+                                <div class="shipping-cart-overly">
+                                    <div class="shipping-item">
+                                        <span class="cross-icon"><i class="fa fa-times-circle"></i></span>
+                                        <div class="shipping-item-image">
+                                            <a href="#"><h:graphicImage library="img" name="shopping-image.jpg" alt="shopping image" /></a>
+                                        </div>
+                                        <div class="shipping-item-text">
+                                            <span>2 <span class="pro-quan-x">x</span> <a href="#" class="pro-cat">Watch</a></span>
+                                            <span class="pro-quality"><a href="#">S,Black</a></span>
+                                            <p>$22.95</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-item">
+                                        <span class="cross-icon"><i class="fa fa-times-circle"></i></span>
+                                        <div class="shipping-item-image">
+                                            <a href="#"><h:graphicImage library="img" name="shopping-image2.jpg" alt="shopping image" /></a>
+                                        </div>
+                                        <div class="shipping-item-text">
+                                            <span>2 <span class="pro-quan-x">x</span> <a href="#" class="pro-cat">Women Bag</a></span>
+                                            <span class="pro-quality"><a href="#">S,Gary</a></span>
+                                            <p>$19.95</p>
+                                        </div>
+                                    </div>
+                                    <div class="shipping-total-bill">
+                                        <div class="cart-prices">
+                                            <span class="shipping-cost">$2.00</span>
+                                            <span>Shipping</span>
+                                        </div>
+                                        <div class="total-shipping-prices">
+                                            <span class="shipping-total">$24.95</span>
+                                            <span>Total</span>
+                                        </div>                                      
+                                    </div>
+                                    <div class="shipping-checkout-btn">
+                                        <a href="checkout.html">Check out <i class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- SHOPPING-CART END -->
+                    <!-- MAINMENU START -->
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 no-padding-right menuarea">
+                        <div class="mainmenu">
+                            <nav>
+                                <ul class="list-inline mega-menu">
+                                    <li class="active"><a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-gird.html">Women</a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-gird.html">Men</a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-gird.html">clothing</a>                                        
+                                    </li>
+                                    <li>
+                                        <a href="shop-gird.html">Tops</a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-gird.html">T-shirts</a> 
+                                    </li>
+                                    <li><a href="#">Delivery</a></li>
+                                    <li><a href="about-us.html">About us</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- MAINMENU END -->
+                </div>
+                <div class="row">
+                    <!-- MOBILE MENU START -->
+                    <div class="col-sm-12 mobile-menu-area">
+                        <div class="mobile-menu hidden-md hidden-lg" id="mob-menu">
+                            <span class="mobile-menu-title">MENU</span>
+                            <nav>
+                                <ul>
+                                    <li><a href="index.html">Home</a>                                                      
+                                    </li>                               
+                                    <li><a href="shop-gird.html">Women</a>
+                                    </li>
+                                    <li><a href="shop-gird.html">men</a>                                     
+                                    </li>
+                                    <li><a href="shop-gird.html">clothing</a></li>
+                                    <li><a href="shop-gird.html">tops</a></li>
+                                    <li><a href="shop-gird.html">T-shirts</a></li>
+                                    <li><a href="#">Delivery</a></li>
+                                    <li><a href="about-us.html">About us</a></li>
+                                </ul>
+                            </nav>
+                        </div>                      
+                    </div>
+                    <!-- MOBILE MENU END -->
+                </div>              
+            </div>
+        </header>
+        <!-- MAIN-MENU-AREA END -->
+</ui:composition>

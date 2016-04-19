@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.png']}"></link>
+    
+    <!-- FONTS -->    
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'></link>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'></link>
+    <link href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'></link>
+        
+    <!-- animate CSS -->
+    <h:outputStylesheet library="css" name="animate.css"></h:outputStylesheet>
+  
+    <!-- FANCYBOX CSS -->          
+    <h:outputStylesheet library="css" name="jquery.fancybox.css"></h:outputStylesheet>  
+
+    <!-- BXSLIDER CSS -->    
+    <h:outputStylesheet library="css" name="jquery.bxslider.css"></h:outputStylesheet>                
+                
+    <!-- MEANMENU CSS -->            
+    <h:outputStylesheet library="css" name="meanmenu.min.css" ></h:outputStylesheet>
+        
+    <!-- JQUERY-UI-SLIDER CSS -->           
+    <h:outputStylesheet library="css" name="jquery-ui-slider.css"></h:outputStylesheet> 
+        
+    <!-- NIVO SLIDER CSS --> 
+    <h:outputStylesheet library="css" name="nivo-slider.css"></h:outputStylesheet>           
+    
+    <!-- OWL CAROUSEL CSS -->    
+    <h:outputStylesheet library="css" name="owl.carousel.css"></h:outputStylesheet>
+        
+    <!-- OWL CAROUSEL THEME CSS -->    
+    <h:outputStylesheet library="css" name="owl.theme.css"></h:outputStylesheet>
+        
+    <!-- BOOTSTRAP CSS -->    
+    <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+
+    <!-- FONT AWESOME CSS -->
+    <h:outputStylesheet library="css" name="font-awesome.min.css"></h:outputStylesheet>
+        
+    <!-- NORMALIZE CSS -->
+    <h:outputStylesheet library="css" name="normalize.css"></h:outputStylesheet>
+        
+    <!-- MAIN CSS -->
+    <h:outputStylesheet library="css" name="main.css"></h:outputStylesheet>
+    
+    <!-- STYLE CSS -->
+    <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+        
+    <!-- RESPONSIVE CSS -->
+    <h:outputStylesheet library="css" name="responsive.css"></h:outputStylesheet>
+        
+    <!-- IE CSS -->
+    <h:outputStylesheet library="css" name="ie.css"></h:outputStylesheet>    
+        
+    <!-- MODERNIZR JS -->
+    <h:outputScript library="js" name="vendor/modernizr-2.6.2.min.js"></h:outputScript>
+    
+    <!-- JS -->
+    <!-- jquery js -->
+    <h:outputScript library="js" name="vendor/jquery-1.11.3.min.js"></h:outputScript>
+
+    <!-- fancybox js -->
+    <h:outputScript library="js" name="jquery.fancybox.js"></h:outputScript>
+
+    <!-- bxslider js -->
+    <h:outputScript library="js" name="jquery.bxslider.min.js"></h:outputScript>
+
+    <!-- meanmenu js -->
+    <h:outputScript library="js" name="jquery.meanmenu.js"></h:outputScript>
+
+    <!-- owl carousel js -->
+    <h:outputScript library="js" name="owl.carousel.min.js"></h:outputScript>
+
+    <!-- nivo slider js -->
+    <h:outputScript library="js" name="jquery.nivo.slider.js"></h:outputScript>
+
+    <!-- jqueryui js -->
+    <h:outputScript library="js" name="jqueryui.js"></h:outputScript>
+
+    <!-- bootstrap js -->
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+
+    <!-- wow js -->
+    <h:outputScript library="js" name="wow.js"></h:outputScript>
+    <h:outputScript>
+        new WOW().init();
+    </h:outputScript>
+
+    <!-- Google Map js -->
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <h:outputScript>
+            function initialize() {
+              var mapOptions = {
+                zoom: 8,
+                scrollwheel: false,
+                center: new google.maps.LatLng(10.8499916, 106.7716503)
+              };
+              var map = new google.maps.Map(document.getElementById('googleMap'),
+                  mapOptions);
+              var marker = new google.maps.Marker({
+                position: map.getCenter(),
+                map: map
+              });
+
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);               
+    </h:outputScript>
+    <!-- main js -->
+    <h:outputScript library="js" name="main.js"></h:outputScript>
+
+    <!-- Login CSS -->
+    <h:outputStylesheet library="css" name="login.css"></h:outputStylesheet>  
+    
+    <!-- Login JS -->
+    <h:outputScript library="js" name="login.js"></h:outputScript>
+    <h:outputScript library="js" name="modernizr.js"></h:outputScript>
+    
+    <!--Start of Zopim Live Chat Script-->
+    <h:outputScript >
+        window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+        d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+        _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+        $.src="//v2.zopim.com/?3q7OTWrySgcph8OnYovlydI8QtwCFYub";z.t=+new Date;$.
+        type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+    </h:outputScript>
+    <!--End of Zopim Live Chat Script-->
+    
+    <!-- other js -->
+    <h:outputScript library="js" name="jquery.scrollUp.min.js"></h:outputScript>
+    <h:outputScript library="js" name="jquery.slicknav.js"></h:outputScript>
+    <h:outputScript library="js" name="plugins.js"></h:outputScript>
+    <h:outputScript library="js" name="price-slider.js"></h:outputScript>
+</h:head>
+<h:body styleClass="index-2">
+        <div class="wrapper">
+            <!--                         -->
+            <!--        T I T L E        -->
+            <!--                         -->
+            <div id="title">
+                <ui:insert name="title">
+                </ui:insert>
+            </div>
+            <div id="body-container">
+                <!--                         -->
+                <!--       H E A D E R       -->
+                <!--                         -->
+                <div id="body-header">
+                    <ui:insert name="body-header">
+                        <ui:include src="/fragments/header.xhtml">
+                        </ui:include>        
+                    </ui:insert>
+                </div>
+                <!--                         -->
+                <!--        B O D Y          -->
+                <!--                         -->
+                <div id="body-content">
+                    <!--                        -->
+                    <!--   APPLICATION CONTENT  -->
+                    <!--                        -->
+                    <ui:insert name="body-content">
+                    </ui:insert>
+                </div>
+                <!--                        -->
+                <!--      F O O T E R       -->
+                <!--                        -->
+                <div id="body-footer">
+                    <ui:insert name="body-footer" >
+                        <ui:include src="/fragments/footer.xhtml">
+                        </ui:include>
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
+        
+        <!-- QUICKVIEW PRODUCT -->
+        <div id="myModal" class="modal fade" a:tabindex="-1" a:role="dialog" a:aria-labelledby="myModalLabel" a:aria-hidden="true">
+            <div class="modal-dialog" style="width: 550px; height: 550px">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h:graphicImage library="img"
+                                        name="product/sale/8.jpg"
+                                        style="width:550px; height:550px"
+                                        alt="product-image" styleClass="img-responsive" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END QUICKVIEW PRODUCT -->
+
+</h:body>
+</html>
