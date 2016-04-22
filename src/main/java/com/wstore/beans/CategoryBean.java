@@ -2,15 +2,16 @@ package com.wstore.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.wstore.DAO.CategoryDAO;
+import com.wstore.DAO.ProductDAO;
 import com.wstore.entities.Category;
-
-
+import com.wstore.entities.Product;
 
 @ManagedBean(name = "categoryBean")
 @SessionScoped
@@ -20,6 +21,26 @@ public class CategoryBean implements Serializable{
 
 	private Category category = new Category();
 	private List<Category> categories = new ArrayList<Category>();
+	private List<Product> products = new ArrayList<Product>();
+
+	public List<String> getProducts() {
+		ProductDAO dao = new ProductDAO();
+		products = dao.findAllProducts();
+		List<String> list = new ArrayList<>();
+		for (int i = 0; i < products.size(); i++) {
+			list.add(products.get(i).getProductBrand());
+		}
+		HashSet hs = new HashSet();
+		hs.addAll(list);
+		list.clear();
+		list.addAll(hs);
+
+		return list;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 
 	public List<Category> getCategories() {
 		CategoryDAO dao = new CategoryDAO();

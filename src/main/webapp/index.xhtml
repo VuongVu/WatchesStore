@@ -16,6 +16,7 @@
         <section class="header-bottom-area">
             <div class="container">
                 <div class="row">
+                    <h:form prependId="false">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                         <!-- LEFT-CATEGORY-MENU START -->
                         <div class="left-category-menu">
@@ -26,7 +27,17 @@
                                 <!-- CATEGORY-MENU-LIST START -->
                                 <div class="category-menu-list">
                                     <ul>
-                                        <li>
+                                        <ui:repeat var="product" value="#{categoryBean.products}">
+                                            <li>
+                                                <h:commandLink value="#{product}">
+                                                    <span class="cat-thumb hidden-md hidden-sm hidden-xs">
+                                                        <h:graphicImage library="img" name="layout2/5.png">
+                                                        </h:graphicImage>
+                                                    </span>
+                                                </h:commandLink>        
+                                            </li>
+                                        </ui:repeat> 
+                                        <!-- <li>
                                             <a href="shop-gird.html"><span class="cat-thumb hidden-md hidden-sm hidden-xs"><h:graphicImage library="img" name="layout2/1.png" /></span>Women</a>
                                         </li>
                                         <li>
@@ -49,7 +60,7 @@
                                         </li>
                                         <li>
                                             <a href="shop-gird.html"><span class="cat-thumb hidden-md hidden-sm hidden-xs"><h:graphicImage library="img" name="layout2/7.png" /></span>kids</a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                                 <!-- CATEGORY-MENU-LIST END -->
@@ -57,6 +68,7 @@
                         </div>  
                         <!-- LEFT-CATEGORY-MENU END -->         
                     </div>
+                    </h:form>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                         <!-- MAIN-SLIDER-AREA START -->
                         <div class="main-slider-area">

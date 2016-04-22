@@ -283,13 +283,18 @@
                     </div>  
                     <!-- SHOPPING-CART END -->
                     <!-- MAINMENU START -->
+                    <h:form prependId="false">
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 no-padding-right menuarea">
                         <div class="mainmenu">
                             <nav>
                                 <ul class="list-inline mega-menu">
                                     <li class="active"><a href="index.html">Home</a>
                                     </li>
-                                    <li>
+                                    <ui:repeat var="category" value="#{categoryBean.categories}">
+                                        <li><h:commandLink value="#{category.categoryName}" action="#{productBean.getCategoryId(category.categoryId)}" />
+                                        </li>
+                                    </ui:repeat> 
+                                    <!-- <li>
                                         <a href="shop-gird.html">Women</a>
                                     </li>
                                     <li>
@@ -303,13 +308,14 @@
                                     </li>
                                     <li>
                                         <a href="shop-gird.html">T-shirts</a> 
-                                    </li>
+                                    </li> -->
                                     <li><a href="#">Delivery</a></li>
                                     <li><a href="about-us.html">About us</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
+                    </h:form>
                     <!-- MAINMENU END -->
                 </div>
                 <div class="row">
