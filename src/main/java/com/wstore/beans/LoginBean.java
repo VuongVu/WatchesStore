@@ -27,8 +27,6 @@ public class LoginBean implements Serializable{
 	private boolean loggedIn;
 	private boolean adminloggedIn;
 
-
-
 	public boolean isAdminloggedIn() {
 		return adminloggedIn;
 	}
@@ -94,7 +92,7 @@ public class LoginBean implements Serializable{
 					"loginButton",
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Email doesn't exists, Please register new account", null));
-			return "fail";
+			return null;
 		}else if(result == "fail") { //check email or password incorrect
 			loggedIn = false;
 			// Add View Faces Message
@@ -102,10 +100,10 @@ public class LoginBean implements Serializable{
 					"loginButton",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Incorrect Email or Password, Please enter correct email and password", null));
-			return "fail";
+			return null;
 		}else { // user login
 			loggedIn = true;
-			return "success";
+			return "index.jsf";
 		}
 	}
 

@@ -1,8 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:a="http://primefaces.org/ui"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets" >
 
         <!-- HEADER-TOP START -->
@@ -37,8 +37,6 @@
                                 <ul class="list-inline">
                                     <li><a href="checkout.html">Check Out</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="cart.html">My Cart</a></li>
                                     <li><a class="cd-signin" href="#modal1">Sign in</a></li>
                                 </ul>                                   
                             </nav>
@@ -56,85 +54,104 @@
 	                <li><a href="#modal1">Sign up</a></li>
 	            </ul>
 
-            <div id="cd-login"> <!-- log in form -->
-                <form class="cd-form">
-                    <p class="fieldset">
-                        <label class="image-replace cd-email" for="signin-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail"/>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <label class="image-replace cd-password" for="signin-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Password"/>
-                        <a href="#0" class="hide-password">Hide</a>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <input type="checkbox" id="remember-me" />
-                        <label for="remember-me">Remember me</label>
-                    </p>
-
-                    <p class="fieldset">
-                        <input class="full-width" type="submit" value="Login"/>
-                    </p>
-                </form>
-                
-                <p class="cd-form-bottom-message"><a href="#modal1">Forgot your password?</a></p>
-                <!-- <a href="#0" class="cd-close-form">Close</a> -->
-            </div> <!-- cd-login -->
-
-            <div id="cd-signup"> <!-- sign up form -->
-                <form class="cd-form">
-                    <p class="fieldset">
-                        <label class="image-replace cd-username" for="signup-username">Username</label>
-                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username"/>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail"/>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <label class="image-replace cd-password" for="signup-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password"/>
-                        <a href="#0" class="hide-password">Hide</a>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <input type="checkbox" id="accept-terms"/>
-                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                    </p>
-
-                    <p class="fieldset">
-                        <input class="full-width has-padding" type="submit" value="Create account"/>
-                    </p>
-                </form>
-            </div>
-
-            <div id="cd-reset-password"> <!-- reset password form -->
-                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
-
-                <form class="cd-form">
-                    <p class="fieldset">
-                        <label class="image-replace cd-email" for="reset-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail"/>
-                        <span class="cd-error-message">Error message here!</span>
-                    </p>
-
-                    <p class="fieldset">
-                        <input class="full-width has-padding" type="submit" value="Reset password"/>
-                    </p>
-                </form>
-
-                <p class="cd-form-bottom-message"><a href="#modal1">Back to log-in</a></p>
-            </div>
-            <a href="#modal1" class="cd-close-form">Close</a>
+                <div id="cd-login"> <!-- log in form -->
+                    <h:form id="loginForm" styleClass="cd-form" prependId="false">
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-email" for="signin-email" value="E-mail" />
+                            <h:inputText id="signin-email" 
+                                         styleClass="full-width has-padding has-border" 
+                                         a:placeholder="E-mail"  
+                                         required="true"
+                                         requiredMessage="Email is required!"
+                                         tabindex="1"
+                                         value="#{loginBean.email}" >
+                                <f:ajax event="click" render="signin-email"></f:ajax>
+                            </h:inputText>
+                            <!-- <span class="cd-error-message">Error message here!</span> -->
+                            <h:message for="signin-email"></h:message>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-password" for="signin-password" value="Password" />
+                            <h:inputText id="signin-password" 
+                                         styleClass="full-width has-padding has-border" 
+                                         a:placeholder="Password"  
+                                         required="true"
+                                         requiredMessage="Password is required!"
+                                         validatorMessage="Password should be of length from 6 to 45 chars"
+                                         tabindex="2"
+                                         value="#{loginBean.password}" >
+                                <f:validateLength minimum="6" maximum="45" for="signin-password"/>
+                            </h:inputText>
+                            <a href="#0" class="hide-password">Hide</a>
+                            <h:message for="signin-password"></h:message>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:commandButton id="loginButton" 
+                                             tabindex="3"
+                                             styleClass="full-width has-padding" 
+                                             type="submit" 
+                                             value="Login" 
+                                             action="#{loginBean.userLogin()}" >
+                                <f:ajax event="action" execute="loginForm" render="signin-email signin-password"></f:ajax>
+                            </h:commandButton>
+                            <p:messages for="loginButton" />
+                        </p>
+                    </h:form>
+                    
+                    <p class="cd-form-bottom-message"><a href="#modal1">Forgot your password?</a></p>
+                </div> <!-- cd-login -->
+    
+                <div id="cd-signup"> <!-- sign up form -->
+                    <h:form styleClass="cd-form" prependId="false">
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-username" for="signup-username" value="Username" />
+                            <h:inputText id="signup-username" styleClass="full-width has-padding has-border" a:placeholder="Username"  value="" />
+                            <span class="cd-error-message">Error message here!</span>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-email" for="signup-email" value="E-mail" />
+                            <h:inputText a:type="email" id="signup-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail"  value="" />
+                            <span class="cd-error-message">Error message here!</span>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-password" for="signup-password" value="Password" />
+                            <h:inputText id="signup-password" styleClass="full-width has-padding has-border" a:placeholder="Password"  value="" />
+                            <a href="#0" class="hide-password">Hide</a>
+                            <span class="cd-error-message">Error message here!</span>
+                        </p>
+    
+                        <p class="fieldset">
+                            <input type="checkbox" id="accept-terms"/>
+                            <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:commandButton styleClass="full-width has-padding" type="submit" value="Create account" />
+                        </p>
+                    </h:form>
+                </div>
+    
+                <div id="cd-reset-password"> <!-- reset password form -->
+                    <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+    
+                    <h:form styleClass="cd-form" prependId="false">
+                        <p class="fieldset">
+                            <h:outputLabel styleClass="image-replace cd-email" for="reset-email" value="E-mail" />
+                            <h:inputText a:type="email" id="reset-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail"/>
+                            <span class="cd-error-message">Error message here!</span>
+                        </p>
+    
+                        <p class="fieldset">
+                            <h:commandButton styleClass="full-width has-padding" type="submit" value="Reset password" />
+                        </p>
+                    </h:form>
+    
+                    <p class="cd-form-bottom-message"><a href="#modal1">Back to log-in</a></p>
+                </div>
             </div> 
         </div>
         <!-- HEADER-TOP END -->
