@@ -53,9 +53,10 @@
 	                <li><a href="#modal1">Sign in</a></li>
 	                <li><a href="#modal1">Sign up</a></li>
 	            </ul>
-
+                
                 <div id="cd-login"> <!-- log in form -->
                     <h:form id="loginForm" styleClass="cd-form" prependId="false">
+                        <p:growl id="growl" sticky="true" showDetail="true" life="2000" />
                         <p class="fieldset">
                             <h:outputLabel styleClass="image-replace cd-email" for="signin-email" value="E-mail" />
                             <h:inputText id="signin-email" 
@@ -67,8 +68,6 @@
                                          value="#{loginBean.email}" >
                                 <f:ajax event="click" render="signin-email"></f:ajax>
                             </h:inputText>
-                            <!-- <span class="cd-error-message">Error message here!</span> -->
-                            <h:message for="signin-email"></h:message>
                         </p>
     
                         <p class="fieldset">
@@ -84,19 +83,18 @@
                                 <f:validateLength minimum="6" maximum="45" for="signin-password"/>
                             </h:inputText>
                             <a href="#0" class="hide-password">Hide</a>
-                            <h:message for="signin-password"></h:message>
                         </p>
     
                         <p class="fieldset">
                             <h:commandButton id="loginButton" 
                                              tabindex="3"
                                              styleClass="full-width has-padding" 
+                                             a:update="growl"
                                              type="submit" 
                                              value="Login" 
                                              action="#{loginBean.userLogin()}" >
-                                <f:ajax event="action" execute="loginForm" render="signin-email signin-password"></f:ajax>
+                                <f:ajax event="action" execute="loginForm" render="loginForm"></f:ajax>
                             </h:commandButton>
-                            <p:messages for="loginButton" />
                         </p>
                     </h:form>
                     

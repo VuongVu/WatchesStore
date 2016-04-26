@@ -986,8 +986,10 @@ body .ui-tooltip {
 .ui-state-highlight, .ui-widget-content .ui-state-highlight,
 	.ui-widget-header .ui-state-highlight {
 	border: 1px solid #fed22f;
-	background: #ffe45c
-		url(images/ui-bg_highlight-soft_75_ffe45c_1x100.html) 50% top repeat-x;
+	/* background: #ffe45c
+		url(images/ui-bg_highlight-soft_75_ffe45c_1x100.html) 50% top repeat-x; */
+    background: #ffffff
+        url(images/ui-bg_highlight-soft_75_ffe45c_1x100.html) 50% top repeat-x;
 	color: #363636;
 }
 

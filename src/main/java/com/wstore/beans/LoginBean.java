@@ -81,6 +81,7 @@ public class LoginBean implements Serializable{
 	 * @throws InterruptedException
 	 */
 	public String userLogin() throws InterruptedException {
+		String currentUrl = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 		CustomerDAO dao = new CustomerDAO();
 		//validate email and password to login
 		String result = dao.authenticate(email, password);
@@ -90,20 +91,25 @@ public class LoginBean implements Serializable{
 			// Add View Faces Message
 			FacesContext.getCurrentInstance().addMessage(
 					"loginButton",
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Email doesn't exists, Please register new account", null));
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Email doesn't exists", "Please register new account"));
 			return null;
 		}else if(result == "fail") { //check email or password incorrect
 			loggedIn = false;
 			// Add View Faces Message
 			FacesContext.getCurrentInstance().addMessage(
 					"loginButton",
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Incorrect Email or Password, Please enter correct email and password", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Incorrect Email or Password", "Please enter correct email and password"));
 			return null;
 		}else { // user login
 			loggedIn = true;
-			return "index.jsf";
+			// Add View Faces Message
+			FacesContext.getCurrentInstance().addMessage(
+					"loginButton",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Welcome to WStore", email));
+			return currentUrl + "?faces-redirect=true";
 		}
 	}
 
