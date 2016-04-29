@@ -23,6 +23,7 @@ public class CategoryBean implements Serializable{
 	private List<Category> categories = new ArrayList<Category>();
 	private List<Product> products = new ArrayList<Product>();
 
+	@SuppressWarnings("unchecked")
 	public List<String> getProducts() {
 		ProductDAO dao = new ProductDAO();
 		products = dao.findAllProducts();
@@ -30,6 +31,7 @@ public class CategoryBean implements Serializable{
 		for (int i = 0; i < products.size(); i++) {
 			list.add(products.get(i).getProductBrand());
 		}
+		@SuppressWarnings("rawtypes")
 		HashSet hs = new HashSet();
 		hs.addAll(list);
 		list.clear();
