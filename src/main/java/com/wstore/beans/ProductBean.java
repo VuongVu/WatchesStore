@@ -241,7 +241,7 @@ public class ProductBean implements Serializable {
 
 	public String getProductDetail(Product product) {
 		this.product = product;
-		return "/productDetail.jsf?faces-redirect=true";
+		return "product-detail.jsf?faces-redirect=true";
 	}
 
 	/**
@@ -329,7 +329,7 @@ public class ProductBean implements Serializable {
 	public String getCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 		this.search = true;
-		return "/products.jsf?faces-redirect=true";
+		return "/product-detail.jsf?faces-redirect=true";
 	}
 
 	public String getCategoryIdFromIndex(long categoryId) {

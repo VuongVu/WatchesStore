@@ -231,54 +231,53 @@
             <div class="container">
                 <div class="row">
                     <!-- SHOPPING-CART START -->
+                    <h:form prependId="false" id="cartForm">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right shopingcartarea">
                         <div class="shopping-cart-out pull-right">
                             <div class="shopping-cart">
-                                <a class="shop-link" href="cart.html" title="View my shopping cart">
+                                <a class="shop-link" href="cart.jsf" title="View my shopping cart">
                                     <i class="fa fa-shopping-cart cart-icon"></i>
                                     <b>My Cart</b>
-                                    <span class="ajax-cart-quantity">2</span>
+                                    <span class="ajax-cart-quantity">#{cartBean.number}</span>
                                 </a>
                                 <div class="shipping-cart-overly">
+                                <ui:repeat var="cart" value="#{cartBean.cart.items}">
                                     <div class="shipping-item">
-                                        <span class="cross-icon"><i class="fa fa-times-circle"></i></span>
+                                        <!-- <span class="cross-icon"><i class="fa fa-times-circle"></i></span> -->
+                                        <span class="cross-icon"><h:commandLink action="#{cartBean.deleteFromCart(cart.product)}"><i class="fa fa-times-circle"></i>
+                                        	<f:ajax execute="cartForm" render="cartForm"></f:ajax>
+                                        </h:commandLink></span>
                                         <div class="shipping-item-image">
                                             <a href="#"><h:graphicImage library="img" name="shopping-image.jpg" alt="shopping image" /></a>
                                         </div>
                                         <div class="shipping-item-text">
-                                            <span>2 <span class="pro-quan-x">x</span> <a href="#" class="pro-cat">Watch</a></span>
-                                            <span class="pro-quality"><a href="#">S,Black</a></span>
-                                            <p>$22.95</p>
+                                            <span class="pro-quan-x">x</span> <span>#{cart.quantity} <a href="#" class="pro-cat"></a></span>
+                                            <span class="pro-quality"><a href="#">#{cart.product.productBrand}</a></span>
+                                            <p>$#{cart.product.productPrice}</p>
                                         </div>
                                     </div>
-                                    <div class="shipping-item">
-                                        <span class="cross-icon"><i class="fa fa-times-circle"></i></span>
-                                        <div class="shipping-item-image">
-                                            <a href="#"><h:graphicImage library="img" name="shopping-image2.jpg" alt="shopping image" /></a>
-                                        </div>
-                                        <div class="shipping-item-text">
-                                            <span>2 <span class="pro-quan-x">x</span> <a href="#" class="pro-cat">Women Bag</a></span>
-                                            <span class="pro-quality"><a href="#">S,Gary</a></span>
-                                            <p>$19.95</p>
-                                        </div>
-                                    </div>
+                                    </ui:repeat>
                                     <div class="shipping-total-bill">
-                                        <div class="cart-prices">
+                                       <!--  <div class="cart-prices">
                                             <span class="shipping-cost">$2.00</span>
                                             <span>Shipping</span>
-                                        </div>
+                                        </div> -->
                                         <div class="total-shipping-prices">
-                                            <span class="shipping-total">$24.95</span>
+                                            <span class="shipping-total">$#{cartBean.total_amount}</span>
                                             <span>Total</span>
                                         </div>                                      
                                     </div>
                                     <div class="shipping-checkout-btn">
-                                        <a href="checkout.html">Check out <i class="fa fa-chevron-right"></i></a>
+                                        <!-- <a href="checkout.html">Check out <i class="fa fa-chevron-right"></i></a> -->
+                                        <h:commandLink action="#{cartBean.checkOut(cartBean.cart,customerBean.email)}" value="Check out"><i class="fa fa-chevron-right"></i>
+                                        	<f:ajax execute="cartForm" render="cartForm"></f:ajax>
+                                        </h:commandLink>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>  
+                    </h:form>
                     <!-- SHOPPING-CART END -->
                     <!-- MAINMENU START -->
                     <h:form prependId="false">
@@ -286,7 +285,7 @@
                         <div class="mainmenu">
                             <nav>
                                 <ul class="list-inline mega-menu">
-                                    <li class="active"><a href="index.html">Home</a>
+                                    <li class="active"><a href="index.jsf">Home</a>
                                     </li>
                                     <ui:repeat var="category" value="#{categoryBean.categories}">
                                         <li><h:commandLink value="#{category.categoryName}" action="#{productBean.getCategoryId(category.categoryId)}" />

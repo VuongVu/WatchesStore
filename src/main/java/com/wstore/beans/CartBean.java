@@ -34,6 +34,7 @@ public class CartBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Cart cart = null;
 	private double total_amount=0;
+	private int number;
 
 	public double getTotal_amount() {
 		return total_amount;
@@ -42,8 +43,6 @@ public class CartBean implements Serializable {
 	public void setTotal_amount(double total_amount) {
 		this.total_amount = total_amount;
 	}
-	private int number;
-
 
 	public int getNumber() {
 		return number;

@@ -28,6 +28,8 @@
                 </div>              
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                    <h:form prependId="false">
+                    <ui:repeat var="product" value="#{productBean.product}">
                         <!-- SINGLE-PRODUCT-DESCRIPTION START -->
                         <div class="row">
                             <div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">
@@ -104,7 +106,7 @@
                             </div>
                             <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
                                 <div class="single-product-descirption">
-                                    <h2>Faded Short Sleeves T-shirt</h2>
+                                    <h2>#{product.productName}</h2>
                                     <div class="single-product-social-share">
                                         <ul>
                                             <li><a href="#" class="twi-link"><i class="fa fa-twitter"></i>Tweet</a></li>
@@ -133,10 +135,10 @@
                                         <p>Condition: <span>New product</span></p>
                                     </div>
                                     <div class="single-product-price">
-                                        <h2>$16.51</h2>
+                                        <h2>$#{product.productPrice}</h2>
                                     </div>
                                     <div class="single-product-desc">
-                                        <p>Faded short sleeves t-shirt with high neckline. Soft and stretchy material for a comfortable fit. Accessorize with a straw hat and you're ready for summer!</p>
+                                        <p>#{product.productDescription}</p>
                                         <div class="product-in-stock">
                                             <p>300 Items<span>In stock</span></p>
                                         </div>
@@ -168,7 +170,10 @@
                                         <a class="color-blue" href="#"><span></span></a>
                                     </div>
                                     <div class="single-product-add-cart">
-                                        <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a>
+                                        <!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
+                                        <h:commandButton action="#{cartBean.addToCart(product)}" value="Add to cart" styleClass="add-cart-text">
+                                        	<f:ajax execute="@form" render="@all"></f:ajax>
+                                        </h:commandButton>
                                     </div>
                                 </div>
                             </div>
@@ -623,6 +628,8 @@
                             </div>  
                         </div>
                         <!-- RELATED-PRODUCTS-AREA END -->
+                        </ui:repeat>
+                        </h:form>
                     </div>
                     <!-- RIGHT SIDE BAR START -->
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
