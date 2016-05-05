@@ -172,7 +172,7 @@
                                     <div class="single-product-add-cart">
                                         <!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
                                         <h:commandButton action="#{cartBean.addToCart(product)}" value="Add to cart" styleClass="add-cart-text">
-                                        	<f:ajax execute="@form" render="@all"></f:ajax>
+                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
                                         </h:commandButton>
                                     </div>
                                 </div>
