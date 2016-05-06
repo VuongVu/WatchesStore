@@ -53,9 +53,46 @@
                         <!-- SHOPING-CART-MENU END -->
                         <!-- CART TABLE_BLOCK START -->
                         <div class="table-responsive">
+                        
+                        <h:dataTable var="cart" value="#{cartBean.cart.items}" styleClass="table table-bordered" id="cart-summary">
+                            <h:column styleClass="cart-product">
+                                <f:facet name="header">Product</f:facet>
+                                <h:graphicImage value="/DisplayImage?productId=#{cart.product.productId}"
+                                                alt="product image" >
+                                </h:graphicImage>
+                            </h:column>
+                            
+                            <h:column styleClass="cart-description"> 
+                            <f:facet name="header">Description</f:facet>
+                                #{cart.product.productName}
+                            </h:column>
+                            
+                            <h:column styleClass="cart-availability text-center">
+                            <f:facet name="header">Availability</f:facet>
+                                <span class="label label-success">In stock</span>
+                            </h:column>
+                            
+                            <h:column styleClass="cart-unit text-right">
+                            <f:facet name="header">Unit Price</f:facet>
+                                #{cart.product.productPrice}
+                            </h:column>
+                            
+                             <h:column styleClass="cart_quantity">
+                            	<f:facet name="header">Qty</f:facet>
+                                <div>
+                                    <span>#{cart.quantity}</span>
+                                </div>
+                            </h:column>
+                            
+                            <h:column styleClass="cart-total">
+                            <f:facet name="header">Total</f:facet>
+                               #{cart.product.productPrice*cart.quantity}
+                            </h:column>
+                            
+                        </h:dataTable>  
                             <!-- TABLE START -->
-                            <table class="table table-bordered" id="cart-summary">
-                                <!-- TABLE HEADER START -->
+                            <!-- <table class="table table-bordered" id="cart-summary">
+                                TABLE HEADER START
                                 <thead>
                                     <tr>
                                         <th class="cart-product">Product</th>
@@ -66,10 +103,10 @@
                                         <th class="cart-total text-right">Total</th>
                                     </tr>
                                 </thead>
-                                <!-- TABLE HEADER END -->
-                                <!-- TABLE BODY START -->
+                                TABLE HEADER END
+                                TABLE BODY START
                                 <tbody>
-                                    <!-- SINGLE CART_ITEM START -->
+                                    SINGLE CART_ITEM START
                                     <tr>
                                         <td class="cart-product">
                                             <a href="#">
@@ -96,8 +133,8 @@
                                             <span class="price">$16.51</span>
                                         </td>
                                     </tr>
-                                    <!-- SINGLE CART_ITEM END -->
-                                    <!-- SINGLE CART_ITEM START -->
+                                    SINGLE CART_ITEM END
+                                    SINGLE CART_ITEM START
                                     <tr>
                                         <td class="cart-product">
                                             <a href="#">
@@ -126,8 +163,8 @@
                                             <span class="price">$22.95</span>
                                         </td>
                                     </tr>
-                                    <!-- SINGLE CART_ITEM END -->
-                                    <!-- SINGLE CART_ITEM START -->
+                                    SINGLE CART_ITEM END
+                                    SINGLE CART_ITEM START
                                     <tr>
                                         <td class="cart-product">
                                             <a href="#">
@@ -156,10 +193,10 @@
                                             <span class="price">$23.40</span>
                                         </td>
                                     </tr>
-                                    <!-- SINGLE CART_ITEM END -->
+                                    SINGLE CART_ITEM END
                                 </tbody>
-                                <!-- TABLE BODY END -->
-                                <!-- TABLE FOOTER START -->
+                                TABLE BODY END
+                                TABLE FOOTER START
                                 <tfoot>
                                     <tr>
                                         <td class="text-right" colspan="4">Total products</td>
@@ -186,8 +223,8 @@
                                         </td>
                                     </tr>
                                 </tfoot>
-                                <!-- TABLE FOOTER END -->                               
-                            </table>
+                                TABLE FOOTER END                               
+                            </table> -->
                             <!-- TABLE END -->
                         </div>
                         <!-- CART TABLE_BLOCK END -->

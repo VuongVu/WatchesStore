@@ -192,10 +192,10 @@
             <div class="modal-dialog" style="width: 550px; height: 550px">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <h:graphicImage library="img"
-                                        name="product/sale/8.jpg"
+                        <h:graphicImage value="/DisplayImage?productId=#{productBean.product.productId}"
                                         style="width:550px; height:550px"
-                                        alt="product-image" styleClass="img-responsive" />
+                                        alt="product-image" styleClass="img-responsive" >
+                        </h:graphicImage>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets" >
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
         <!-- HEADER-TOP START -->
         <div class="header-top">
@@ -34,10 +35,17 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="header-right-menu">
                             <nav class="main-nav">
-                                <ul class="list-inline">
+                                <ul class="list-inline dropdown">
                                     <li><a href="checkout.html">Check Out</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a class="cd-signin" href="#modal1">Sign in</a></li>
+                                    <c:if test="#{not loginBean.loggedIn}">
+                                        <li><a class="cd-signin" href="#modal1">Sign in</a></li>
+                                    </c:if>
+                                    <c:when test="#{loginBean.loggedIn}">
+                                        <li>
+                                            <a>#{loginBean.email}</a>
+                                        </li>
+                                    </c:when>
                                 </ul>                                   
                             </nav>
                         </div>
