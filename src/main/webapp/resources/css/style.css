@@ -4739,7 +4739,7 @@ ul.step li.step-done span a {
 
 .text-right, #cart-summary tbody td.cart-unit, #cart-summary tbody td.cart-total
 	{
-	text-align: right;
+	text-align: center;
 }
 
 .table tbody>tr>td.cart_quantity {

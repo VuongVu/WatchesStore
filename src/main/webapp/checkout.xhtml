@@ -53,43 +53,37 @@
                         <!-- SHOPING-CART-MENU END -->
                         <!-- CART TABLE_BLOCK START -->
                         <div class="table-responsive">
-                        
-                        <h:dataTable var="cart" value="#{cartBean.cart.items}" styleClass="table table-bordered" id="cart-summary">
-                            <h:column styleClass="cart-product">
-                                <f:facet name="header">Product</f:facet>
-                                <h:graphicImage value="/DisplayImage?productId=#{cart.product.productId}"
-                                                alt="product image" >
-                                </h:graphicImage>
-                            </h:column>
-                            
-                            <h:column styleClass="cart-description"> 
-                            <f:facet name="header">Description</f:facet>
-                                #{cart.product.productName}
-                            </h:column>
-                            
-                            <h:column styleClass="cart-availability text-center">
-                            <f:facet name="header">Availability</f:facet>
-                                <span class="label label-success">In stock</span>
-                            </h:column>
-                            
-                            <h:column styleClass="cart-unit text-right">
-                            <f:facet name="header">Unit Price</f:facet>
-                                #{cart.product.productPrice}
-                            </h:column>
-                            
-                             <h:column styleClass="cart_quantity">
-                            	<f:facet name="header">Qty</f:facet>
-                                <div>
-                                    <span>#{cart.quantity}</span>
-                                </div>
-                            </h:column>
-                            
-                            <h:column styleClass="cart-total">
-                            <f:facet name="header">Total</f:facet>
-                               #{cart.product.productPrice*cart.quantity}
-                            </h:column>
-                            
-                        </h:dataTable>  
+                            <h:dataTable var="cart" value="#{cartBean.cart.items}" styleClass="table table-bordered" id="cart-summary">
+                                <h:column a:class="cart-product">
+                                    <f:facet name="header">Product</f:facet>
+                                    <h:graphicImage value="/DisplayImage?productId=#{cart.product.productId}"
+                                                    alt="product image"
+                                                    style="width:100px;height:100px" >
+                                    </h:graphicImage>
+                                </h:column>
+                                
+                                <h:column a:class="cart-description text-center"> 
+                                    <f:facet name="header">Name</f:facet>
+                                        #{cart.product.productName}
+                                </h:column>
+                                    
+                                <h:column a:class="cart-unit text-center">
+                                    <f:facet name="header">Unit Price</f:facet>
+                                    #{cart.product.productPrice}
+                                </h:column>
+                                
+                                 <h:column a:class="cart_quantity text-center">
+                                	<f:facet name="header">Qty</f:facet>
+                                    <div>
+                                        <span>#{cart.quantity}</span>
+                                    </div>
+                                </h:column>
+                                
+                                <h:column a:class="cart-total text-center">
+                                    <f:facet name="header">Total</f:facet>
+                                    #{cart.product.productPrice*cart.quantity}
+                                </h:column>
+                            </h:dataTable>  
                             <!-- TABLE START -->
                             <!-- <table class="table table-bordered" id="cart-summary">
                                 TABLE HEADER START

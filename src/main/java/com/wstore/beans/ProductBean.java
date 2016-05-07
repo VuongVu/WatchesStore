@@ -380,4 +380,19 @@ public class ProductBean implements Serializable {
 		}
 
 	}
+
+	/**
+	 * filter product by brand
+	 */
+	public List<Product> productByBrand(Product product) {
+		List<Product> list=new ArrayList<>();
+		ProductDAO dao = new ProductDAO();
+
+		for (Product products : dao.findAllProducts()) {
+			if (products.getProductBrand().equalsIgnoreCase(product.getProductBrand())) {
+				list.add(products);
+			}
+		}
+		return list;
+	}
 }

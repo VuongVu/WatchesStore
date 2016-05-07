@@ -1,6 +1,10 @@
 package com.wstore.entities;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Product product = null;
 	private int quantity = 0;
 

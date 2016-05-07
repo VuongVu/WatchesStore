@@ -75,35 +75,35 @@ public class CartBean implements Serializable {
 	}
 
 	/* Them product vao gio hang */
-	public void addToCart(Product product) {
+	public void addToCart(Product product,int quantity) {
 		//Product currentProduct=this.products.get(this.products.indexOf(product));
 		try {
 			if (product.getProductQuantity() > 0) {
 
 				if (getCart() == null) {
 					cart = new Cart();
-					getCart().addItem(product, 1);
+					getCart().addItem(product, quantity);
 					this.number+=1;
-					product.setProductQuantity(product.getProductQuantity()-1);
+					product.setProductQuantity(product.getProductQuantity()-quantity);
 
 				} else {
 
 					if (checkExistProductInCart(product) == -1) {
-						getCart().addItem(product, 1);
+						getCart().addItem(product, quantity);
 
-						product.setProductQuantity(product.getProductQuantity()-1);
+						product.setProductQuantity(product.getProductQuantity()-quantity);
 						this.number+=1;
 						//this.total_amount+=product.getProductPrice()-(product.getProductPrice()*(product.getProductDiscount()/100));
 					} else {
 
 						int newQuantity = getCart().getItems()
 								.get(checkExistProductInCart(product))
-								.getQuantity() + 1;
+								.getQuantity() + quantity;
 						getCart().getItems()
 						.get(checkExistProductInCart(product))
 						.setQuantity(newQuantity);
 
-						product.setProductQuantity(product.getProductQuantity()-1);
+						product.setProductQuantity(product.getProductQuantity()-quantity);
 
 					}
 				}
@@ -144,8 +144,8 @@ public class CartBean implements Serializable {
 		}
 	}
 
-	public void redirect(Product product) throws IOException{
-		addToCart(product);
+	public void redirect(Product product,int quantity) throws IOException{
+		addToCart(product,quantity);
 		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 		context.redirect("checkout.jsf");
 	}
