@@ -20,8 +20,8 @@
                         <div class="bstore-breadcrumb">
                             <a href="index.html">HOMe<span><i class="fa fa-caret-right"></i> </span> </a>
                             <span> <i class="fa fa-caret-right"> </i> </span>
-                            <a href="shop-gird.html"> women </a>
-                            <span> Faded Short Sleeves T-shirt </span>
+                            <a href="shop-gird.html"> #{productBean.product.category.categoryName}</a>
+                            <span> #{productBean.product.productName} </span>
                         </div>
                         <!-- BSTORE-BREADCRUMB END -->
                     </div>
@@ -82,7 +82,7 @@
                                     <div class="single-product-desc">
                                         <p>#{product.productDescription}</p>
                                         <div class="product-in-stock">
-                                            <p id="quantityInStock">#{product.productQuantity} Items<span>In stock</span></p>
+                                            <h:outputLabel id="quantityInStock" value="#{product.productQuantity} Items " ><span>In stock</span></h:outputLabel>
                                         </div>
                                     </div>
                                     <div class="single-product-info">
@@ -95,12 +95,13 @@
                                         <div class="cart-quantity">
                                             <div class="single-qty-btn">
                                                 <h:inputText styleClass="cart-plus-minus sing-pro-qty" binding="#{input}" id="inputText" />
-                                                <div class="dec qtybutton" onclick="minus()" >-</div>
+                                                <div class="dec qtybutton" onclick="minus()">-</div>
                                                 <div class="inc qtybutton" onclick="plus()">+</div>             
                                             </div>
                                         </div>
                                     </div>
                                     <h:outputScript>
+                                        document.getElementById("j_idt139:0:inputText").defaultValue = "1";
                                         function plus(){        
                                             var a = document.getElementById("j_idt139:0:inputText").value;
                                             a = eval(a)+1;
@@ -109,20 +110,19 @@
                                         }
                                         function minus(){
                                             var a = document.getElementById("j_idt139:0:inputText").value;
-                                            if(eval(a) > 1){
+                                            if(eval(a) > 1){    
                                                 a = eval(a)-1;
                                             }
                                             else{
                                                 a = 1;
                                             }
                                             document.getElementById("j_idt139:0:inputText").value = a;
-                                            
                                         }
                                     </h:outputScript>                   
                                     <div class="single-product-add-cart">
                                         <!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
                                         <h:commandButton action="#{cartBean.addToCart(product,input.value)}" value="Add to cart" styleClass="add-cart-text">
-                                        	<f:ajax execute="@form" render="cartForm productDescription"></f:ajax>
+                                        	<f:ajax execute="@form" render="cartForm quantityInStock"></f:ajax>
                                         </h:commandButton>
                                         <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                             <input type="hidden" name="cmd" value="_s-xclick"/>
@@ -177,13 +177,17 @@
                                                 <div class="col-xs-5 col-sm-4 col-md-4 col-lg-3 padding-5">
                                                     <div class="tab-rating-box">
                                                         <span>Grade</span>
-                                                        <div class="rating-box">
+                                                        <!-- <div class="rating-box">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star-half-empty"></i>
-                                                        </div>  
+                                                        </div> -->  
+                                                        <p:rating value="#{ratingView.rating}">
+                                                            <p:ajax event="rate" listener="#{ratingView.onrate}" />
+                                                            <p:ajax event="cancel" listener="#{ratingView.oncancel}" />
+                                                        </p:rating>
                                                         <div class="review-author-info">
                                                             <strong>write A REVIEW</strong>
                                                             <span>06/22/2015</span>
@@ -224,7 +228,7 @@
                                             <div class="item">
                                                 <!-- <div class="single-product-item"> -->
                                                     <div class="product-image">
-                                                        <a href="#"><h:graphicImage value="/DisplayImage?productId=#{productRelate.productId}" alt="product-image" /></a>
+                                                        <a href="#"><h:graphicImage value="/DisplayImage?productId=#{productRelate.productId}" style="weight:190px;height:190px" alt="product-image" /></a>
                                                     </div>
                                                     <div class="product-info">
                                                         <div class="customar-comments-box">
@@ -247,337 +251,6 @@
                                                 </div>                          
                                             </div>
                                             </ui:repeat>
-                                            <!-- SINGLE-PRODUCT-ITEM END -->
-                                            <!-- SINGLE-PRODUCT-ITEM START -->
-                                            <!-- <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/1.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Blouse</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$22.95</span>
-                                                            <span class="old-price">$27.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/9.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Dress</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$23.40</span>
-                                                            <span class="old-price">$26.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/5.jpg" alt="product-image" /></a>
-                                                        <div class="overlay-content">
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Dress</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$50.99</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/12.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Summer Dr...</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$28.98</span>
-                                                            <span class="old-price">$30.51</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/13.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Summer</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$30.50</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>  
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/7.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Chiffon Dr...</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$16.40</span>
-                                                            <span class="old-price">$20.50</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/11.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Dress</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$26.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/10.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Dress</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$26.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/2.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Blouse</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$27.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/4.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Faded Short Sle...</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$16.51</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/6.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Chiffon Dr...</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$16.40</span>
-                                                            <span class="old-price">$20.50</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>      
-                                            SINGLE-PRODUCT-ITEM END
-                                            SINGLE-PRODUCT-ITEM START                              
-                                            <div class="item">
-                                                <div class="single-product-item">
-                                                    <div class="product-image">
-                                                        <a href="#"><h:graphicImage library="img" name="product/sale/8.jpg" alt="product-image" /></a>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-half-empty"></i>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <span>1 Review(s)</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#">Printed Dress</a>
-                                                        <div class="price-box">
-                                                            <span class="price">$26.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>                          
-                                            </div>   -->
                                             <!-- SINGLE-PRODUCT-ITEM END -->
                                             <!-- SINGLE-PRODUCT-ITEM START -->                              
                                         </div>

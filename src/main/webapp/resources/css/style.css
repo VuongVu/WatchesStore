@@ -5463,6 +5463,13 @@ span.large-btn:hover i {
 	line-height: 18px;
 }
 
+.single-product-descirption label {
+    margin: 0;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+}
+
 .single-product-descirption h2 {
 	color: #333;
 	font-size: 24px;
@@ -5653,6 +5660,11 @@ span.large-btn:hover i {
 	color: #333;
 }
 
+.single-product-desc .product-in-stock label {
+    margin-bottom: 15px;
+    color: #333;
+}
+
 .product-in-stock p span {
 	background-color: #55c65e;
 	border: 1px solid #36943e;
@@ -5661,6 +5673,16 @@ span.large-btn:hover i {
 	line-height: 18px;
 	margin-left: 10px;
 	padding: 5px 8px;
+}
+
+.product-in-stock label span {
+    background-color: #55c65e;
+    border: 1px solid #36943e;
+    color: #fff;
+    font-size: 13px;
+    line-height: 18px;
+    margin-left: 10px;
+    padding: 5px 8px;
 }
 
 .single-product-info {
