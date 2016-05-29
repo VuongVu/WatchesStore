@@ -78,7 +78,7 @@ public class CartBean implements Serializable {
 	public void addToCart(Product product,int quantity) {
 		//Product currentProduct=this.products.get(this.products.indexOf(product));
 		try {
-			if (product.getProductQuantity() > 0) {
+			if (product.getProductQuantity() > 0 && quantity <= product.getProductQuantity()) {
 
 				if (getCart() == null) {
 					cart = new Cart();
@@ -112,7 +112,7 @@ public class CartBean implements Serializable {
 
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
-						null,
+						"cartadd",
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								product.getProductName()+" is out of product", "Out of products"));
 			}

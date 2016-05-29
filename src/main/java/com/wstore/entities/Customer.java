@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,12 +43,18 @@ public class Customer implements Serializable{
 	@Column(name = "phone")
 	private String phone;
 
-	@OneToMany(mappedBy = "customer")
-	private Set<Order> orders;
+	@Column(name="address")
+	private String address;
 
 	@Column(name="isDelete")
 	private boolean isDelete;
 
+
+	@OneToMany(mappedBy = "customer")
+	private Set<Order> orders;
+
+	@OneToMany(fetch=FetchType.LAZY,mappedBy = "id.customer",cascade=javax.persistence.CascadeType.ALL)
+	private Set<Comment> comments;
 
 	public Customer() {
 
@@ -60,6 +67,14 @@ public class Customer implements Serializable{
 		this.password = password;
 		this.fullName = fullName;
 		this.phone = phone;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public boolean isDelete() {
@@ -116,6 +131,15 @@ public class Customer implements Serializable{
 
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	@Override

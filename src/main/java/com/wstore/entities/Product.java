@@ -3,8 +3,10 @@ package com.wstore.entities;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,6 +47,10 @@ public class Product implements	Serializable{
 
 	@Column(name = "productRanking")
 	private double productRanking;
+	
+	@Column(name="isDelete")
+	private boolean isDelete;
+
 
 	@Lob
 	@Column(name = "productImage")
@@ -64,11 +70,30 @@ public class Product implements	Serializable{
 
 	@OneToMany(mappedBy = "product")
 	private Set<OrderDetail> orderDetails;
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy = "id.product",cascade=CascadeType.ALL)
+	private Set<Comment> comments;
+	
+	@OneToMany(mappedBy="product")
+	private Set<ProductState> productStates;
+	
+	
+	public Set<ProductState> getProductStates() {
+		return productStates;
+	}
 
-	@Column(name="isDelete")
-	private boolean isDelete;
+	public void setProductStates(Set<ProductState> productStates) {
+		this.productStates = productStates;
+	}
 
+	public Set<Comment> getComments() {
+		return comments;
+	}
 
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	
 	public boolean isDelete() {
 		return isDelete;
 	}

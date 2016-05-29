@@ -28,10 +28,12 @@
                                     <span class="current-lang-label">Language : </span><strong>English</strong>
                                 </div>                                       
                             </div>
+                            
                         </div>
                     </div>
                     <!-- HEADER-LEFT-MENU END -->
                     <!-- HEADER-RIGHT-MENU START -->
+                    <h:form id="header" prependId="false">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="header-right-menu">
                             <nav class="main-nav">
@@ -41,15 +43,21 @@
                                     <c:if test="#{not loginBean.loggedIn}">
                                         <li><a class="cd-signin" href="#modal1">Sign in</a></li>
                                     </c:if>
-                                    <c:when test="#{loginBean.loggedIn}">
-                                        <li>
+                                    <c:if test="#{loginBean.loggedIn}">
+                                        <li class="dropdown">
                                             <a>#{loginBean.email}</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <h:commandLink style="color:#000" action="#{loginBean.userLogout()}" value="Logout" />
+                                                </li>
+                                            </ul>
                                         </li>
-                                    </c:when>
+                                    </c:if>
                                 </ul>                                   
                             </nav>
                         </div>
                     </div>
+                    </h:form>
                     <!-- HEADER-RIGHT-MENU END -->
                 </div>
             </div>
@@ -178,50 +186,12 @@
                         <!-- CATEGORYS-PRODUCT-SEARCH START -->
                         <div class="categorys-product-search">
                             <h:form prependId="false" styleClass="search-form-cat">
-                            <!-- <form action="#" method="get" class="search-form-cat"> -->
                                 <div class="search-product form-group">
-                                    <select name="catsearch" class="cat-search">
-                                        <option value="">Categories</option>
-                                        <option value="2">Women</option>
-                                        <option value="3">T-Shirts</option>
-                                        <option value="4">Men</option>
-                                        <option value="5">Shoose</option>
-                                        <option value="6">Dress</option>
-                                        <option value="7">Tops</option>
-                                        <option value="8">Casual</option>
-                                        <option value="9">Evening</option>
-                                        <option value="10">Summer</option>
-                                        <option value="11">sports</option>
-                                        <option value="12">day</option>
-                                        <option value="13">evening</option>
-                                        <option value="14">Blouse</option>
-                                        <option value="15">handba</option>
-                                        <option value="16">phone</option>
-                                        <option value="17">house</option>
-                                        <option value="18">Beauty</option>
-                                        <option value="19">health</option>
-                                        <option value="20">clothing</option>
-                                        <option value="21">kids</option>
-                                        <option value="22">Dresse</option>
-                                        <option value="22">Casual</option>
-                                        <option value="23">day</option>
-                                        <option value="24">evening</option>
-                                        <option value="24">Blouse</option>
-                                        <option value="25">handb</option>
-                                        <option value="66">phone</option>
-                                        <option value="27">house</option>                                    
-                                    </select>
-                                    <h:inputText styleClass="form-control search-form" p:placeholder="Enter your search key ... " />
-                                    <h:commandLink>
-                                        <button class="search-button" value="Search" name="s" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </h:commandLink>
-                                    <!-- <button class="search-button" value="Search" name="s" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button> -->                                   
+                                	<h:inputText value="#{productBean.searchString}" styleClass="form-control search-form" p:placeholder="Enter your search key ... " />
+                                    <h:commandLink action="#{productBean.search()}" styleClass="search-button">
+                                    	 <i class="fa fa-search" style="margin-left: 20px;"></i>
+                                    </h:commandLink>                            
                                 </div>
-                            <!-- </form> -->
                             </h:form>
                         </div>
                         <!-- CATEGORYS-PRODUCT-SEARCH END -->
@@ -248,9 +218,11 @@
                                 <ui:repeat var="cart" value="#{cartBean.cart.items}">
                                     <div class="shipping-item">
                                         <!-- <span class="cross-icon"><i class="fa fa-times-circle"></i></span> -->
-                                        <span class="cross-icon"><h:commandLink action="#{cartBean.deleteFromCart(cart.product)}"><i class="fa fa-times-circle"></i>
-                                        	<f:ajax execute="cartForm" render="cartForm j_idt139:0:productDescription"></f:ajax>
-                                        </h:commandLink></span>
+                                        <span class="cross-icon">
+	                                        <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}"><i class="fa fa-times-circle"></i>
+	                                        	<f:ajax execute="cartForm" render="cartForm j_idt141:0:quantityInStock"></f:ajax>
+	                                        </h:commandLink>
+                                        </span>
                                         <div class="shipping-item-image">
                                             <a href="#"><h:graphicImage library="img" name="shopping-image.jpg" alt="shopping image" /></a>
                                         </div>
@@ -273,7 +245,7 @@
                                     </div>
                                     <div class="shipping-checkout-btn">
                                         <!-- <a href="checkout.html">Check out <i class="fa fa-chevron-right"></i></a> -->
-                                        <h:commandLink action="#{cartBean.checkOut(cartBean.cart,customerBean.email)}" value="Check out"><i class="fa fa-chevron-right"></i>
+                                        <h:commandLink action="/cart.jsf?faces-redirect=true" value="Check out"><i class="fa fa-chevron-right"></i>
                                         	<f:ajax execute="cartForm" render="cartForm"></f:ajax>
                                         </h:commandLink>
                                     </div>
@@ -292,9 +264,9 @@
                                     <li class="active"><a href="index.jsf">Home</a>
                                     </li>
                                     <ui:repeat var="category" value="#{categoryBean.categories}">
-                                        <li><h:commandLink value="#{category.categoryName}" action="#{productBean.getCategoryId(category.categoryId)}" />
+                                        <li><h:commandLink value="#{category.categoryName}" action="#{productBean.getCategoryId(category.categoryId)}"/>
                                         </li>
-                                    </ui:repeat> 
+                                    </ui:repeat>
                                     <!-- <li>
                                         <a href="shop-gird.html">Women</a>
                                     </li>

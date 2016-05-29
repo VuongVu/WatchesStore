@@ -5,12 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.model.UploadedFile;
@@ -24,33 +21,39 @@ import com.wstore.entities.Supplier;
 
 @ManagedBean(name = "productBean")
 @SessionScoped
-public class ProductBean implements Serializable {
+public class ProductBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	private Product product = new Product();
-	private List<Product> products = new ArrayList<Product>();
-
 	private List<SelectItem> listCategories = new ArrayList<SelectItem>();
 	private List<SelectItem> listSuppliers = new ArrayList<SelectItem>();
 	private List<Product> listProductByBrand = new ArrayList<Product>();
-	private List<Product> listProductByCate = new ArrayList<Product>();
+	private List<Product> listSearch = new ArrayList<Product>();
+	private List<Product> listFilter = new ArrayList<>();
 	private UploadedFile image;
-	private String searchString = "";
-	private boolean filterBrand = false;
-	private boolean filterCate = false;
-	private boolean search = true;
-
-	private String brand;
-
-	private int categoryId = 0;
-
-	public boolean isSearch() {
-		return search;
+	private String productBrand="%";
+	private double productPrice=100000;
+	private String productProperty="isAll";
+	private int categoryId;
+	private int sort = 0;
+	private String searchString;
+	
+	
+	public String getSearchString() {
+		return searchString;
 	}
 
-	public void setSearch(boolean search) {
-		this.search = search;
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
+
+	public List<Product> getListFilter() {
+		return listFilter;
+	}
+
+	public void setListFilter(List<Product> listFilter) {
+		this.listFilter = listFilter;
 	}
 
 	public List<Product> getListProductByBrand() {
@@ -61,32 +64,38 @@ public class ProductBean implements Serializable {
 		this.listProductByBrand = listProductByBrand;
 	}
 
-	public List<Product> getListProductByCate() {
-		return listProductByCate;
+	
+	
+	public List<Product> getListSearch() {
+		return listSearch;
 	}
 
-	public void setListProductByCate(List<Product> listProductByCate) {
-		this.listProductByCate = listProductByCate;
+	public void setListSearch(List<Product> listSearch) {
+		this.listSearch = listSearch;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public String getProductBrand() {
+		return productBrand;
 	}
 
-	public String getBrand() {
-		return brand;
+	public void setProductBrand(String productBrand) {
+		this.productBrand = productBrand;
 	}
 
-	public void setBrand(String brand) {
-		this.brand = brand;
+	public double getProductPrice() {
+		return productPrice;
 	}
 
-	public String getSearchString() {
-		return searchString;
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
 	}
 
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
+	public String getProductProperty() {
+		return productProperty;
+	}
+
+	public void setProductProperty(String productProperty) {
+		this.productProperty = productProperty;
 	}
 
 	public Product getProduct() {
@@ -96,21 +105,14 @@ public class ProductBean implements Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
 
-	public boolean isFilterBrand() {
-		return filterBrand;
+	public int getSort() {
+		return sort;
 	}
 
-	public void setFilterBrand(boolean filterBrand) {
-		this.filterBrand = filterBrand;
-	}
-
-	public boolean isFilterCate() {
-		return filterCate;
-	}
-
-	public void setFilterCate(boolean filterCate) {
-		this.filterCate = filterCate;
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 
 	/**
@@ -118,29 +120,14 @@ public class ProductBean implements Serializable {
 	 *
 	 * @return list
 	 */
-	public List<Product> getProducts() {
-		ProductDAO dao = new ProductDAO();
-		products = dao.findAllProducts();
-
-		return products;
+	
+	
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public List<String> listBrands() {
-		ProductDAO dao = new ProductDAO();
-		List<Product> list = new ArrayList<Product>();
-		List<String> list2 = new ArrayList<String>();
-		Set<String> hs = new HashSet<String>();
-
-		list = dao.findAllProducts();
-
-		for (Product p : list) {
-			list2.add(p.getProductBrand());
-		}
-		hs.addAll(list2);
-		list2.clear();
-		list2.addAll(hs);
-
-		return list2;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	/**
@@ -158,6 +145,18 @@ public class ProductBean implements Serializable {
 		return listCategories;
 	}
 
+	public List<String> getListProductBrand(){
+		List<String> list=new ArrayList<>();
+		HashSet<String> hashSet=new HashSet<>();
+		ProductDAO dao=new ProductDAO();
+		
+		for (int i = 0; i < dao.findAllProducts().size(); i++) {
+			hashSet.add(dao.findAllProducts().get(i).getProductBrand());
+		}
+		list.addAll(hashSet);
+		
+		return list;		
+	}
 	public void setListCategories(List<SelectItem> listCategories) {
 		this.listCategories = listCategories;
 	}
@@ -249,151 +248,83 @@ public class ProductBean implements Serializable {
 	 *
 	 * @return
 	 */
-	public int getCategoryId() {
-		return categoryId;
-	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public List<Product> listProducts() {
-		filterBrand = false;
-		filterCate = false;
-		search = true;
+	public List<Product> listProducts() {		
 		ProductDAO dao = new ProductDAO();
 		List<Product> list = new ArrayList<Product>();
-		if (this.searchString == null || this.searchString=="") {
-			if (this.categoryId != 0) {
-				list = dao.findProductByCatId(this.categoryId);
-				this.categoryId=0;
-			} else {
-				list = dao.findAllProducts();
-				this.categoryId=0;
-			}
-
-		} else{
-			if(this.categoryId==0){
-				for (Product p : dao.findAllProducts()) {
-					if (p.getProductName().toLowerCase()
-							.contains(this.searchString.toLowerCase())) {
-						list.add(p);
-					}
-				}
-			}
-			else {
-				list = dao.findProductByCatId(this.categoryId);
-				this.categoryId=0;
-			}
-		}
+		list=dao.findAllProducts();
+		return list;
+	}
+	
+	public List<Product> listNewProduct(){
+		ProductDAO dao=new ProductDAO();
+		List<Product> list=dao.findNewProducts();
+		return list;
+	}
+	public List<Product> listSaleProduct(){
+		ProductDAO dao=new ProductDAO();
+		List<Product> list=dao.findSaleProducts();
+		return list;
+	}
+	public List<Product> listBestProduct(){
+		ProductDAO dao=new ProductDAO();
+		List<Product> list = dao.findBestProducts();
 		return list;
 	}
 
-	public List<Product> getSameProduct() {
-		List<Product> list = new ArrayList<Product>();
-		List<Product> list2 = new ArrayList<Product>();
-		int size;
-		ProductDAO dao = new ProductDAO();
-		if (!this.product.equals(null)) {
-			for (Product product : dao.findAllProducts()) {
-				if (product.getProductBrand().equals(
-						this.product.getProductBrand())) {
-					list.add(product);
-				}
-			}
-			Random random = new Random();
-
-			if (list.size() > 3) {
-				size = 3;
-			} else {
-				size = list.size();
-			}
-			for (int i = 0; i < size; i++) {
-				list2.add(list.get(random.nextInt(list.size())));
-				int j = 0;
-				while (j < i) {
-					if (list2.get(j) == list2.get(i)) {
-						list2.add(list.get(random.nextInt(list.size())));
-						j = 0;
-					} else {
-						j++;
-					}
-				}
-			}
-			return list2;
-		} else {
-			return null;
-		}
-	}
 
 	public String getCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-		this.search = true;
-		return "/product-detail.jsf?faces-redirect=true";
+		ProductDAO dao=new ProductDAO();
+		this.categoryId=categoryId;
+		this.listFilter=dao.findProductByCatId(categoryId);
+		return "/shop-grid.jsf?faces-redirect=true";
 	}
 
-	public String getCategoryIdFromIndex(long categoryId) {
-		this.categoryId = (int)categoryId;
-		this.search = true;
-		return "/products.jsf?faces-redirect=true";
-	}
-
-	/**
-	 * filter Product by brand
-	 *
-	 * @param e
-	 */
-	public void filterByBrand(ValueChangeEvent e) {
-		filterBrand = true;
-		filterCate = false;
-		search = false;
-		ProductDAO dao = new ProductDAO();
-		this.listProductByBrand = new ArrayList<Product>();
-		for (Product product : dao.findAllProducts()) {
-			if (product.getProductBrand().equalsIgnoreCase(
-					e.getNewValue().toString())) {
-				this.listProductByBrand.add(product);
-			}
-		}
-	}
-
-	/**
-	 * filter Product by category
-	 *
-	 * @param e
-	 */
-	public void filterByCategory(ValueChangeEvent e) {
-		filterCate = true;
-		filterBrand = false;
-		search = false;
-		ProductDAO dao = new ProductDAO();
-		this.listProductByCate = new ArrayList<Product>();
-		if (e.getNewValue().equals("all")) {
-			this.listProductByCate = dao.findAllProducts();
-		} else {
-			for (Product product : dao.findAllProducts()) {
-				if (product.getCategory().getCategoryName()
-						.equalsIgnoreCase(e.getNewValue().toString())) {
-					this.listProductByCate.add(product);
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * filter product by brand
-	 */
 	public List<Product> productByBrand(Product product) {
 		List<Product> list=new ArrayList<>();
 		ProductDAO dao = new ProductDAO();
-
-		for (Product products : dao.findAllProducts()) {
-			if (products.getProductBrand().equalsIgnoreCase(product.getProductBrand())) {
-				list.add(products);
+		try {
+			for (Product products : dao.findAllProducts()) {
+				if (products.getProductBrand().equalsIgnoreCase(product.getProductBrand())) {
+					list.add(products);
+				}
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+		
 		return list;
+	}
+	public List<Product> productByCategory(Product product) {
+		List<Product> list=new ArrayList<>();
+		ProductDAO dao = new ProductDAO();
+		try {
+			for (Product products : dao.findAllProducts()) {
+				if (products.getCategory().getCategoryName().equalsIgnoreCase(product.getCategory().getCategoryName())) {
+					list.add(products);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return list;
+	}
+
+	
+	public void processValueChange(){
+		// TODO Auto-generated method stub
+		ProductDAO dao=new ProductDAO();
+		try {
+			this.listFilter=dao.filter(this.categoryId, this.productBrand, this.productPrice, this.productProperty, this.sort);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	public String search(){
+		ProductDAO dao=new ProductDAO();
+		this.listSearch = dao.search(this.searchString);
+		return "/search.jsf?faces-redirect=true";
 	}
 
 }

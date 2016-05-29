@@ -198,7 +198,7 @@ public class OrderDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Order> findOrderByCustEmail(String email){
+	public List<Order> findOrderByCustEmail(String email){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;

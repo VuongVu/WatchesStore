@@ -73,6 +73,9 @@ Version: 1.0
 	margin: 0;
 	padding: 0
 }
+table tbody tr td label{
+	padding-left: 20px
+}
 
 body {
 	font-family: "arial", serif;
@@ -808,7 +811,7 @@ input.search-form[placeholder]:-ms-input-placeholder {
 .header-right-callus:before {
 	background: #ff4f4f none repeat scroll 0 0;
 	color: #fff;
-	content: "";
+	content: "ï‚•";
 	display: inline-block;
 	font-family: FontAwesome;
 	font-size: 20px;
@@ -2200,7 +2203,7 @@ div.client-carousel .owl-item img {
 	top: 0;
 	left: 0;
 	line-height: 23px;
-	content: "";
+	content: "ï„�";
 	font-family: fontawesome;
 }
 
@@ -2333,7 +2336,7 @@ body.index-2 .category-heading h2 {
 
 body.index-2 .category-heading h2:before {
 	background: #E53935 none repeat scroll 0 0;
-	content: "";
+	content: "ïƒ‰";
 	display: block;
 	float: left;
 	font-family: "FontAwesome";
@@ -5463,13 +5466,6 @@ span.large-btn:hover i {
 	line-height: 18px;
 }
 
-.single-product-descirption label {
-    margin: 0;
-    font-size: 13px;
-    color: #333;
-    line-height: 18px;
-}
-
 .single-product-descirption h2 {
 	color: #333;
 	font-size: 24px;
@@ -5660,11 +5656,6 @@ span.large-btn:hover i {
 	color: #333;
 }
 
-.single-product-desc .product-in-stock label {
-    margin-bottom: 15px;
-    color: #333;
-}
-
 .product-in-stock p span {
 	background-color: #55c65e;
 	border: 1px solid #36943e;
@@ -5673,16 +5664,6 @@ span.large-btn:hover i {
 	line-height: 18px;
 	margin-left: 10px;
 	padding: 5px 8px;
-}
-
-.product-in-stock label span {
-    background-color: #55c65e;
-    border: 1px solid #36943e;
-    color: #fff;
-    font-size: 13px;
-    line-height: 18px;
-    margin-left: 10px;
-    padding: 5px 8px;
 }
 
 .single-product-info {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class DataConnect {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataConnect.class);
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DATABASE_URL = "jdbc:mysql://localhost/mydb";
+	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/mydb";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "root";
 	/**

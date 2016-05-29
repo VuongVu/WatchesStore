@@ -11,8 +11,8 @@
 	   <title>Home</title>
 	</ui:define>
 	
-	<ui:define name="body-content">   
-	    <h:form prependId="false">
+	<ui:define name="body-content">  
+	<h:form prependId="false"> 
         <!-- HEADER-BOTTOM-AREA START -->
         <section class="main-content-section">
             <div class="container">
@@ -91,20 +91,18 @@
                                     <!-- SIDEBAR-BEST-SELLER SINGLE ITEM START -->
                                     <div class="item">
                                         <!-- SINGLE-PRODUCT-ITEM START -->
-                                        <ui:repeat var="product" value="#{productBean.listProducts().subList(0,(productBean.listProducts().size()>5)?5:productBean.listProducts())}">
+                                      
+                                        <ui:repeat var="product" value="#{productBean.listBestProduct().subList(0,(productBean.listBestProduct().size()>5)?5:productBean.listBestProduct().size())}">
                                         <div class="single-product-item">
                                             <div class="sidebar-product-image">
                                                 <a href="single-product.html"><h:graphicImage library="img" name="product/sidebar_product/1.jpg" alt="product-image" /></a>
                                             </div>
                                             <div class="product-info sede-pro-info">
-                                                <a href="single-product.html">#{product.productBrand}</a>
+                                                <!-- <a href="#">#{product.productName}</a> -->
+                                                <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                       <p:rating value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>
                                                     </div>
                                                 </div>
                                                 <div class="price-box">
@@ -119,29 +117,28 @@
                                     <!-- SIDEBAR-BEST-SELLER SINGLE ITEM END -->
                                     <!-- SIDEBAR-BEST-SELLER SINGLE ITEM START -->
                                     <div class="item">
+                                    	<ui:repeat var="product" value="#{productBean.listBestProduct().size()>6?(productBean.listBestProduct().subList(6,(productBean.listBestProduct().size()>10)?10:productBean.listBestProduct().size())):null}">
                                         <!-- SINGLE-PRODUCT-ITEM START -->                              
                                         <div class="single-product-item">
                                             <div class="sidebar-product-image">
-                                                <a href="single-product.html"><h:graphicImage library="img" name="product/sidebar_product/6.jpg" alt="product-image" /></a>
+                                                <a href="single-product.html"><h:graphicImage library="img" name="product/sidebar_product/1.jpg" alt="product-image" /></a>
                                             </div>
                                             <div class="product-info sede-pro-info">
-                                                <a href="single-product.html">Printed Summer...</a>
+                                                <!-- <a href="#">#{product.productName}</a> -->
+                                                <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
+                                                       <p:rating value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>
                                                     </div>
                                                 </div>
                                                 <div class="price-box">
-                                                    <span class="price">$28.98</span>
-                                                    <span class="old-price">$30.51</span>
+                                                    <span class="price">$#{product.productPrice}</span>
+                                                    <!-- <span class="old-price">$27.00</span> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- SINGLE-PRODUCT-ITEM END -->                                    
+                                        <!-- SINGLE-PRODUCT-ITEM END --> 
+                                        </ui:repeat>                                   
                                     </div>
                                     <!-- SIDEBAR-BEST-SELLER SINGLE ITEM END -->
                                 </div>  
@@ -153,7 +150,7 @@
                     <!-- LEFT-SIDEBAR END -->
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                         <div class="row">
-                        
+                            
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="new-product-area">
                                     <div class="left-title-area">
@@ -165,7 +162,7 @@
                                                 <!-- HOME2-NEW-PRO-CAROUSEL START -->
                                                 <div class="home2-new-pro-carousel">
                                                     <!-- NEW-PRODUCT SINGLE ITEM START -->
-                                                    <ui:repeat var="product" value="#{productBean.listProducts()}">
+                                                    <ui:repeat var="product" value="#{productBean.listNewProduct()}">
                                                      <div class="item">
                                                         <div class="new-product">
                                                             <div class="single-product-item">
@@ -188,41 +185,17 @@
                                                                 <div class="product-info">
                                                                     <div class="customar-comments-box">
                                                                         <div class="rating-box">                                                                        
-                                                                        	<h:panelGroup rendered="#{product.productRanking == 1}">
-																			    <i class="fa fa-star"></i>
-																			</h:panelGroup>                                                                        	
-                                                                            <h:panelGroup rendered="#{product.productRanking == 2}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                        	<h:panelGroup rendered="#{product.productRanking == 3}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                        	<h:panelGroup rendered="#{product.productRanking == 4}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                            <h:panelGroup rendered="#{product.productRanking == 5}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>                                                                            
+                                                                        	<p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>                                                           
                                                                             
                                                                         </div>
                                                                         <div class="review-box">
-                                                                            <span>3 Review(s)</span>
+                                                                            <!-- <span>3 Review(s)</span> -->
                                                                         </div>
                                                                     </div>
-                                                                    <a href="single-product.html">#{product.productName}</a>
+                                                                    <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
+                                                                    <!-- <h:outputText value="#{product.productName}"/> -->
                                                                     <div class="price-box">
-                                                                       <span class="price">$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</span>
-                                                                	   <h:outputText styleClass="old-price" value="$#{product.productPrice}" rendered="#{product.productDiscount!=0}"></h:outputText>
+                                                                        <span class="price">$#{product.productPrice}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -237,7 +210,7 @@
                                     </div>
                                 </div>                                      
                             </div>
-                            
+                    
                             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                                 <!-- TOW-COLUMN-ADD START -->
                                 <div class="tow-column-add zoom-img">
@@ -262,17 +235,17 @@
                                         <!-- HOME2-SALE-CAROUSEL START -->
                                         <div class="home2-sale-carousel">
                                             <!-- NEW-PRODUCT SINGLE ITEM START -->
-                                            <ui:repeat var="product" value="#{productBean.listProducts()}">
+                                          
+                                            <ui:repeat var="product" value="#{productBean.listSaleProduct()}">
                                             <div class="item">
                                                 <div class="new-product">
                                                     <div class="single-product-item">
                                                         <div class="product-image">
                                                             <h:commandLink action="#{productBean.getProductDetail(product)}">
-                                                            	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
+                                                                        <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
                                                                                         style="weight:190px;height:190px"
                                                                                         alt="product-image" />
                                                             </h:commandLink>
-                                                            <a href="#" class="new-mark-box">sale</a>
                                                             <div class="overlay-content">
                                                                 <ul>
                                                                     <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
@@ -285,46 +258,24 @@
                                                         <div class="product-info">
                                                             <div class="customar-comments-box">
                                                                 <div class="rating-box">
-                                                                    <h:panelGroup rendered="#{product.productRanking == 1}">
-																			    <i class="fa fa-star"></i>
-																			</h:panelGroup>                                                                        	
-                                                                            <h:panelGroup rendered="#{product.productRanking == 2}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                        	<h:panelGroup rendered="#{product.productRanking == 3}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                        	<h:panelGroup rendered="#{product.productRanking == 4}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>
-                                                                            <h:panelGroup rendered="#{product.productRanking == 5}">
-                                                                        		<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                            	<i class="fa fa-star"></i>
-                                                                        	</h:panelGroup>            
+                                                                   <p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>         
                                                                 </div>
                                                                 <div class="review-box">
-                                                                    <span>1 Review(s)</span>
+                                                                    <!-- <span>1 Review(s)</span> -->
                                                                 </div>
                                                             </div>
-                                                            <a href="single-product.html">#{product.productName}</a>
+                                                            <!-- <h:outputText value="#{product.productName}"/> -->
+                                                            <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                             <div class="price-box">
                                                                 <span class="price">$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</span>
-                                                                <h:outputText styleClass="old-price" value="$#{product.productPrice}" rendered="#{product.productDiscount!=0}"></h:outputText>
+                                                                <h:outputText value="#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             </ui:repeat>
+                                   
                                             <!-- NEW-PRODUCT SINGLE ITEM END -->          
                                         </div>
                                         <!-- HOME2-SALE-CAROUSEL END -->
@@ -372,11 +323,15 @@
                                 <!-- FEARTURED-CAROUSEL START -->
                                 <div class="feartured-carousel">
                                     <!-- SINGLE-PRODUCT-ITEM START -->
+                                    <ui:repeat var="product" value="#{productBean.listProducts().subList(0,10)}">
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/3.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
+                                                 <h:commandLink action="#{productBean.getProductDetail(product)}">
+                                                                        <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
+                                                                                        style="weight:190px;height:190px"
+                                                                                        alt="product-image" />
+                                                 </h:commandLink>
                                                 <div class="overlay-content">
                                                     <ul>
                                                         <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
@@ -389,26 +344,24 @@
                                             <div class="product-info">
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
+                                                        <p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>
                                                     </div>
-                                                    <div class="review-box">
+                                                  <!--   <div class="review-box">
                                                         <span>1 Review (s)</span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <a href="single-product.html">Faded Short Sleeves T-shirt</a>
-                                                <div class="price-box">
-                                                    <span class="price">$16.51</span>
-                                                </div>
+                                                <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}" />
+                                               <div class="price-box">
+                                                                <span class="price">$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</span>
+                                                                <h:outputText value="#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
+                                               </div>
                                             </div>
                                         </div>                          
                                     </div>
+                                    </ui:repeat>
                                     <!-- SINGLE-PRODUCT-ITEM END -->
                                     <!-- SINGLE-PRODUCT-ITEM START -->
-                                    <div class="item">
+                                    <!-- <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
                                                 <a href="#"><h:graphicImage library="img" name="product/sale/1.jpg" alt="product-image" /></a>
@@ -443,8 +396,8 @@
                                             </div>
                                         </div>                          
                                     </div>
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -480,8 +433,8 @@
                                             </div>
                                         </div>                          
                                     </div>
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -516,8 +469,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -553,8 +506,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -589,8 +542,8 @@
                                             </div>
                                         </div>                          
                                     </div>  
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -626,8 +579,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -662,8 +615,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -698,8 +651,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -734,8 +687,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -770,8 +723,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -807,8 +760,8 @@
                                             </div>
                                         </div>                          
                                     </div>      
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                    SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START                              
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -841,10 +794,10 @@
                                                     <span class="price">$26.00</span>
                                                 </div>
                                             </div>
-                                        </div>                          
-                                    </div>  
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->                              
+                                        </div>                     
+                                    </div>  -->
+                                    <!-- SINGLE-PRODUCT-ITEM END
+                                    SINGLE-PRODUCT-ITEM START       -->                        
                                 </div>
                                 <!-- FEARTURED-CAROUSEL END -->
                             </div>

@@ -8,23 +8,19 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wstore.entities.Category;
+import com.wstore.entities.Comment;
+import com.wstore.entities.Customer;
+import com.wstore.entities.Product;
 import com.wstore.utils.HibernateUtil;
 
-public class CategoryDAO {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDAO.class);
-
-	/**
-	 *
-	 * add new category
-	 */
+public class CommentDAO {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CommentDAO.class);
 	
-	public void addCategory(Category category){
+	public void addComment(Comment comment,Product product,Customer customer){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
@@ -35,9 +31,16 @@ public class CategoryDAO {
 			session = sessionFactory.openSession();
 			// Starting Transaction
 			tx = session.beginTransaction();
-
-			//save category object
-			session.save(category);
+			comment.setProduct(product);
+			comment.setCustomer(customer);
+			comment.setIsdel(false);
+			//save comment object
+			if(isExist(product, customer)!=null){
+				session.update(comment);
+			}else {
+				session.save(comment);
+			}
+			
 
 			//commit transaction
 			tx.commit();
@@ -52,60 +55,23 @@ public class CategoryDAO {
 			}
 		}
 	}
-
-	/**
-	 * Edit category
-	 */
-	public void updateCategory(Category category) {
+	public Comment isExist(Product product,Customer customer){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
-		//String result = null;
-
+		Comment comment = null;
 		try{
 			//get Session object
 			sessionFactory = HibernateUtil.getSessionFactory();
 			session = sessionFactory.openSession();
 			// Starting Transaction
 			tx = session.beginTransaction();
-
-			//update category detail
-			session.update(category);
-
-			//commit transaction
-			tx.commit();
-			//result = "success";
-		}catch (HibernateException e){
-			if (tx != null) {
-				tx.rollback();
-				LOGGER.info(e.getMessage());
-				//result = "fail";
-			}
-		}finally {
-			if(!sessionFactory.isClosed()){
-				session.close();
-			}
-		}
-
-		//return result;
-	}
-
-	/**
-	 * delete category
-	 */
-	public void deleteCategory(Category category){
-		SessionFactory sessionFactory = null;
-		Session session = null;
-		Transaction tx = null;
-
-		try{
-			//get Session object
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.openSession();
-			// Starting Transaction
-			tx = session.beginTransaction();
-			category.setDelete(true);
-			session.update(category);
+			//comment.setDelete(true);
+			Criteria criteria = session.createCriteria(Comment.class);
+			criteria.add(Restrictions.eq("id.customer", customer)).add(Restrictions.eq("id.product", product));
+			
+			comment=(Comment) criteria.uniqueResult();
+			
 
 			//commit transaction
 			tx.commit();
@@ -120,14 +86,49 @@ public class CategoryDAO {
 				session.close();
 			}
 		}
+		return comment;
 	}
 	
 	/**
-	 * get all Category
+	 * delete comment
 	 */
+	public void deleteComment(Comment comment){
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+			//comment.setDelete(true);
+			session.update(comment);
+
+			//commit transaction
+			tx.commit();
+
+		}catch (HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+	}
+
+	/**
+	 * get all Comment
+	 */
+	
 	@SuppressWarnings("unchecked")
-	public List<Category> findAllCategories() {
-		List<Category> categories = new ArrayList<Category>();
+	public List<Comment> findAllCommentsByProId(int productId) {
+		List<Comment> comments = new ArrayList<Comment>();
+		List<Comment> list=new ArrayList<>();
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
@@ -140,13 +141,16 @@ public class CategoryDAO {
 			tx = session.beginTransaction();
 
 			//call Criteria API
-			Criteria criteria = session.createCriteria(Category.class);
-			// To sort records in descening order
-			criteria.add(Restrictions.eq("isDelete", false));
-			criteria.addOrder(Order.asc("categoryId"));
-			//get list from criteria
-			categories = criteria.list();
-
+			Criteria criteria = session.createCriteria(Comment.class);
+//			// To sort records in descening order
+//			
+			
+			comments=criteria.list();
+			for (int i = 0; i < comments.size(); i++) {
+				if(comments.get(i).getProduct().getProductId()==productId && comments.get(i).isIsdel()==false){
+					list.add(comments.get(i));
+				}
+			}
 			//commit transaction
 			tx.commit();
 
@@ -160,42 +164,7 @@ public class CategoryDAO {
 				session.close();
 			}
 		}
-		return categories;
+		return list;
 	}
-	/**
-	 * get category by Id
-	 */
 	
-	public Category findCategoryById(int categoryId){
-		SessionFactory sessionFactory = null;
-		Session session = null;
-		Transaction tx = null;
-		Category category = null;
-
-		try{
-			//get Session object
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.openSession();
-			// Starting Transaction
-			tx = session.beginTransaction();
-
-			Criteria criteria = session.createCriteria(Category.class);
-			criteria.add(Restrictions.eq("categoryId", categoryId)).add(Restrictions.eq("isDelete",false));
-			category = (Category)criteria.uniqueResult();
-
-			//commit transaction
-			tx.commit();
-
-		}catch(HibernateException e){
-			if (tx != null) {
-				tx.rollback();
-				LOGGER.info(e.getMessage());
-			}
-		}finally {
-			if(!sessionFactory.isClosed()){
-				session.close();
-			}
-		}
-		return category;
-	}
 }

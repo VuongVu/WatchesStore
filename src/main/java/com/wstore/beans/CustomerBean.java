@@ -49,13 +49,14 @@ public class CustomerBean implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
 	public List<Customer> getCustomers() {
 		CustomerDAO dao = new CustomerDAO();
 		customers = dao.findAllCustomers();
@@ -78,6 +79,15 @@ public class CustomerBean implements Serializable{
 		email = null;
 
 		return "/login.jsf?faces-redirect=true";
+	}
+	
+	public String registerCheckout() throws InterruptedException {
+		CustomerDAO dao = new CustomerDAO();
+		customer.setEmail(this.email);
+		dao.addCustomer(this.customer);		
+		this.customer = new Customer();
+		email = null;
+		return "checkout-address.jsf?faces-redirect=true";
 	}
 
 	/**

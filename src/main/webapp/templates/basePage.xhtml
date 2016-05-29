@@ -23,7 +23,7 @@
         
     <!-- animate CSS -->
     <h:outputStylesheet library="css" name="animate.css"></h:outputStylesheet>
-  
+  	
     <!-- FANCYBOX CSS -->          
     <h:outputStylesheet library="css" name="jquery.fancybox.css"></h:outputStylesheet>  
 
@@ -93,7 +93,7 @@
 
     <!-- bootstrap js -->
     <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
-
+	
     <!-- wow js -->
     <h:outputScript library="js" name="wow.js"></h:outputScript>
     <h:outputScript>
@@ -125,6 +125,7 @@
     <!-- Login CSS -->
     <h:outputStylesheet library="css" name="login.css"></h:outputStylesheet>  
     
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Login JS -->
     <h:outputScript library="js" name="login.js"></h:outputScript>
     <h:outputScript library="js" name="modernizr.js"></h:outputScript>
@@ -136,6 +137,13 @@
         _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
         $.src="//v2.zopim.com/?3q7OTWrySgcph8OnYovlydI8QtwCFYub";z.t=+new Date;$.
         type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+    </h:outputScript>
+    <h:outputScript >
+		        $(function(){
+		    $('.dropdown').hover(function() {
+		        $(this).addClass('open');
+		    });
+			});
     </h:outputScript>
     <!--End of Zopim Live Chat Script-->
     
@@ -186,7 +194,6 @@
                 </div>
             </div>
         </div>
-        
         <!-- QUICKVIEW PRODUCT -->
         <div id="myModal" class="modal fade" a:tabindex="-1" a:role="dialog" a:aria-labelledby="myModalLabel" a:aria-hidden="true">
             <div class="modal-dialog" style="width: 550px; height: 550px">
@@ -201,6 +208,5 @@
             </div>
         </div>
         <!-- END QUICKVIEW PRODUCT -->
-
 </h:body>
 </html>

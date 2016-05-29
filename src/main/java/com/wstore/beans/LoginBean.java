@@ -113,6 +113,39 @@ public class LoginBean implements Serializable{
 		}
 	}
 
+	public String userLoginCheckout() throws InterruptedException {
+		CustomerDAO dao = new CustomerDAO();
+		//validate email and password to login
+		String result = dao.authenticate(email, password);
+		//check login result
+		System.out.println(result);
+		if(result == "exists"){ //check if email doesn't exists
+			loggedIn = false;
+			// Add View Faces Message
+			FacesContext.getCurrentInstance().addMessage(
+					"loginButton",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Email doesn't exists", "Please register new account"));
+			return null;
+		}else if(result == "fail") { //check email or password incorrect
+			loggedIn = false;
+			// Add View Faces Message
+			FacesContext.getCurrentInstance().addMessage(
+					"loginButton",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Incorrect Email or Password", "Please enter correct email and password"));
+			return null;
+		}else { // user login
+			loggedIn = true;
+			// Add View Faces Message
+			FacesContext.getCurrentInstance().addMessage(
+					"loginButton",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Welcome to WStore", email));
+			return "checkout-address.jsf?faces-redirect=true";
+		}
+	}
+
 	public String adminLogin(){
 		AdminDAO dao = new AdminDAO();
 		String result = dao.authenticate(this.adminUsername, this.adminPassword);
@@ -141,8 +174,9 @@ public class LoginBean implements Serializable{
 	 * logout user funtional
 	 */
 	public String userLogout() {
+		String currentUrl = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 		loggedIn = false;
-		return null;
+		return currentUrl + "faces-redirect=true";
 	}
 	/**
 	 * logout admin

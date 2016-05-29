@@ -23,5 +23,7 @@
         <mapping class="com.wstore.entities.Product" />
         <mapping class="com.wstore.entities.Order" />
         <mapping class="com.wstore.entities.OrderDetail" />
+        <mapping class="com.wstore.entities.Comment" />
+        <mapping class="com.wstore.entities.ProductState" />
     </session-factory>
 </hibernate-configuration>

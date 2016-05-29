@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -158,6 +159,126 @@ public class ProductDAO {
 		}
 		return products;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findNewProducts() {
+		List<Product> products = new ArrayList<Product>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Product.class);
+			// To sort records in descening order
+			//criteria.add(Restrictions.eq("isDelete",false));
+			criteria.createAlias("productStates", "ps");
+			criteria.add(Restrictions.eq("ps.isNew", true));
+			//criteria.addOrder(Order.asc("productId"));
+			//get list from criteria
+			products = criteria.list();
+
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findSaleProducts() {
+		List<Product> products = new ArrayList<Product>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Product.class);
+			// To sort records in descening order
+			//criteria.add(Restrictions.eq("isDelete",false));
+			criteria.createAlias("productStates", "ps");
+			criteria.add(Restrictions.eq("ps.isSale", true));
+			//criteria.addOrder(Order.asc("productId"));
+			//get list from criteria
+			products = criteria.list();
+
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findBestProducts() {
+		List<Product> products = new ArrayList<Product>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Product.class);
+			// To sort records in descening order
+			//criteria.add(Restrictions.eq("isDelete",false));
+			criteria.createAlias("productStates", "ps");
+			criteria.add(Restrictions.eq("ps.isBest", true));
+			//criteria.addOrder(Order.asc("productId"));
+			//get list from criteria
+			products = criteria.list();
+
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return products;
+	}
 
 	public Product findOneProducts(int productId) {
 		SessionFactory sessionFactory = null;
@@ -232,5 +353,102 @@ public class ProductDAO {
 		}
 		return products;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> filter(int categoryId, String productBrand, double productPrice, String property,int sort){
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+		List<Product> list=new ArrayList<>();
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Product.class);
+			
+			criteria.createAlias("category", "c");
+			criteria.add(Restrictions.eq("c.categoryId", categoryId));
+			criteria.add(Restrictions.like("productBrand",productBrand ));
+			criteria.add(Restrictions.le("productPrice",productPrice));
+			criteria.createAlias("productStates", "ps");
+			criteria.add(Restrictions.eq("ps."+property+"", true));
+			if(sort==0){
+				criteria.addOrder(Order.asc("productId"));
+			}else if (sort==1) {
+				criteria.addOrder(Order.asc("productName"));
+			}else if (sort==2) {
+				criteria.addOrder(Order.desc("productName"));
+			}else if (sort==3) {
+				criteria.addOrder(Order.asc("productPrice"));
+			}else if (sort==4) {
+				criteria.addOrder(Order.desc("productPrice"));
+			}
+			list=criteria.list();
+			
 
+			//commit transaction
+			tx.commit();
+		}catch (HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> search(String search){
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+		boolean flag=false;
+		double a = 0;
+		List<Product> list=new ArrayList<>();
+		try {
+			a = Double.parseDouble(search);
+			flag=true;
+		} catch (Exception e) {
+			
+		}
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Product.class);
+			criteria.createAlias("category", "ca");
+			Criterion cri1 = Restrictions.like("productBrand", "%"+search+"%");
+			Criterion cri2 = Restrictions.like("productName", "%"+search+"%");			
+			Criterion cri4 = Restrictions.like("productDescription", "%"+search+"%");
+			Criterion cri5 = Restrictions.like("ca.categoryName", "%"+search+"%");
+			if (flag) {
+				Criterion cri3 = Restrictions.eq("productPrice", a);
+				criteria.add(Restrictions.or(cri1,cri2,cri3,cri4,cri5));
+			} else {
+				criteria.add(Restrictions.or(cri1,cri2,cri4,cri5));
+			}
+			
+			list=criteria.list();
+			
+
+			//commit transaction
+			tx.commit();
+		}catch (HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return list;
+	}
 }

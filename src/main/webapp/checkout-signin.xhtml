@@ -11,7 +11,7 @@
     </ui:define>
     
     <ui:define name="body-content">
-    <h:form>
+   
         <!-- MAIN-CONTENT-SECTION START -->
         <section class="main-content-section">
             <div class="container">
@@ -53,74 +53,91 @@
                         </div>
                         <!-- SHOPING-CART-MENU END -->
                     </div>
+                     <h:form prependId="false">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <!-- CREATE-NEW-ACCOUNT START -->
                         <div class="create-new-account">
-                            <h:form prependId="false" styleClass="new-account-box primari-box" id="create-new-account">
+                            <div class="new-account-box primari-box" id="create-new-account">
                                 <h3 class="box-subheading">Create an account</h3>
                                 <div class="form-content">
                                     <p>Please enter your information to create an account.</p>
                                     <div class="form-group primary-form-group">
                                         <h:outputLabel value="Email address" for="email"  />
-                                        <h:inputText value="" a:name="email" id="email" styleClass="form-control input-feild" required="true" />
+                                        <h:inputText value="#{customerBean.email}" id="email" styleClass="form-control input-feild" required="true" requiredMessage="Email is required!"/>
+                                        <p:message for="email"></p:message>
                                     </div>
                                     <div class="form-group primary-form-group">
                                         <h:outputLabel value="Password" for="password"  />
-                                        <h:inputSecret value="" a:name="password" id="password" styleClass="form-control input-feild" required="true" />
+                                        <h:inputSecret value="#{customerBean.customer.password}" a:match="repassword" id="password"  styleClass="form-control input-feild" required="true" requiredMessage="Password is required!" validatorMessage="Password contain at least 8 chars">
+                                        	<f:validateLength minimum="8"></f:validateLength>
+                                        </h:inputSecret>
+                                        <p:message for="password"></p:message>
                                     </div>
                                     <div class="form-group primary-form-group">
-                                        <h:outputLabel value="Full name" for="name"  />
-                                        <h:inputSecret value="" a:name="name" id="name" styleClass="form-control input-feild" />
+                                        <h:outputLabel value="Address" for="name"  />
+                                        <h:inputText value="#{customerBean.customer.address}" id="name"  styleClass="form-control input-feild" required="true" requiredMessage="Password is required!" validatorMessage="Password contain at least 8 chars">
+                                        	<f:validateLength minimum="8"></f:validateLength>
+                                       	</h:inputText>
+                                        <p:message for="name"></p:message>
                                     </div>
                                     <div class="submit-button">
-                                        <a href="checkout-registration.html" id="SubmitCreate" class="btn main-btn">
+                                        <h:commandLink action="#{customerBean.registerCheckout()}" id="SubmitCreate" class="btn main-btn">
                                             <span>
                                                 <i class="fa fa-user submit-icon"></i>
                                                 Create an account
-                                            </span>                                         
-                                        </a>
+                                            </span>
+                                            <f:ajax execute="@form" render="@form"></f:ajax>                                         
+                                        </h:commandLink>
                                         
                                     </div>
                                 </div>
-                            </h:form>                        
+                            </div>                        
                         </div>
                         <!-- CREATE-NEW-ACCOUNT END -->
                     </div>
+                    </h:form>
+                    <h:form prependId="false">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <!-- REGISTERED-ACCOUNT START -->
                         <div class="primari-box registered-account">
-                            <form class="new-account-box" id="accountLogin" method="post" action="#">
+                            <div class="new-account-box" id="accountLogin">
                                 <h3 class="box-subheading">Already registered?</h3>
                                 <div class="form-content">
                                     <div class="form-group primary-form-group">
                                         <h:outputLabel value="Email address" for="loginemail"  />
-                                        <h:inputText value="" a:name="loginemail" id="loginemail" styleClass="form-control input-feild" required="true" />
+                                        <h:inputText value="#{loginBean.email}" id="loginemail" styleClass="form-control input-feild" required="true" requiredMessage="Email is required"/>
+                                        <p:message for="loginemail"></p:message>
                                     </div>
                                     <div class="form-group primary-form-group">
                                         <h:outputLabel value="Password" for="loginpassword"  />
-                                        <h:inputSecret value="" a:name="loginpassword" id="loginpassword" styleClass="form-control input-feild" required="true" />
+                                        <h:inputSecret value="#{loginBean.password}" id="loginpassword" styleClass="form-control input-feild" required="true" requiredMessage="Password is required"/>
+                                        <p:message for="loginpassword"></p:message>
                                     </div>
+                                    
                                     <div class="forget-password">
                                         <p><a href="#">Forgot your password?</a></p>
                                     </div>
                                     <div class="submit-button">
-                                        <a href="my-account.html" id="signinCreate" class="btn main-btn">
+                                        <h:commandLink action="#{loginBean.userLoginCheckout()}" value="" class="btn main-btn">
                                         <span>
                                             <i class="fa fa-lock submit-icon"></i>
                                              Sign in
                                         </span>
-                                        </a>
+                                        <f:ajax execute="@form" render="@form"></f:ajax>
+                                        </h:commandLink>
+                                        <p:messages for="loginButton" />
                                     </div>
                                 </div>
-                            </form>                         
+                                
+                            </div>                         
                         </div>
                         <!-- REGISTERED-ACCOUNT END -->
-                    </div>              
+                    </div>     
+                    </h:form>         
                 </div>
             </div>
         </section>
         <!-- MAIN-CONTENT-SECTION END -->
-        </h:form>
     </ui:define>
     
 </ui:composition>
