@@ -62,12 +62,34 @@
                                             <p:rating id="productRating" value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>       
                                         </div>
                                         <div class="read-reviews">
-                                           <a href="#datasheet">Read reviews</a> 
+                                           <a id="readreview" href="#datasheet">Read reviews</a> 
                                         </div>
                                         <div class="write-review">
-                                            <a href="#review">Write a review</a>
+                                            <a id="writereview" href="#review">Write a review</a>
                                         </div>
                                     </div>
+                                    <h:outputScript>
+                                            $(function(){
+                                                    $("#readreview").click(function() {
+                                                        $(".datasheet").addClass('active');
+                                                        $("#datasheet").addClass('active');
+                                                        $(".info").removeClass('active');
+                                                        $("#moreinfo").removeClass('active');
+                                                        $(".review").removeClass('active');
+                                                        $("#review").removeClass('active');
+                                                    });
+                                                });
+                                            $(function(){
+                                                    $("#writereview").click(function() {
+                                                        $(".datasheet").removeClass('active');
+                                                        $("#datasheet").removeClass('active');
+                                                        $(".info").removeClass('active');
+                                                        $("#moreinfo").removeClass('active');
+                                                        $(".review").addClass('active');
+                                                        $("#review").addClass('active');
+                                                    });
+                                                });
+                                    </h:outputScript>
                                     <div class="single-product-condition">
                                         <!-- <p>Reference: <span>demo_1</span></p>
                                         <p>Condition: <span>New product</span></p> -->
@@ -193,9 +215,9 @@
                                 <div class="product-more-info-tab">
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs more-info-tab">
-                                        <li class="active"><a href="#moreinfo" data-toggle="tab">more info</a></li>
-                                        <li><a href="#datasheet" data-toggle="tab">data sheet</a></li>
-                                        <li><a href="#review" data-toggle="tab">reviews</a></li>
+                                        <li class="active info"><a href="#moreinfo" data-toggle="tab">more info</a></li>
+                                        <li class="datasheet"><a href="#datasheet" data-toggle="tab">data sheet</a></li>
+                                        <li class="review"><a href="#review" data-toggle="tab">reviews</a></li>
                                     </ul>
                                       <!-- Tab panes -->
                                     <div class="tab-content">
@@ -248,7 +270,7 @@
                                                         				id="content"/>
                                                         <p:message for="content"/><br/>
                                                         <h:commandButton action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}" value="Send" style="float:right;" class="btn btn-default btn-add-review ">
-                                                        	<f:ajax execute="@form" render="j_idt143:0:reviewform j_idt143:0:datasheetform j_idt143:0:productRating"></f:ajax>
+                                                        	<f:ajax execute="@form" render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
                                                         </h:commandButton>
                                                         </h:panelGroup>
                                                  <h:outputText value="You must login to use this feature" rendered="#{loginBean.loggedIn==false}"/>
@@ -275,7 +297,9 @@
                                     <a href="#"><h:graphicImage library="img" name="product/sidebar_product/2.jpg" alt="" /></a>
                                     <div class="r-sidebar-pro-content">
                                         <h5><h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"/></h5>
-                                        <p>#{product.productDescription}</p>
+                                        <div class="price-box">
+                                            <span class="price">$#{productRelate.productPrice}</span>
+                                        </div>
                                     </div>
                                 </li>
                                 </ui:repeat>
