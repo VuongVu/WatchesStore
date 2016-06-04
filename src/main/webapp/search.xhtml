@@ -349,7 +349,7 @@
                                 <!-- PRODUCT-CATEGORY-TITLE START -->
                                 <h1>
                                     <span class="cat-name">#{productBean.listFilter.size()!=0?productBean.listFilter.get(0).category.categoryName:null}</span>
-                                    <span class="count-product">There are #{productBean.listFilter.size()} products.</span>
+                                    <span class="count-product">There are #{productBean.listSearch.size()} products.</span>
                                 </h1>
                                 <!-- PRODUCT-CATEGORY-TITLE END -->
                             </div>
@@ -357,9 +357,9 @@
                                 <div class="product-shooting-bar">
                                     <!-- SHOORT-BY START -->
                                     <div class="shoort-by">
-                                        <label for="productShort">Sort by</label>
+                                        <!-- <label for="productShort">Sort by</label>
                                         <div class="short-select-option">
-                                            <!-- <select name="sortby" id="productShort">
+                                            <select name="sortby" id="productShort">
                                                 <option value=""></option>
                                                 <option value="">Price: Lowest first</option>
                                                 <option value="">Price: Highest first</option>
@@ -368,7 +368,7 @@
                                                 <option value="">In stock</option>
                                                 <option value="">Reference: Lowest first</option>
                                                 <option value="">Reference: Highest first</option>
-                                            </select>    -->             
+                                            </select>                
                                             <h:selectOneMenu value="#{productBean.sort}" onselect="#{productBean.processValueChange()}">
                                             	<f:selectItem itemLabel="Default" itemValue="0" />
                                             	<f:selectItem itemLabel="Product Name: A to Z" itemValue="1" />
@@ -377,27 +377,27 @@
                                             	<f:selectItem itemLabel="Price: Highest first" itemValue="4" />
                                             	<f:ajax execute="@form" render="@form"></f:ajax>
                                             </h:selectOneMenu>                               
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <!-- SHOORT-BY END -->
                                     <!-- SHOW-PAGE START -->
                                     <div class="show-page">
-                                        <label for="perPage">Show</label>
+                                        <!-- <label for="perPage">Show</label>
                                         <div class="s-page-select-option">
                                             <select name="show" id="perPage">
                                                 <option value="">11</option>
                                                 <option value="">12</option>
                                             </select>                                                   
                                         </div>
-                                        <span>per page</span>                                       
+                                        <span>per page</span>       -->                                 
                                     </div>
                                     <!-- SHOW-PAGE END -->
                                     <!-- VIEW-SYSTEAM START -->
                                     <div class="view-systeam">
                                         <label for="perPage">View:</label>
                                         <ul>
-                                            <li class="active"><a href="shop-gird.html"><i class="fa fa-th-large"></i></a><br />Grid</li>
-                                            <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a><br />List</li>
+                                            <li class="active"><a href="#"><i class="fa fa-th-large"></i></a><br />Grid</li>
+                                            <!-- <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a><br />List</li> -->
                                         </ul>
                                     </div>
                                     <!-- VIEW-SYSTEAM END -->
@@ -453,9 +453,17 @@
                                                 <!-- <a href="single-product.html" class="new-mark-box">new</a> -->
                                                 <div class="overlay-content">
                                                     <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
+                                                       <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                        <li>
+	                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+	                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+	                                                        </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+                                                        	</h:commandLink>
+                                                        </li>
                                                         <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
                                                     </ul>
                                                 </div>

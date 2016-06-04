@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/templates/adminBasePage.xhtml">
+        <ui:define name="title">
+            <title>Admin | Product</title>
+        </ui:define>
+        <ui:define name="body-content">
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <h1>
+                        Product Table
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li><a href="#">Tables</a></li>
+                        <li class="active">Product Table</li>
+                    </ol>
+                </div>
+                <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
+                    <div class="content">
+                        <!-- Horizontal Form -->
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">List Product</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <div class="form-horizontal">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <div align="center">
+                                            <h3>
+                                                Please <a
+                                                    href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a>
+                                                to access this page
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                <h:form prependId="false" rendered="#{loginBean.adminloggedIn}" >
+                <!-- Main content -->
+                <div class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">List Product</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <h:dataTable rendered="#{not empty productBean.products}" value="#{productBean.products}" var="p" id="table1" role="grid"
+                                             styleClass="table table-bordered table-striped">
+                                     <h:column>                 
+                                        <f:facet name="header">Id</f:facet>                   
+                                        <h:outputText value="#{p.productId}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{p.productName}" />
+                                     </h:column>
+                                      <h:column>
+                                        <f:facet name="header">Category</f:facet>
+                                        <h:outputText value="#{p.category.categoryName}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Supplier</f:facet>
+                                        <h:outputText value="#{p.supplier.companyName}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Brand</f:facet>
+                                        <h:outputText value="#{p.productBrand}" />
+                                     </h:column>
+                                     <h:column>                 
+                                        <f:facet name="header">Price</f:facet>                   
+                                        <h:outputText value="#{p.productPrice}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Quantity</f:facet>
+                                        <h:outputText value="#{p.productQuantity}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Discount</f:facet>
+                                        <h:outputText value="#{p.productDiscount}" />
+                                     </h:column>
+                                     <h:column>                 
+                                        <f:facet name="header">Ranking</f:facet>                   
+                                        <h:outputText value="#{p.productRanking}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Image</f:facet>
+                                        <h:graphicImage value="/DisplayImage?productId=#{p.productId}" width="70" height="70" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Description</f:facet>
+                                        <h:outputText value="#{p.productDescription}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Options</f:facet>
+                                        <h:commandButton styleClass="btn btn-block btn-info btn-flat"
+                                                         style="width:95px" 
+                                                         value="Edit" 
+                                                         action="#{productBean.editAction(p)}" >
+                                        </h:commandButton>
+                                        <h:commandButton styleClass="btn btn-block btn-danger btn-flat" 
+                                                         style="width:95px" 
+                                                         value="Delete" 
+                                                         type="submit"
+                                                         onclick="return confirm('Are you sure to delete it?')" 
+                                                         action="#{productBean.deleteProduct(p)}" >
+                                            <f:ajax render="@all"></f:ajax>
+                                        </h:commandButton>
+                                     </h:column>
+                                </h:dataTable>
+                           
+                                <h:panelGroup rendered="#{empty productBean.products}" styleClass="table table-bordered table-striped">
+                                        <p>Products is empty! Please add new product.</p>
+                                </h:panelGroup>
+                                
+                                <h:commandButton styleClass="btn btn-block btn-success btn-flat pull-left" 
+                                                 style="width:100px"
+                                                 action="/pages/product/create.jsf?faces-redirect=true" 
+                                                 value="Create New" /> 
+                            </div>
+                            <!-- /.box-body --> 
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row --> 
+                </div>
+                <!-- /.content -->
+                </h:form>
+            </div>
+            <!-- /.content-wrapper -->
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

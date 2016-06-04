@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets" >
+    
+    <div class="main-header">
+        <!-- Logo -->
+        <a href="#{request.contextPath}/admin.jsf" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>A</b>LW</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Admin</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <div class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <h:graphicImage value="/resources/admin/dist/img/avatar5.png" styleClass="user-image" alt="User Image">
+                    </h:graphicImage>
+                  <span class="hidden-xs">#{loginBean.adminUsername}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- alt="User Image" -->
+                  <li class="user-header">
+                      <h:graphicImage value="/resources/admin/dist/img/avatar5.png" styleClass="img-circle" alt="User Image">
+                      </h:graphicImage>
+                    <p>
+                        #{loginBean.adminUsername} - Admin
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <!-- <a href="#" class="btn btn-default btn-flat">Profile</a> -->
+                    </div>
+                    <div class="pull-right">
+                        <h:commandButton value="Sign out" styleClass="btn btn-default btn-flat" action="#{loginBean.adminLogout()}" />
+                    </div>
+                  </li>
+                </ul>
+              </li> 
+            </ul>
+          </div>
+          </h:form>
+        </div>
+      </div>
+      <!-- Left side column. contains the logo and sidebar -->
+      <div class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <div class="sidebar">
+          <!-- Sidebar user panel -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="active treeview">
+              <a href="#{request.contextPath}/admin.jsf">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-table"></i> <span>Tables</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="http://localhost:8080/WatchesStore/pages/admin/admin.jsf"><i class="fa fa-circle-o"></i>Admin</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/customer/customer.jsf"><i class="fa fa-circle-o"></i>Customer</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/category/category.jsf"><i class="fa fa-circle-o"></i>Category</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/product/product.jsf"><i class="fa fa-circle-o"></i>Product</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/supplier/supplier.jsf"><i class="fa fa-circle-o"></i>Supplier</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/order/order.jsf"><i class="fa fa-circle-o"></i>Order</a></li>
+                <li><a href="http://localhost:8080/WatchesStore/pages/orderdetail/order-detail.jsf"><i class="fa fa-circle-o"></i>Order Detail</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /.sidebar -->
+      </div>
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+</ui:composition>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+    <ui:composition template="/templates/adminBasePage.xhtml">
+        <ui:define name="title">
+            <title>Admin | Dashboard</title>
+        </ui:define>
+        <ui:define name="body-content">
+              <!-- Content Wrapper. Contains page content -->
+              <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                  <h1>
+                    Dashboard
+                    <small>Control panel</small>
+                  </h1>
+                  <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Dashboard</li>
+                  </ol>
+                </div>
+                <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
+                    <div align="center">    
+                        <h3>Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page</h3>
+                    </div>
+                </h:form>
+                <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
+                    <div align="center">    
+                        <h3>Welcome to Admin Page</h3>
+                    </div>
+                </h:form>
+              </div><!-- /.content-wrapper -->
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -176,6 +176,8 @@ public class LoginBean implements Serializable{
 	public String userLogout() {
 		String currentUrl = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 		loggedIn = false;
+		email = null;
+		password = null;
 		return currentUrl + "faces-redirect=true";
 	}
 	/**

@@ -35,10 +35,10 @@
                         <div class="shoping-cart-menu">
                             <ul class="step">
                                 <li class="step-todo first step-done">
-                                    <span><a href="cart.html">01. Summary</a></span>
+                                    <span><a href="cart.xhtml">01. Summary</a></span>
                                 </li>
                                 <li class="step-todo second step-done">
-                                    <span><a href="checkout-signin.html">02. Sign in</a></span>
+                                    <span><a href="checkout-signin.xhtml">02. Sign in</a></span>
                                 </li>
                                 <li class="step-current third">
                                     <span>03. Address</span>
@@ -56,27 +56,31 @@
                     <!-- ADDRESS AREA START --> 
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
                         <div class="form-group primary-form-group p-info-group deli-address-group">
-                            <label>Choose a delivery address:</label>
+                            <!-- <label>Choose a delivery address:</label>
                             <div class="birth-day delivery-address">
                                 <select id="deli-address" name="deliveryaddress">
                                     <option value="">Your Office Address</option>
                                     <option value="">Your Office Address</option>
                                     <option value="">Other Address</option>
                                 </select>                                               
-                            </div>
+                            </div> -->
                         </div>  
                         <div class="form-group primary-form-group p-info-group chose-address">
-                            <label class="cheker">
+                            <!-- <label class="cheker">
                                 <input type="checkbox" name="checkbox"></input>
                                 <span></span>
                             </label>
-                            <a href="#">Use the delivery address as the billing address.</a>
+                            <a href="#">Use the delivery address as the billing address.</a> -->
                         </div>                          
                     </div>
                 </div>
+               <h:outputText value="You need loggin to view this page" rendered="#{loginBean.loggedIn==false}"/>
+               <h:form prependId="false" rendered="#{loginBean.loggedIn==true}">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="first_item primari-box">
+                            <!-- DELIVERY ADDRESS START -->
+                           <h:panelGroup rendered="#{customerBean.findCustomerByEmail(loginBean.email).address!=null}">
                             <!-- DELIVERY ADDRESS START -->
                             <ul class="address">
                                 <li>
@@ -87,19 +91,18 @@
                                 <ui:repeat var="customer" value="#{customerBean.findCustomerByEmail(loginBean.email)}">
 	                                <li><span class="address_name">#{customer.fullName}</span></li>
 	                                <li><span class="address_company">#{customer.address}</span></li>
-	                                <!-- <li><span class="address_address1">Bonossri</span></li>
-	                                <li><span class="address_address2">D-Block</span></li> -->
-	                                <!-- <li><span class="">Rampura</span></li>
-	                                <li><span class="">Dhaka</span></li> -->
 	                                <li><span class="address_phone">#{customer.phone}</span></li>
 	                                
-	                                <li class="update-button">                                
+	                                <!-- <li class="update-button">                                
 	                                    <a href="my-cart-step-2-info.html">Update<i class="fa fa-chevron-right"></i></a>
-	                                </li>  
+	                                </li>   -->
                                 </ui:repeat>                             
                             </ul>   
                             <!-- DELIVERY ADDRESS END -->
-                        </div>                      
+                        </h:panelGroup> 
+                        <h:outputText value="You have no address yet, please add new" rendered="#{customerBean.findCustomerByEmail(loginBean.email).address==null}"/>      
+                            <!-- DELIVERY ADDRESS END -->
+                        </div>                                              
                     </div>
                     <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="second_item primari-box">
@@ -129,7 +132,7 @@
                         <div class="add-new-address">
                             <a class="new-address-link" role="button" data-toggle="collapse" href="#addNewAddress" aria-expanded="false" aria-controls="addNewAddress">Add a new address<i class="fa fa-chevron-right"></i></a>
                             <div class="collapse" id="addNewAddress">
-                                <form class="form-horizontal well">
+                                <div class="form-horizontal well">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Customer name</label>
                                         <div class="col-sm-4">
@@ -200,21 +203,24 @@
                                             <button type="submit" class="btn btn-primary">Accept</button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                         <!-- ADDRESS AREA START --> 
                         <!-- RETURNE-CONTINUE-SHOP START -->
                         <div class="returne-continue-shop ship-address">
                             <a href="index.xhtml" class="continueshoping"><i class="fa fa-chevron-left"></i>Continue shopping</a>
-                            <a href="checkout-shipping.xhtml" class="procedtocheckout">Proceed to checkout<i class="fa fa-chevron-right"></i></a>
+                            <h:commandLink action="checkout-shipping.xhtml" class="procedtocheckout" rendered="#{customerBean.findCustomerByEmail(loginBean.email).address!=null}">Proceed to checkout<i class="fa fa-chevron-right"></i></h:commandLink>
+                            <h:panelGroup rendered="#{customerBean.findCustomerByEmail(loginBean.email).address==null}">
+                            	<a class="procedtocheckout" role="button" data-toggle="collapse" href="#addNewAddress" aria-expanded="false" aria-controls="addNewAddress">Proceed to checkout<i class="fa fa-chevron-right"></i></a>
+                            </h:panelGroup>
                         </div>  
                         <!-- RETURNE-CONTINUE-SHOP END -->      
                     </div>                  
                 </div>
+                 </h:form>
             </div>
         </section>
         <!-- MAIN-CONTENT-SECTION END -->
     </ui:define>
- 
 </ui:composition>

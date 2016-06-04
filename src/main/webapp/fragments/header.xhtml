@@ -187,7 +187,7 @@
                         <div class="categorys-product-search">
                             <h:form prependId="false" styleClass="search-form-cat">
                                 <div class="search-product form-group">
-                                	<h:inputText value="#{productBean.searchString}" styleClass="form-control search-form" p:placeholder="Enter your search key ... " />
+                                	<h:inputText value="#{productBean.searchString}" styleClass="form-control search-form" a:placeholder="Enter your search key ... " style="width: 476px;"/>
                                     <h:commandLink action="#{productBean.search()}" styleClass="search-button">
                                     	 <i class="fa fa-search" style="margin-left: 20px;"></i>
                                     </h:commandLink>                            
@@ -220,16 +220,21 @@
                                         <!-- <span class="cross-icon"><i class="fa fa-times-circle"></i></span> -->
                                         <span class="cross-icon">
 	                                        <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}"><i class="fa fa-times-circle"></i>
-	                                        	<f:ajax execute="cartForm" render="cartForm j_idt141:0:quantityInStock"></f:ajax>
+	                                        	<f:ajax execute="cartForm" render="cartForm j_idt141:0:quantityStock"></f:ajax>
 	                                        </h:commandLink>
                                         </span>
                                         <div class="shipping-item-image">
-                                            <a href="#"><h:graphicImage library="img" name="shopping-image.jpg" alt="shopping image" /></a>
+                                            <a href="#">
+                                            	<h:graphicImage value="/DisplayImage?productId=#{cart.product.productId}"
+                                                    alt="product image"
+                                                    style="width:80px;height:80px" >
+                                    			</h:graphicImage>
+                                            </a>
                                         </div>
                                         <div class="shipping-item-text">
                                             <span class="pro-quan-x">x</span> <span>#{cart.quantity} <a href="#" class="pro-cat"></a></span>
                                             <span class="pro-quality"><a href="#">#{cart.product.productBrand}</a></span>
-                                            <p>$#{cart.product.productPrice}</p>
+                                            <p>$#{cart.product.productPrice-(cart.product.productPrice*(cart.product.productDiscount/100))}</p>
                                         </div>
                                     </div>
                                     </ui:repeat>

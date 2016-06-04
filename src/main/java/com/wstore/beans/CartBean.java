@@ -144,10 +144,9 @@ public class CartBean implements Serializable {
 		}
 	}
 
-	public void redirect(Product product,int quantity) throws IOException{
+	public String buyNow(Product product,int quantity) throws IOException{
 		addToCart(product,quantity);
-		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-		context.redirect("checkout.jsf");
+		return "cart.jsf?faces-redirect=true";
 	}
 
 	public void redirectCheckoutSuccess(ActionEvent e) throws IOException{

@@ -396,7 +396,7 @@
                                     <div class="view-systeam">
                                         <label for="perPage">View:</label>
                                         <ul>
-                                            <li class="active"><a href="shop-gird.html"><i class="fa fa-th-large"></i></a><br />Grid</li>
+                                            <li class="active"><a href="#"><i class="fa fa-th-large"></i></a><br />Grid</li>
                                             <!-- <li><a href="shop-list.html"><i class="fa fa-th-list"></i></a><br />List</li> -->
                                         </ul>
                                     </div>
@@ -454,8 +454,16 @@
                                                 <div class="overlay-content">
                                                     <ul>
                                                         <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
+                                                        <li>
+	                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+	                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+	                                                        </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+                                                        	</h:commandLink>
+                                                        </li>
                                                         <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
                                                     </ul>
                                                 </div>

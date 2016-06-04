@@ -1,55 +1,63 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-                xmlns:p="http://primefaces.org/ui"
-                template="/templates/basePage.xhtml">
-                
-    <ui:define name="title">
-       <title>Product Detail</title>
-    </ui:define>
-    
-    <ui:define name="body-content">
-    
-     <ui:repeat var="product" value="#{productBean.product}">
-        <!-- MAIN-CONTENT-SECTION START -->
-        <section class="main-content-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <!-- BSTORE-BREADCRUMB START -->
-                        <div class="bstore-breadcrumb">
-                            <a href="index.html">HOMe<span><i class="fa fa-caret-right"></i> </span> </a>
-                            <span> <i class="fa fa-caret-right"> </i> </span>
-                            <a href="shop-gird.html"> #{product.category.categoryName} </a>
-                            <span> #{product.productName} </span>
-                        </div>
-                        <!-- BSTORE-BREADCRUMB END -->
-                    </div>
-                </div>              
-                <div class="row">
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                        <!-- SINGLE-PRODUCT-DESCRIPTION START -->
-                        <h:form prependId="false" id="productDescription" >
-                        <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">
-                                <div class="single-product-view">
-                                      <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="thumbnail_1">
-                                            <div class="single-product-image">
-                                                <h:graphicImage value="/DisplayImage?productId=#{product.productId}" alt="single-product-image" style="width:330px; height:330px" />
-                                                <a data-toggle="modal" data-target="#myModal"><span class="btn large-btn">View larger <i class="fa fa-search-plus"></i></span></a>
-                                            </div>  
-                                        </div>
-                                    </div>                                      
-                                </div> 
-                            </div>
-                            <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
-                                <div class="single-product-descirption">
-                                    <h2>#{product.productName}</h2>
-                                    <!-- <div class="single-product-social-share">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/templates/basePage.xhtml">
+
+	<ui:define name="title">
+		<title>Product Detail</title>
+	</ui:define>
+
+	<ui:define name="body-content">
+
+		<ui:repeat var="product" value="#{productBean.product}">
+			<!-- MAIN-CONTENT-SECTION START -->
+			<section class="main-content-section">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<!-- BSTORE-BREADCRUMB START -->
+							<div class="bstore-breadcrumb">
+								<h:form prependId="false">
+									<a href="index.xhtml">HOMe<span><i
+											class="fa fa-caret-right"></i> </span>
+									</a> 
+									<span> <i class="fa fa-caret-right"> </i></span> 
+									<h:commandLink action="#{productBean.getCategoryId(product.category.categoryId)}" value="#{product.category.categoryName}"></h:commandLink>
+									<span> #{product.productName} </span>
+								</h:form>
+							</div>
+							<!-- BSTORE-BREADCRUMB END -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+							<!-- SINGLE-PRODUCT-DESCRIPTION START -->
+							<h:form prependId="false" id="productDescription">
+								<div class="row">
+									<div class="col-lg-5 col-md-5 col-sm-4 col-xs-12">
+										<div class="single-product-view">
+											<!-- Tab panes -->
+											<div class="tab-content">
+												<div class="tab-pane active" id="thumbnail_1">
+													<div class="single-product-image">
+														<h:graphicImage
+															value="/DisplayImage?productId=#{product.productId}"
+															alt="single-product-image"
+															style="width:330px; height:330px" />
+														<a data-toggle="modal" data-target="#myModal"><span
+															class="btn large-btn">View larger <i
+																class="fa fa-search-plus"></i></span></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
+										<div class="single-product-descirption">
+											<h2>#{product.productName}</h2>
+											<!-- <div class="single-product-social-share">
                                         <ul>
                                             <li><a href="#" class="twi-link"><i class="fa fa-twitter"></i>Tweet</a></li>
                                             <li><a href="#" class="fb-link"><i class="fa fa-facebook"></i>Share</a></li>
@@ -57,270 +65,330 @@
                                             <li><a href="#" class="pin-link"><i class="fa fa-pinterest"></i>Pinterest</a></li>
                                         </ul>
                                     </div> -->
-                                    <div class="single-product-review-box">
-                                        <div class="rating-box">
-                                            <p:rating id="productRating" value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>       
-                                        </div>
-                                        <div class="read-reviews">
-                                           <a id="readreview" href="#datasheet">Read reviews</a> 
-                                        </div>
-                                        <div class="write-review">
-                                            <a id="writereview" href="#review">Write a review</a>
-                                        </div>
-                                    </div>
-                                    <h:outputScript>
-                                            $(function(){
-                                                    $("#readreview").click(function() {
-                                                        $(".datasheet").addClass('active');
-                                                        $("#datasheet").addClass('active');
-                                                        $(".info").removeClass('active');
-                                                        $("#moreinfo").removeClass('active');
-                                                        $(".review").removeClass('active');
-                                                        $("#review").removeClass('active');
-                                                    });
-                                                });
-                                            $(function(){
-                                                    $("#writereview").click(function() {
-                                                        $(".datasheet").removeClass('active');
-                                                        $("#datasheet").removeClass('active');
-                                                        $(".info").removeClass('active');
-                                                        $("#moreinfo").removeClass('active');
-                                                        $(".review").addClass('active');
-                                                        $("#review").addClass('active');
-                                                    });
-                                                });
-                                    </h:outputScript>
-                                    <div class="single-product-condition">
-                                        <!-- <p>Reference: <span>demo_1</span></p>
+											<div class="single-product-review-box">
+												<div class="rating-box">
+													<p:rating id="productRating"
+														value="#{commentBean.getRating(product)}" cancel="false"
+														readonly="true"></p:rating>
+												</div>
+												<div class="read-reviews">
+													<a href="#datasheet" id="readreview">Read reviews</a>
+												</div>
+												<div class="write-review">
+													<a href="#review" id="writereview">Write a review</a>
+												</div>
+											</div>
+											<div class="single-product-condition">
+												<!-- <p>Reference: <span>demo_1</span></p>
                                         <p>Condition: <span>New product</span></p> -->
-                                    </div>
-                                    <div class="single-product-price">
-                                        <h2>$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</h2>
-                                        <h:outputText styleClass="old-price" value="$#{product.productPrice}" rendered="#{product.productDiscount!=0}"/>
-                                    </div>
-                                    <div class="single-product-desc">
-                                        <!-- <p>#{product.productDescription}</p> -->
-                                        <div class="product-in-stock">
-                                            <h:outputLabel id="quantityInStock"  value="#{product.productQuantity} Items "><span>In stock</span></h:outputLabel>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="single-product-quantity">
-                                        <p class="small-title">Quantity</p> 
-                                        <div class="cart-quantity">
-                                            <div class="single-qty-btn">
-                                                <h:inputText styleClass="cart-plus-minus sing-pro-qty" id="qty" binding="#{input}" value="1" required="true" requiredMessage="Quantity is required">
-                                                	<f:validateLongRange minimum="1"></f:validateLongRange>
-                                                </h:inputText>
-                                                <div class="dec qtybutton" onclick="minus()">-</div>
-                                                <div class="inc qtybutton" onclick="plus()">+</div> 
-                                            </div>
-                                        </div>                                        
-                                    </div>
-                                    <p:messages for="cartadd" id="mess"/>
-                                    <p:messages id="qtymessage" for="qty"/>
-                                    <h:outputScript>                                   	
-                                        function plus(){        
-                                            var a = document.getElementById("j_idt141:0:qty").value;
-                                            a = parseInt(a,10)+1;
-                                            document.getElementById("j_idt141:0:qty").value = a;                                                
-                                        }
-                                        function minus(){
-                                            var a = document.getElementById("j_idt141:0:qty").value;
-                                            if(parseInt(a,10) > 1){
-                                                a = parseInt(a,10)-1;
-                                            }
-                                            else{
-                                                a = 1;
-                                            }
-                                            document.getElementById("j_idt141:0:qty").value = a;
-                                            
-                                        }
-                                    </h:outputScript>                   
-                                    <div class="single-product-add-cart">
-                                        <!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
-                                        <h:commandButton action="#{cartBean.addToCart(product,input.value)}" value="Add to cart" styleClass="add-cart-text">
-                                        	<f:ajax execute="@form" render="cartForm quantityInStock qtymessage mess"></f:ajax>
-                                        </h:commandButton>
-                                        <!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+											</div>
+											<div class="single-product-price">
+												<h2>$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</h2>
+												<h:outputText styleClass="old-price"
+													value="$#{product.productPrice}"
+													rendered="#{product.productDiscount!=0}" />
+											</div>
+											<div class="single-product-desc">
+												<!-- <p>#{product.productDescription}</p> -->
+												<h:panelGroup styleClass="product-in-stock" id="quantityStock">
+													<h:outputLabel rendered="#{product.productQuantity!=0}"
+														value="#{product.productQuantity} Items ">
+														<span>In stock</span>
+													</h:outputLabel>
+													<h:outputLabel rendered="#{product.productQuantity==0}">														
+														<span>Out stock</span>
+													</h:outputLabel>
+												</h:panelGroup>
+											</div>
+
+											<div class="single-product-quantity">
+												<p class="small-title">Quantity</p>
+												<div class="cart-quantity">
+													<div class="single-qty-btn">
+														<h:inputText styleClass="cart-plus-minus sing-pro-qty" id="qty" required="true"
+															requiredMessage="Quantity is required" binding="#{quantity}">
+															<f:validateLongRange minimum="1"></f:validateLongRange>
+														</h:inputText>
+														<div class="dec qtybutton" onclick="minus()">-</div>
+														<div class="inc qtybutton" onclick="plus()">+</div>
+													</div>
+												</div>
+											</div>
+											<p:messages for="cartadd" id="mess" />
+											<p:messages id="qtymessage" for="qty" />
+											<h:outputScript>													                                 	
+			                                        function plus(){        
+			                                            var a = document.getElementById("j_idt141:0:qty").value;
+			                                            a = parseInt(a,10)+1;
+			                                            document.getElementById("j_idt141:0:qty").value = a;                                                
+			                                        }
+			                                        function minus(){
+			                                            var a = document.getElementById("j_idt141:0:qty").value;
+			                                            if(parseInt(a,10) > 1){
+			                                                a = parseInt(a,10)-1;
+			                                            }
+			                                            else{
+			                                                a = 1;
+			                                            }
+			                                            document.getElementById("j_idt141:0:qty").value = a;			                                            
+			                                        }
+                                    		</h:outputScript>
+											<div class="single-product-add-cart">
+												<!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
+												<h:commandButton
+													action="#{cartBean.addToCart(product,quantity.value)}"
+													value="Add to cart" styleClass="add-cart-text">
+													<f:ajax execute="@form"
+														render="cartForm j_idt141:0:quantityStock qtymessage mess"></f:ajax>
+												</h:commandButton>
+												<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                             <input type="hidden" name="cmd" value="_s-xclick"/>
                                             <input type="hidden" name="hosted_button_id" value="6R5PK87ZT85HS"/>
                                             <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
                                             <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
-                                        </form> --> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- SINGLE-PRODUCT-DESCRIPTION END -->
-                        <!-- SINGLE-PRODUCT INFO TAB START -->
-                        
-                        </h:form>
-                        <!-- SINGLE-PRODUCT INFO TAB END -->
-                        <!-- RELATED-PRODUCTS-AREA START -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="left-title-area">
-                                    <h2 class="left-title">related products</h2>
-                                </div>  
-                            </div>
-                            <div class="related-product-area featured-products-area">
-                                <div class="col-sm-12">
-                                <h:form prependId="false" id="productForm">
-                                    <div class=" row">
-                                        <!-- RELATED-CAROUSEL START -->
-                                        <div class="related-product">
-                                            <!-- SINGLE-PRODUCT-ITEM START -->
-                                            
-                                            <ui:repeat var="productRelate" value="#{productBean.productByBrand(product)}">
-                                            <div class="item">
-                                                <!-- <div class="single-product-item"> -->
-                                                    <div class="product-image">
-                                                        <h:commandLink action="#{productBean.getProductDetail(productRelate)}">
-                                                                        <h:graphicImage value="/DisplayImage?productId=#{productRelate.productId}" 
-                                                                                        style="weight:190px;height:190px"
-                                                                                        alt="product-image" />
-                                                        </h:commandLink>
-                                                    </div>
-                                                    <div class="product-info">
-                                                        <div class="customar-comments-box">
-                                                            <div class="rating-box">
-                                                                <p:rating value="#{commentBean.getRating(productRelate)}" readonly="true" cancel="false"></p:rating>
-                                                            </div>
-                                                            <div class="review-box">
-                                                                <!-- <span>1 Review(s)</span> -->
-                                                            </div>
-                                                        </div>
-                                                        <h:commandLink action="#{productBean.getProductDetail(productRelate)}" value="#{productRelate.productName}"></h:commandLink>
-                                                        <div class="price-box">
-                                                            <span class="price">$#{productRelate.productPrice}</span>
-                                                        </div>
-                                                    <!-- </div> -->
-                                                </div>                          
-                                            </div>
-                                            </ui:repeat>                        
-                                        </div>
-                                        <!-- RELATED-CAROUSEL END -->
-                                    </div>
-                                    </h:form>
-                                </div>
-                            </div>  
-                        </div>
-                        <br/>
-                        <br/>
-                        <!-- RELATED-PRODUCTS-AREA END -->
-                        
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="product-more-info-tab">
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs more-info-tab">
-                                        <li class="active info"><a href="#moreinfo" data-toggle="tab">more info</a></li>
-                                        <li class="datasheet"><a href="#datasheet" data-toggle="tab">data sheet</a></li>
-                                        <li class="review"><a href="#review" data-toggle="tab">reviews</a></li>
-                                    </ul>
-                                      <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="moreinfo">
-                                            <div class="tab-description">
-                                                <p>#{product.productDescription}</p>
-                                            </div>
-                                        </div>                                    
-                                        <div class="tab-pane" id="datasheet">
-                                         <h:form prependId="false" id="datasheetform">
-                                            <div class="deta-sheet">
-                                                <h:panelGroup rendered="#{commentBean.findComment(product.productId).size()!=0}">
-			                                       <ui:repeat var="comment" value="#{commentBean.findComment(product.productId)}">
-			                                          <div class="item" style="border-bottom: solid 1px aliceblue;">
-				                                          	<h3 class="text-primary"> #{comment.customer.fullName} </h3>
-				                                          	<b><h:outputLabel value="#{comment.title}" /></b>
-				                                           	<p:rating value="#{comment.rating}" readonly="true" cancel="false"></p:rating><br/>
-				                                           	<span style="font-size: 15px">#{comment.content}</span>
-				                                           	<br />
-				                                           	<br />
-			                                           </div>
-			                                        </ui:repeat>
-			                                      </h:panelGroup>
-			                                      <h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}"/>
-                                            </div>
-                                            </h:form>
-                                        </div>
-                                        <div class="tab-pane" id="review">
-                                         <h:form prependId="false" id="reviewform">
-                                            <div class="row tab-review-row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-5">
-                                                
-                                                    <!-- <div class="write-your-review"> -->
-                                                   <h:panelGroup rendered="#{loginBean.loggedIn==true}">
-                                                        <table>
-                                                        	<tr>
-                                                        	<td><span>Your rating:</span></td>
-                                                        	<td><p:rating stars="5" value="#{commentBean.comment.rating}" style="padding-left: 30px;"></p:rating></td>
-                                                        	</tr>
-                                                        </table>
-                                                        <p>Title of review</p>
-                                                        <h:inputText value="#{commentBean.comment.title}" 
-                                                        			class="form-control input-md" 
-                                                        			id="title"/>
-                                                        <p:message for="title"/>
-                                                        <p>Content</p>                                                       
-                                                        <h:inputTextarea value="#{commentBean.comment.content}" 
-                                                        				rows="5" 
-                                                        				class="form-control input-md"
-                                                        				id="content"/>
-                                                        <p:message for="content"/><br/>
-                                                        <h:commandButton action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}" value="Send" style="float:right;" class="btn btn-default btn-add-review ">
-                                                        	<f:ajax execute="@form" render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
-                                                        </h:commandButton>
-                                                        </h:panelGroup>
-                                                 <h:outputText value="You must login to use this feature" rendered="#{loginBean.loggedIn==false}"/>
-                                                    <!-- </div> -->
-                                                </div>
-                                               <!--  <a href="#" class="write-review-btn">Write your review!</a> -->
-                                            </div>
-                                            </h:form>
-                                        </div>
-                                    </div>                                  
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- RIGHT SIDE BAR START -->
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <!-- SINGLE SIDE BAR START -->
-                        <h:form prependId="false">
-                        <div class="single-product-right-sidebar">
-                            <h2 class="left-title">Viewed products</h2>
-                            <ul>
-                            	<ui:repeat var="product" value="#{productBean.productByCategory(product)}">
-                                <li>
-                                    <a href="#"><h:graphicImage library="img" name="product/sidebar_product/2.jpg" alt="" /></a>
-                                    <div class="r-sidebar-pro-content">
-                                        <h5><h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"/></h5>
-                                        <div class="price-box">
-                                            <span class="price">$#{productRelate.productPrice}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                </ui:repeat>
+                                        </form> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- SINGLE-PRODUCT-DESCRIPTION END -->
+								<!-- SINGLE-PRODUCT INFO TAB START -->
 
-                            </ul>
-                        </div>  
-                        </h:form>
-                       
-                        <!-- SINGLE SIDE BAR START -->                      
-                        <div class="single-product-right-sidebar">
-                            <div class="slider-right zoom-img">
-                                <a href="#"><h:graphicImage styleClass="img-responsive" library="img" name="product/cms11.jpg" alt="sidebar left" /></a>
-                            </div>                          
-                        </div>
-                    </div>
-                    <!-- SINGLE SIDE BAR END -->                
-                </div>
-            </div>
-        </section>
-        <!-- MAIN-CONTENT-SECTION END -->  
-        </ui:repeat>  
-    </ui:define>
-    
+							</h:form>
+							<!-- SINGLE-PRODUCT INFO TAB END -->
+							<!-- RELATED-PRODUCTS-AREA START -->
+							<br/>
+							<br/>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="left-title-area">
+										<h2 class="left-title">related products</h2>
+									</div>
+								</div>
+								<div class="related-product-area featured-products-area">
+									<div class="col-sm-12">
+										<h:form prependId="false" id="productForm">
+											<div class=" row">
+												<!-- RELATED-CAROUSEL START -->
+												<div class="related-product">
+													<!-- SINGLE-PRODUCT-ITEM START -->
+
+													<ui:repeat var="productRelate" value="#{productBean.productByBrand(product)}">
+														<div class="single-product-item">
+															<!-- <div class="single-product-item"> -->
+															<div class="product-image">
+																<h:commandLink
+																	action="#{productBean.getProductDetail(productRelate)}">
+																	<h:graphicImage
+																		value="/DisplayImage?productId=#{productRelate.productId}"
+																		style="weight:190px;height:190px" alt="product-image" />
+																</h:commandLink>
+																		<div class="overlay-content">
+                                                                        <ul>
+                                                                            <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                                            <li>
+						                                                        <h:commandLink action="#{cartBean.addToCart(productRelate,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+						                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
+					                                                        <li>
+					                                                        	<h:commandLink action="#{cartBean.buyNow(productRelate,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+					                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
+					                                                        <!-- <li><a data-toggle="modal" data-target="#detailModal" title="Quick view"><i class="fa fa-heart-o"></i></a></li> -->
+					                                                        
+                                                                        </ul>
+                                                                    </div>
+															</div>
+															<div class="product-info">
+																<div class="customar-comments-box">
+																	<div class="rating-box">
+																		<p:rating
+																			value="#{commentBean.getRating(productRelate)}"
+																			readonly="true" cancel="false"></p:rating>
+																	</div>
+																	<div class="review-box">
+																		<!-- <span>1 Review(s)</span> -->
+																	</div>
+																</div>
+																<h:commandLink
+																	action="#{productBean.getProductDetail(productRelate)}"
+																	value="#{productRelate.productName}"></h:commandLink>
+																<div class="price-box">
+																	<span class="price">$#{productRelate.productPrice}</span>
+																</div>
+																<!-- </div> -->
+															</div>
+														</div>
+													</ui:repeat>
+												</div>
+												<!-- RELATED-CAROUSEL END -->
+											</div>
+										</h:form>
+									</div>
+								</div>
+							</div>
+							<br /> <br />
+							<!-- RELATED-PRODUCTS-AREA END -->
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="product-more-info-tab">
+										<!-- Nav tabs -->
+										<ul class="nav nav-tabs more-info-tab">
+											<li class="active"><a href="#moreinfo" data-toggle="tab">more
+													info</a></li>
+											<li><a href="#datasheet" data-toggle="tab">data
+													sheet</a></li>
+											<li><a href="#review" data-toggle="tab">reviews</a></li>
+										</ul>
+											
+										<!-- Tab panes -->
+										<div class="tab-content">
+											<div class="tab-pane active" id="moreinfo">
+												<div class="tab-description">
+													<p>#{product.productDescription}</p>
+												</div>
+											</div>
+											<div class="tab-pane" id="datasheet">
+												<h:form prependId="false" id="datasheetform">
+													<div class="deta-sheet">
+														<h:panelGroup rendered="#{commentBean.findComment(product.productId).size()!=0}">
+															<p:dataTable var="comment" value="#{commentBean.findComment(product.productId)}" rows="5"
+												                         paginator="true" styleClass="table"
+												                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+																<p:column>
+																	<div class="item"
+																	style="border-bottom: solid 1px aliceblue;">
+																	<h3 class="text-primary">
+																		#{comment.customer.fullName}</h3>
+																	<b><h:outputLabel value="#{comment.title}" /></b>
+																	<p:rating value="#{comment.rating}" readonly="true"
+																		cancel="false"></p:rating>
+																	<br /> <span style="font-size: 15px">#{comment.content}</span>
+																	<br /> <br />
+																</div>
+																</p:column>																
+															</p:dataTable>
+														</h:panelGroup>
+														<!-- <h:panelGroup
+															rendered="#{commentBean.findComment(product.productId).size()!=0}">
+															<ui:repeat var="comment"
+																value="#{commentBean.findComment(product.productId)}">
+																<div class="item"
+																	style="border-bottom: solid 1px aliceblue;">
+																	<h3 class="text-primary">
+																		#{comment.customer.fullName}</h3>
+																	<b><h:outputLabel value="#{comment.title}" /></b>
+																	<p:rating value="#{comment.rating}" readonly="true"
+																		cancel="false"></p:rating>
+																	<br /> <span style="font-size: 15px">#{comment.content}</span>
+																	<br /> <br />
+																</div>
+															</ui:repeat>
+														</h:panelGroup> -->
+														<h:outputText value="There are no reviews"
+															rendered="#{commentBean.findComment(product.productId).size()==0}" />
+													</div>
+												</h:form>
+											</div>
+											<div class="tab-pane" id="review">
+												<h:form prependId="false" id="reviewform">
+													<div class="row tab-review-row">
+														<div
+															class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-5">
+
+															<!-- <div class="write-your-review"> -->
+															<h:panelGroup rendered="#{loginBean.loggedIn==true}">
+																<table>
+																	<tr>
+																		<td><span>Your rating:</span></td>
+																		<td><p:rating stars="5"
+																				value="#{commentBean.comment.rating}"
+																				style="padding-left: 30px;"></p:rating></td>
+																	</tr>
+																</table>
+																<p>Title of review</p>
+																<h:inputText value="#{commentBean.comment.title}"
+																	class="form-control input-md" id="title" />
+																<p:message for="title" />
+																<p>Content</p>
+																<h:inputTextarea value="#{commentBean.comment.content}"
+																	rows="5" class="form-control input-md" id="content" />
+																<p:message for="content" />
+																<br />
+																<h:commandButton
+																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
+																	value="Send" style="float:right;"
+																	class="btn btn-default btn-add-review ">
+																	<f:ajax execute="@form"
+																		render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
+																</h:commandButton>
+															</h:panelGroup>
+															<h:panelGroup rendered="#{loginBean.loggedIn==false}">
+																<span>You must <a href="#modal1" id="loggin">loggin</a> to use this feature</span>
+																<h:outputScript>
+																	 $(function(){
+																	    $('#loggin').click(function() {
+																	        $('.cd-user-modal').addClass('is-visible');
+																	    });
+																	    $('#loggin').click(function() {
+																	        $('#cd-login').addClass('is-selected');
+																	    });
+																	});
+																</h:outputScript>
+															</h:panelGroup>
+															<!-- </div> -->
+														</div>
+														<!--  <a href="#" class="write-review-btn">Write your review!</a> -->
+													</div>
+												</h:form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- RIGHT SIDE BAR START -->
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+							<!-- SINGLE SIDE BAR START -->
+							<h:form prependId="false">
+								<div class="single-product-right-sidebar">
+									<h2 class="left-title">Viewed products</h2>
+									<ul>
+										<ui:repeat var="product"
+											value="#{productBean.productByCategory(product)}">
+											<li><a href="#"><h:graphicImage library="img"
+														name="product/sidebar_product/2.jpg" alt="" /></a>
+												<div class="r-sidebar-pro-content">
+													<h5>
+														<h:commandLink
+															action="#{productBean.getProductDetail(product)}"
+															value="#{product.productName}" />
+													</h5>
+													<p>#{product.productDescription}</p>
+												</div></li>
+										</ui:repeat>
+
+									</ul>
+								</div>
+							</h:form>
+
+							<!-- SINGLE SIDE BAR START -->
+							<div class="single-product-right-sidebar">
+								<div class="slider-right zoom-img">
+									<a href="#"><h:graphicImage styleClass="img-responsive"
+											library="img" name="product/cms11.jpg" alt="sidebar left" /></a>
+								</div>
+							</div>
+						</div>
+						<!-- SINGLE SIDE BAR END -->
+					</div>
+				</div>
+			</section>
+			<!-- MAIN-CONTENT-SECTION END -->
+		</ui:repeat>
+	</ui:define>
+
 </ui:composition>

@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -95,7 +95,11 @@
                                         <ui:repeat var="product" value="#{productBean.listBestProduct().subList(0,(productBean.listBestProduct().size()>5)?5:productBean.listBestProduct().size())}">
                                         <div class="single-product-item">
                                             <div class="sidebar-product-image">
-                                                <a href="single-product.html"><h:graphicImage library="img" name="product/sidebar_product/1.jpg" alt="product-image" /></a>
+                                                <a href="single-product.html">
+                                                	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
+                                                                    style="width:80px;height:80px"
+                                                                    alt="product-image"/>
+                                                </a>
                                             </div>
                                             <div class="product-info sede-pro-info">
                                                 <!-- <a href="#">#{product.productName}</a> -->
@@ -121,7 +125,11 @@
                                         <!-- SINGLE-PRODUCT-ITEM START -->                              
                                         <div class="single-product-item">
                                             <div class="sidebar-product-image">
-                                                <a href="single-product.html"><h:graphicImage library="img" name="product/sidebar_product/1.jpg" alt="product-image" /></a>
+                                                <a href="single-product.html">
+                                                	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
+                                                                    style="width:80px;height:80px"
+                                                                    alt="product-image"/>
+                                                </a>
                                             </div>
                                             <div class="product-info sede-pro-info">
                                                 <!-- <a href="#">#{product.productName}</a> -->
@@ -169,16 +177,34 @@
                                                                 <div class="product-image">
                                                                     <h:commandLink action="#{productBean.getProductDetail(product)}">
                                                                         <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                                        style="weight:190px;height:190px"
-                                                                                        alt="product-image" />
+                                                                                        style="width:190px;height:190px"
+                                                                                        alt="product-image"/>
                                                                     </h:commandLink>
                                                                     <a href="#" class="new-mark-box">new</a>
                                                                     <div class="overlay-content">
                                                                         <ul>
-                                                                            <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
-                                                                            <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                                            <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                                            <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+                                                                            <!-- <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li> -->
+                                                                            <li>
+                                                                            	<h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Quick view"><i class="fa fa-heart-o"></i>
+					                                                        		<f:ajax render="productImage"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
+                                                                            <li>
+						                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+						                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
+					                                                        <li>
+					                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+					                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
+					                                                        <!-- <li><a id="detailproduct-#{product.productId}" data-toggle="modal" data-target="#detailModal" title="Quick view" data-id="#{product.productId}"><i class="fa fa-heart-o"></i></a></li> -->
+					                                                        <li>
+						                                                        <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-heart-o"></i>
+						                                                        	<f:ajax render="productModal"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
@@ -248,9 +274,17 @@
                                                             </h:commandLink>
                                                             <div class="overlay-content">
                                                                 <ul>
-                                                                    <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                                    <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                                    <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
+                                                                   <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                                   <li>
+				                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+				                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+				                                                        </h:commandLink>
+			                                                        </li>
+			                                                        <li>
+			                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+			                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+			                                                        	</h:commandLink>
+			                                                        </li>
                                                                     <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
                                                                 </ul>
                                                             </div>
@@ -268,7 +302,7 @@
                                                             <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                             <div class="price-box">
                                                                 <span class="price">$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</span>
-                                                                <h:outputText value="#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
+                                                                <h:outputText value="$#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -334,10 +368,18 @@
                                                  </h:commandLink>
                                                 <div class="overlay-content">
                                                     <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+                                                        <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                        <li>
+	                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+	                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+	                                                        </h:commandLink>
+                                                        </li>
+                                                        <li>
+                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+                                                        	</h:commandLink>
+                                                        </li>
+                                                        <li><a href="#modal1" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -353,7 +395,7 @@
                                                 <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}" />
                                                <div class="price-box">
                                                                 <span class="price">$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</span>
-                                                                <h:outputText value="#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
+                                                                <h:outputText value="$#{product.productPrice}" styleClass="old-price" rendered="#{product.productDiscount!=0}"/>
                                                </div>
                                             </div>
                                         </div>                          

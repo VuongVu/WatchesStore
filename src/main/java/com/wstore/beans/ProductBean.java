@@ -18,14 +18,14 @@ import com.wstore.DAO.SupplierDAO;
 import com.wstore.entities.Category;
 import com.wstore.entities.Product;
 import com.wstore.entities.Supplier;
-
-@ManagedBean(name = "productBean")
+@ManagedBean(name="productBean")
 @SessionScoped
 public class ProductBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	private Product product = new Product();
+	private Product productDetail = new Product();
 	private List<SelectItem> listCategories = new ArrayList<SelectItem>();
 	private List<SelectItem> listSuppliers = new ArrayList<SelectItem>();
 	private List<Product> listProductByBrand = new ArrayList<Product>();
@@ -62,9 +62,7 @@ public class ProductBean implements Serializable{
 
 	public void setListProductByBrand(List<Product> listProductByBrand) {
 		this.listProductByBrand = listProductByBrand;
-	}
-
-	
+	}	
 	
 	public List<Product> getListSearch() {
 		return listSearch;
@@ -104,8 +102,7 @@ public class ProductBean implements Serializable{
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-	
+	}	
 
 	public int getSort() {
 		return sort;
@@ -114,13 +111,6 @@ public class ProductBean implements Serializable{
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
-
-	/**
-	 * get list product
-	 *
-	 * @return list
-	 */
-	
 	
 	public int getCategoryId() {
 		return categoryId;
@@ -130,11 +120,15 @@ public class ProductBean implements Serializable{
 		this.categoryId = categoryId;
 	}
 
-	/**
-	 * get list category
-	 *
-	 * @return list
-	 */
+	
+	public Product getProductDetail() {
+		return productDetail;
+	}
+
+	public void setProductDetail(Product productDetail) {
+		this.productDetail = productDetail;
+	}
+	
 	public List<SelectItem> getListCategories() {
 		CategoryDAO dao = new CategoryDAO();
 		listCategories.clear();
@@ -280,17 +274,16 @@ public class ProductBean implements Serializable{
 		return "/shop-grid.jsf?faces-redirect=true";
 	}
 
+	
 	public List<Product> productByBrand(Product product) {
 		List<Product> list=new ArrayList<>();
 		ProductDAO dao = new ProductDAO();
 		try {
-			for (Product products : dao.findAllProducts()) {
-				if (products.getProductBrand().equalsIgnoreCase(product.getProductBrand())) {
-					list.add(products);
-				}
-			}
+			list = dao.findProductByBrand(product.getProductBrand());
+			list.remove(product);
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("sada"+ e);
 		}
 		
 		return list;
@@ -299,11 +292,8 @@ public class ProductBean implements Serializable{
 		List<Product> list=new ArrayList<>();
 		ProductDAO dao = new ProductDAO();
 		try {
-			for (Product products : dao.findAllProducts()) {
-				if (products.getCategory().getCategoryName().equalsIgnoreCase(product.getCategory().getCategoryName())) {
-					list.add(products);
-				}
-			}
+			list = dao.findProductByCatId(product.getCategory().getCategoryId());
+			list.remove(product);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -323,8 +313,17 @@ public class ProductBean implements Serializable{
 	}
 	public String search(){
 		ProductDAO dao=new ProductDAO();
-		this.listSearch = dao.search(this.searchString);
-		return "/search.jsf?faces-redirect=true";
+		if (searchString != "") {
+			this.listSearch = dao.search(this.searchString);
+			this.searchString = "";
+			return "/search.jsf?faces-redirect=true";
+		}
+		return null;
 	}
-
+	
+	public void takeModalProduct(int id){
+		//Product product = new Product();
+		ProductDAO dao=new ProductDAO();
+		productDetail = dao.findOneProducts(id);
+	}
 }

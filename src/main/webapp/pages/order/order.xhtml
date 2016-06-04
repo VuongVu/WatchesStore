@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/templates/adminBasePage.xhtml">
+        <ui:define name="title">
+            <title>Admin | Order</title>
+        </ui:define>
+        <ui:define name="body-content">
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <h1>
+                        Order Table
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li><a href="#">Tables</a></li>
+                        <li class="active">Order Table</li>
+                    </ol>
+                </div>
+                <!-- Main content -->
+                <div class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">List Order</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
+                                    <div align="center">
+                                        <h3>Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page</h3>
+                                    </div>
+                                </h:form>
+                                <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
+                                <h:dataTable rendered="#{not empty orderBean.orders}" value="#{orderBean.orders}" var="order" id="table1" role="grid"
+                                             styleClass="table table-bordered table-striped">
+                                     <h:column>                 
+                                        <f:facet name="header">Order Id</f:facet>                   
+                                        <h:outputText value="#{order.orderId}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Order Date</f:facet>
+                                        <h:outputText value="#{order.orderDate}" >
+                                        </h:outputText>
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Total Amount</f:facet>
+                                        <h:outputText value="#{order.total_amount}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Paid</f:facet>
+                                        <h:outputText value="#{order.paid}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Customer Id</f:facet>
+                                        <h:outputText value="#{order.customer.customerId}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Options</f:facet>
+                                        <h:commandButton styleClass="btn btn-block btn-info btn-flat"
+                                                         style="width:95px" 
+                                                         value="Edit" 
+                                                         action="#{orderBean.editAction(order)}" >
+                                        </h:commandButton>
+                                     </h:column>
+                                </h:dataTable>
+                           
+                                <h:panelGroup rendered="#{empty orderBean.orders}" styleClass="table table-bordered table-striped">
+                                        <p>Order is empty! Please add new order.</p>
+                                </h:panelGroup>
+                                </h:form>
+                            </div>
+                            <!-- /.box-body --> 
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row --> 
+                </div>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

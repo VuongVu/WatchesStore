@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/templates/adminBasePage.xhtml">
+        <ui:define name="title">
+            <title>Admin | Edit Customer</title>
+        </ui:define>
+        <ui:define name="body-content">
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <h1>Edit Customer</h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li><a href="#">Tables</a></li>
+                        <li><a href="#">Customer Table</a></li>
+                        <li class="active">Edit Customer</li>
+                    </ol>
+                </div>
+                <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
+                    <div align="center">
+                       <h3> Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page </h3>
+                    </div>
+                </h:form>
+                <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
+                <!-- Main content -->
+                <div class="content">
+                    <!-- Horizontal Form -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Customer Form</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="form-horizontal">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <h:outputLabel value="Customer Id" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.customerId}" 
+                                                     styleClass="form-control"
+                                                     id="customerId"      
+                                                     disabled="true"                                              
+                                                     tabindex="1">
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <h:outputLabel value="First Name" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.firstName}" 
+                                                     styleClass="form-control"
+                                                     id="firstName" 
+                                                     required="true"
+                                                     requiredMessage="First name is required"                                                    
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="firstName"></f:ajax>
+                                        </h:inputText>
+                                    </div>
+                                    <h:message for="firstName" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                              
+                                <div class="form-group">
+                                    <h:outputLabel value="Last Name" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.lastName}" 
+                                                     styleClass="form-control"
+                                                     id="lastName"
+                                                     required="true"
+                                                     requiredMessage="Last name is required"  
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="lastName"></f:ajax>
+                                         </h:inputText>
+                                    </div>
+                                    <h:message for="lastName" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <h:outputLabel value="Phone" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.phone}" 
+                                                     styleClass="form-control"
+                                                     id="phone"
+                                                     onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));"
+                                                     required="true"
+                                                     requiredMessage="Phone is required"  
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="phone"></f:ajax>
+                                         </h:inputText>
+                                    </div>
+                                    <h:message for="phone" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <h:outputLabel value="Address" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.address}" 
+                                                     styleClass="form-control"
+                                                     id="address"
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="address"></f:ajax>
+                                         </h:inputText>
+                                    </div>
+                                    <h:message for="address" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <h:outputLabel value="Email" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.email}" 
+                                                     styleClass="form-control"
+                                                     id="email"
+                                                     required="true"
+                                                     requiredMessage="Email is required"  
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="email"></f:ajax>
+                                         </h:inputText>
+                                    </div>
+                                    <h:message for="email" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <h:outputLabel value="Password" styleClass="col-sm-2 control-label"/>
+                                    <div class="col-sm-4">
+                                        <h:inputText value="#{customerBean.customer.password}" 
+                                                     styleClass="form-control"
+                                                     id="password"
+                                                     required="true"
+                                                     requiredMessage="Password is required"  
+                                                     tabindex="1">
+                                            <f:ajax event="change" render="password"></f:ajax>
+                                         </h:inputText>
+                                    </div>
+                                    <h:message for="password" styleClass="col-sm-4" style="color:red"/>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <h:commandButton tabindex="2" 
+                                                 value="Save" 
+                                                 action="#{customerBean.updateCustomer()}" 
+                                                 style="width:95px"
+                                                 styleClass="btn btn-info btn-flat">
+                                    <f:ajax execute="@form" render="@form"></f:ajax>
+                                </h:commandButton>
+                                <h:commandButton tabindex="2" 
+                                                 value="Cancel" 
+                                                 action="/pages/customer/customer.jsf?faces-redirect=true"
+                                                 style="width:95px"
+                                                 styleClass="btn btn-default btn-flat pull-right"/>   
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

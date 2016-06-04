@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/templates/adminBasePage.xhtml">
+        <ui:define name="title">
+            <title>Admin | Create Product</title>
+        </ui:define>
+        <ui:define name="body-content">
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <h1>Create New Product</h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li><a href="#">Tables</a></li>
+                        <li><a href="#">Product Table</a></li>
+                        <li class="active">Create Product</li>
+                    </ol>
+                </div>
+                <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
+                    <div align="center">
+                       <h3> Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page </h3>
+                    </div>
+                </h:form>
+                <h:form prependId="false" enctype="multipart/form-data" rendered="#{loginBean.adminloggedIn}">
+                <!-- Main content -->
+                <div class="content">
+                    <!-- Horizontal Form -->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Product Form</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="nav-tabs-custom" style="margin-bottom:0px">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1" data-toggle="tab">Details Required</a></li>
+                                <li class="nav-img"><a href="#tab_2" data-toggle="tab">Images</a></li> 
+                            </ul>
+                            <div class="tab-content" style="min-height:480px;">
+                                <div class="tab-pane active" id="tab_1">
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Name" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productName}" 
+                                                     styleClass="form-control"
+                                                     id="productName" 
+                                                     required="true"
+                                                     requiredMessage="Product name is required"                                                    
+                                                     tabindex="1">
+                                                <f:ajax event="click" render="productName"></f:ajax>
+                                            </h:inputText>
+                                        </div>
+                                        <h:messages for="productName" styleClass="col-sm-4" style="color:red"/>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <h:outputLabel value="Category Name" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:selectOneMenu value="#{productBean.product.category}" converter="categoryConverter" styleClass="form-control" >
+                                                <f:selectItem itemLabel="Choose one .." itemValue="#{null}" />
+                                                <f:selectItems value="#{productBean.listCategories}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <h:outputLabel value="Supplier Name" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:selectOneMenu value="#{productBean.product.supplier}" converter="supplierConverter" styleClass="form-control" >
+                                                <f:selectItem itemLabel="Choose one .." itemValue="#{null}" />
+                                                <f:selectItems value="#{productBean.listSuppliers}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div> 
+                                    <br />   
+                                    <br />   
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Brand" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productBrand}" 
+                                                     styleClass="form-control"
+                                                     id="productBrand" 
+                                                     required="true"
+                                                     requiredMessage="Product Brand is required"                                                    
+                                                     tabindex="1">
+                                                <f:ajax event="click" render="productBrand"></f:ajax>
+                                            </h:inputText>
+                                        </div>
+                                        <h:messages for="productBrand" styleClass="col-sm-4" style="color:red"/>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Price" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productPrice}" 
+                                                     styleClass="form-control"
+                                                     id="productPrice" 
+                                                     required="true"
+                                                     requiredMessage="Product Price is required"                                                    
+                                                     tabindex="1">
+                                                <f:ajax event="click" render="productPrice"></f:ajax>
+                                            </h:inputText>
+                                        </div>
+                                        <h:messages for="productPrice" styleClass="col-sm-4" style="color:red"/>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Quantity" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productQuantity}" 
+                                                     styleClass="form-control"
+                                                     id="productQuantity" 
+                                                     required="true"
+                                                     requiredMessage="Product Quantity is required"                                                    
+                                                     tabindex="1">
+                                            </h:inputText>
+                                        </div>
+                                        <h:messages for="productQuantity" styleClass="col-sm-4" style="color:red"/>
+                                    </div> 
+                                    <br /> 
+                                    <br /> 
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Discount" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productDiscount}" 
+                                                     styleClass="form-control"
+                                                     id="productDiscount"                                                 
+                                                     tabindex="1">
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <br /> 
+                                    <br /> 
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product Description" styleClass="col-sm-2 control-label"/>
+                                        <div class="col-sm-4">
+                                            <h:inputText value="#{productBean.product.productDescription}" 
+                                                     styleClass="form-control"
+                                                     id="productDescription"                                                 
+                                                     tabindex="1">
+                                                <f:ajax event="click" render="productDescription"></f:ajax>
+                                            </h:inputText>
+                                        </div>
+                                        <h:messages for="productDescription" styleClass="col-sm-4" style="color:red"/>
+                                    </div>
+                                    <br /> 
+                                    <br /> 
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane " id="tab_2">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">                                             
+                                                <h:outputLabel value="Choose Image" styleClass="col-sm-2 control-label"/>  
+                                                <div class="col-sm-4">
+                                                    <div style="width:400px;">
+                                                        <p:fileUpload value="#{productBean.image}"
+                                                                      styleClass="text-box single-line form-control valid" 
+                                                                      id="file"
+                                                                      mode="simple" 
+                                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" > 
+                                                        </p:fileUpload>
+                                                    </div>
+                                                    <br />
+                                                    <h:message for="file"/>
+                                                    <h:outputLabel for="file" />
+                                                    <br />
+                                                    <br />
+                                                    <div style="width:400px; height:400px">
+                                                        <h:graphicImage id="myImg"
+                                                                        height="400" 
+                                                                        width="400" 
+                                                                        alt="Preview Image" 
+                                                                        library="images"
+                                                                        name="picture-insert.png">
+                                                            <f:ajax event="click" render="myImg"></f:ajax>
+                                                        </h:graphicImage>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div><!-- /.tab-content -->
+                            <div class="box-footer">
+                                <h:commandButton action="#{productBean.addProduct()}" 
+                                                 value="Save" 
+                                                 style="width:95px"
+                                                 styleClass="btn btn-info btn-flat">
+                                </h:commandButton>
+                                <h:commandButton value="Cancel" 
+                                                 action="/pages/product/product.jsf?faces-redirect=true"
+                                                 style="width:95px"
+                                                 styleClass="btn btn-default btn-flat pull-right"/>   
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -811,7 +811,7 @@ input.search-form[placeholder]:-ms-input-placeholder {
 .header-right-callus:before {
 	background: #ff4f4f none repeat scroll 0 0;
 	color: #fff;
-	content: "ï‚•";
+	content: "";
 	display: inline-block;
 	font-family: FontAwesome;
 	font-size: 20px;

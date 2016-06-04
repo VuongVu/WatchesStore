@@ -451,4 +451,42 @@ public class ProductDAO {
 		}
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findProductByBrand(String brand) {
+		List<Product> products = new ArrayList<Product>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Product.class);
+			// To sort records in descening order
+			
+			criteria.add(Restrictions.eq("productBrand", brand)).add(Restrictions.eq("isDelete",false));
+			//get list from criteria
+			products = criteria.list();
+
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return products;
+	}
 }
