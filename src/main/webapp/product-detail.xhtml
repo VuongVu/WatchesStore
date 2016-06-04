@@ -237,10 +237,8 @@
 									<div class="product-more-info-tab">
 										<!-- Nav tabs -->
 										<ul class="nav nav-tabs more-info-tab">
-											<li class="active"><a href="#moreinfo" data-toggle="tab">more
-													info</a></li>
-											<li><a href="#datasheet" data-toggle="tab">data
-													sheet</a></li>
+											<li class="active"><a href="#moreinfo" data-toggle="tab">more info</a></li>
+											<li><a href="#datasheet" data-toggle="tab">data sheet</a></li>
 											<li><a href="#review" data-toggle="tab">reviews</a></li>
 										</ul>
 											
@@ -259,13 +257,10 @@
 												                         paginator="true" styleClass="table"
 												                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 																<p:column>
-																	<div class="item"
-																	style="border-bottom: solid 1px aliceblue;">
-																	<h3 class="text-primary">
-																		#{comment.customer.fullName}</h3>
+																	<div class="item" style="border-bottom: solid 1px aliceblue;">
+																	<h3 class="text-primary">#{comment.customer.fullName}</h3>
 																	<b><h:outputLabel value="#{comment.title}" /></b>
-																	<p:rating value="#{comment.rating}" readonly="true"
-																		cancel="false"></p:rating>
+																	<p:rating value="#{comment.rating}" readonly="true" cancel="false"></p:rating>
 																	<br /> <span style="font-size: 15px">#{comment.content}</span>
 																	<br /> <br />
 																</div>
@@ -288,8 +283,7 @@
 																</div>
 															</ui:repeat>
 														</h:panelGroup> -->
-														<h:outputText value="There are no reviews"
-															rendered="#{commentBean.findComment(product.productId).size()==0}" />
+														<h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" />
 													</div>
 												</h:form>
 											</div>
@@ -304,26 +298,21 @@
 																<table>
 																	<tr>
 																		<td><span>Your rating:</span></td>
-																		<td><p:rating stars="5"
-																				value="#{commentBean.comment.rating}"
-																				style="padding-left: 30px;"></p:rating></td>
+																		<td><p:rating stars="5" value="#{commentBean.comment.rating}" style="padding-left: 30px;"></p:rating></td>
 																	</tr>
 																</table>
 																<p>Title of review</p>
-																<h:inputText value="#{commentBean.comment.title}"
-																	class="form-control input-md" id="title" />
+																<h:inputText value="#{commentBean.comment.title}" class="form-control input-md" id="title" />
 																<p:message for="title" />
 																<p>Content</p>
-																<h:inputTextarea value="#{commentBean.comment.content}"
-																	rows="5" class="form-control input-md" id="content" />
+																<h:inputTextarea value="#{commentBean.comment.content}" rows="5" class="form-control input-md" id="content" />
 																<p:message for="content" />
 																<br />
-																<h:commandButton
-																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
-																	value="Send" style="float:right;"
-																	class="btn btn-default btn-add-review ">
-																	<f:ajax execute="@form"
-																		render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
+																<h:commandButton action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
+																	             value="Send" 
+																	             style="float:right;"
+																	             class="btn btn-default btn-add-review ">
+																	<f:ajax execute="@form" render="j_idt143:0:reviewform j_idt143:0:datasheetform j_idt143:0:productRating"></f:ajax>
 																</h:commandButton>
 															</h:panelGroup>
 															<h:panelGroup rendered="#{loginBean.loggedIn==false}">
@@ -363,9 +352,7 @@
 														name="product/sidebar_product/2.jpg" alt="" /></a>
 												<div class="r-sidebar-pro-content">
 													<h5>
-														<h:commandLink
-															action="#{productBean.getProductDetail(product)}"
-															value="#{product.productName}" />
+														<h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}" />
 													</h5>
 													<p>#{product.productDescription}</p>
 												</div></li>
@@ -378,8 +365,7 @@
 							<!-- SINGLE SIDE BAR START -->
 							<div class="single-product-right-sidebar">
 								<div class="slider-right zoom-img">
-									<a href="#"><h:graphicImage styleClass="img-responsive"
-											library="img" name="product/cms11.jpg" alt="sidebar left" /></a>
+									<a href="#"><h:graphicImage styleClass="img-responsive" library="img" name="product/cms11.jpg" alt="sidebar left" /></a>
 								</div>
 							</div>
 						</div>
