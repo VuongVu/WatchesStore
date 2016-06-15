@@ -10,8 +10,7 @@
 	</ui:define>
 
 	<ui:define name="body-content">
-
-		<ui:repeat var="product" value="#{productBean.product}">
+		<ui:repeat var="product" value="#{productBean.product_detail}">
 			<!-- MAIN-CONTENT-SECTION START -->
 			<section class="main-content-section">
 				<div class="container">
@@ -20,8 +19,7 @@
 							<!-- BSTORE-BREADCRUMB START -->
 							<div class="bstore-breadcrumb">
 								<h:form prependId="false">
-									<a href="index.xhtml">HOMe<span><i
-											class="fa fa-caret-right"></i> </span>
+									<a href="index.xhtml">HOMe<span><i class="fa fa-caret-right"></i> </span>
 									</a> 
 									<span> <i class="fa fa-caret-right"> </i></span> 
 									<h:commandLink action="#{productBean.getCategoryId(product.category.categoryId)}" value="#{product.category.categoryName}"></h:commandLink>
@@ -46,9 +44,12 @@
 															value="/DisplayImage?productId=#{product.productId}"
 															alt="single-product-image"
 															style="width:330px; height:330px" />
-														<a data-toggle="modal" data-target="#myModal"><span
-															class="btn large-btn">View larger <i
-																class="fa fa-search-plus"></i></span></a>
+														<h:commandLink action="#{productBean.takeModalProduct(product.productId)}" a:data-toggle="modal" a:data-target="#myModal">
+															<span class="btn large-btn">View larger 
+																<i class="fa fa-search-plus"></i>
+															</span>
+															<f:ajax render="productImage"></f:ajax>
+														</h:commandLink>
 													</div>
 												</div>
 											</div>
@@ -106,7 +107,7 @@
 												<div class="cart-quantity">
 													<div class="single-qty-btn">
 														<h:inputText styleClass="cart-plus-minus sing-pro-qty" id="qty" required="true"
-															requiredMessage="Quantity is required" binding="#{quantity}">
+															         requiredMessage="Quantity is required" binding="#{quantity}">
 															<f:validateLongRange minimum="1"></f:validateLongRange>
 														</h:inputText>
 														<div class="dec qtybutton" onclick="minus()">-</div>
@@ -116,7 +117,8 @@
 											</div>
 											<p:messages for="cartadd" id="mess" />
 											<p:messages id="qtymessage" for="qty" />
-											<h:outputScript>													                                 	
+											<h:outputScript>	
+											        document.getElementById("j_idt141:0:qty").value = 1;								                                 	
 			                                        function plus(){        
 			                                            var a = document.getElementById("j_idt141:0:qty").value;
 			                                            a = parseInt(a,10)+1;
@@ -141,12 +143,6 @@
 													<f:ajax execute="@form"
 														render="cartForm j_idt141:0:quantityStock qtymessage mess"></f:ajax>
 												</h:commandButton>
-												<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                            <input type="hidden" name="cmd" value="_s-xclick"/>
-                                            <input type="hidden" name="hosted_button_id" value="6R5PK87ZT85HS"/>
-                                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
-                                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
-                                        </form> -->
 											</div>
 										</div>
 									</div>
@@ -177,29 +173,36 @@
 														<div class="single-product-item">
 															<!-- <div class="single-product-item"> -->
 															<div class="product-image">
-																<h:commandLink
-																	action="#{productBean.getProductDetail(productRelate)}">
-																	<h:graphicImage
-																		value="/DisplayImage?productId=#{productRelate.productId}"
-																		style="weight:190px;height:190px" alt="product-image" />
+																<h:commandLink action="#{productBean.getProductDetail(productRelate)}">
+																	<h:graphicImage value="/DisplayImage?productId=#{productRelate.productId}"
+																					style="weight:190px;height:190px;border:1px solid" alt="product-image" />
 																</h:commandLink>
-																		<div class="overlay-content">
+																<div class="overlay-content">
                                                                         <ul>
-                                                                            <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                                            <!-- <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#"><i class="fa fa-search"></i></a></li> -->
+	                                                                        <li>
+                                                                            	<h:commandLink action="#{productBean.takeModalProduct(productRelate.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Zoom in"><i class="fa fa-search-plus"></i>
+					                                                        		<f:ajax render="productImage"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
                                                                             <li>
-						                                                        <h:commandLink action="#{cartBean.addToCart(productRelate,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+						                                                        <h:commandLink action="#{cartBean.addToCart(productRelate,1)}" a:title="Add to cart"> <i class="fa fa-plus"></i>
 						                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
 						                                                        </h:commandLink>
 					                                                        </li>
 					                                                        <li>
-					                                                        	<h:commandLink action="#{cartBean.buyNow(productRelate,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+					                                                        	<h:commandLink action="#{cartBean.buyNow(productRelate,1)}" a:title="Buy now"> <i class="fa fa-shopping-cart"></i>
 					                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
 					                                                        	</h:commandLink>
 					                                                        </li>
 					                                                        <!-- <li><a data-toggle="modal" data-target="#detailModal" title="Quick view"><i class="fa fa-heart-o"></i></a></li> -->
-					                                                        
+					                                                        <li>
+						                                                        <h:commandLink action="#{productBean.takeModalProduct(productRelate.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-edit"></i>
+						                                                        	<f:ajax render="productModal"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
                                                                         </ul>
-                                                                    </div>
+                                                                </div>
 															</div>
 															<div class="product-info">
 																<div class="customar-comments-box">
@@ -253,37 +256,18 @@
 												<h:form prependId="false" id="datasheetform">
 													<div class="deta-sheet">
 														<h:panelGroup rendered="#{commentBean.findComment(product.productId).size()!=0}">
-															<p:dataTable var="comment" value="#{commentBean.findComment(product.productId)}" rows="5"
-												                         paginator="true" styleClass="table"
-												                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-																<p:column>
-																	<div class="item" style="border-bottom: solid 1px aliceblue;">
-																	<h3 class="text-primary">#{comment.customer.fullName}</h3>
+															<ui:repeat var="comment" value="#{commentBean.findComment(product.productId)}">
+																<div class="item" style="border-bottom: solid 1px aliceblue;">
+																	<h3 class="text-primary">
+																		#{comment.customer.fullName}</h3>
 																	<b><h:outputLabel value="#{comment.title}" /></b>
 																	<p:rating value="#{comment.rating}" readonly="true" cancel="false"></p:rating>
 																	<br /> <span style="font-size: 15px">#{comment.content}</span>
 																	<br /> <br />
 																</div>
-																</p:column>																
-															</p:dataTable>
-														</h:panelGroup>
-														<!-- <h:panelGroup
-															rendered="#{commentBean.findComment(product.productId).size()!=0}">
-															<ui:repeat var="comment"
-																value="#{commentBean.findComment(product.productId)}">
-																<div class="item"
-																	style="border-bottom: solid 1px aliceblue;">
-																	<h3 class="text-primary">
-																		#{comment.customer.fullName}</h3>
-																	<b><h:outputLabel value="#{comment.title}" /></b>
-																	<p:rating value="#{comment.rating}" readonly="true"
-																		cancel="false"></p:rating>
-																	<br /> <span style="font-size: 15px">#{comment.content}</span>
-																	<br /> <br />
-																</div>
 															</ui:repeat>
-														</h:panelGroup> -->
-														<h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" />
+														</h:panelGroup>
+														<!-- <h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" /> -->
 													</div>
 												</h:form>
 											</div>
@@ -298,21 +282,25 @@
 																<table>
 																	<tr>
 																		<td><span>Your rating:</span></td>
-																		<td><p:rating stars="5" value="#{commentBean.comment.rating}" style="padding-left: 30px;"></p:rating></td>
+																		<td><p:rating stars="5"
+																				value="#{commentBean.comment.rating}"
+																				style="padding-left: 30px;"></p:rating></td>
 																	</tr>
 																</table>
 																<p>Title of review</p>
-																<h:inputText value="#{commentBean.comment.title}" class="form-control input-md" id="title" />
+																<h:inputText value="#{commentBean.comment.title}"
+																	class="form-control input-md" id="title" />
 																<p:message for="title" />
 																<p>Content</p>
-																<h:inputTextarea value="#{commentBean.comment.content}" rows="5" class="form-control input-md" id="content" />
+																<h:inputTextarea value="#{commentBean.comment.content}"
+																	rows="5" class="form-control input-md" id="content" />
 																<p:message for="content" />
 																<br />
-																<h:commandButton action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
-																	             value="Send" 
-																	             style="float:right;"
-																	             class="btn btn-default btn-add-review ">
-																	<f:ajax execute="@form" render="j_idt143:0:reviewform j_idt143:0:datasheetform j_idt143:0:productRating"></f:ajax>
+																<h:commandButton
+																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
+																	value="Send" style="float:right;"
+																	class="btn btn-default btn-add-review ">
+																	<f:ajax execute="@form" render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
 																</h:commandButton>
 															</h:panelGroup>
 															<h:panelGroup rendered="#{loginBean.loggedIn==false}">
@@ -346,15 +334,14 @@
 								<div class="single-product-right-sidebar">
 									<h2 class="left-title">Viewed products</h2>
 									<ul>
-										<ui:repeat var="product"
-											value="#{productBean.productByCategory(product)}">
-											<li><a href="#"><h:graphicImage library="img"
-														name="product/sidebar_product/2.jpg" alt="" /></a>
+										<ui:repeat var="viewProduct" value="#{productBean.productByBrand(product).size()>5?productBean.productByBrand(product).subList(0,5):productBean.productByBrand(product)}">
+											<li><a href="#"><h:graphicImage value="/DisplayImage?productId=#{viewProduct.productId}" alt="product-image" style="width:80px;height:80px"/></a>
 												<div class="r-sidebar-pro-content">
 													<h5>
-														<h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}" />
+														<h:commandLink action="#{productBean.getProductDetail(viewProduct)}"
+															           value="#{viewProduct.productName}" />
 													</h5>
-													<p>#{product.productDescription}</p>
+													<p>$#{viewProduct.productPrice}</p>
 												</div></li>
 										</ui:repeat>
 

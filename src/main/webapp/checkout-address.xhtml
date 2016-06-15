@@ -74,36 +74,33 @@
                         </div>                          
                     </div>
                 </div>
-               <h:outputText value="You need loggin to view this page" rendered="#{loginBean.loggedIn==false}"/>
-               <h:form prependId="false" rendered="#{loginBean.loggedIn==true}">
+               <h:panelGroup prependId="false" rendered="#{loginBean.loggedIn==true and cartBean.number!=0}">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="first_item primari-box">
-                            <!-- DELIVERY ADDRESS START -->
-                           <h:panelGroup rendered="#{customerBean.findCustomerByEmail(loginBean.email).address!=null}">
-                            <!-- DELIVERY ADDRESS START -->
-                            <ul class="address">
-                                <li>
-                                    <h3 class="page-subheading box-subheading">
-                                        Your register address
-                                    </h3>
-                                </li>
-                                <ui:repeat var="customer" value="#{customerBean.findCustomerByEmail(loginBean.email)}">
-	                                <li><span class="address_name">#{customer.fullName}</span></li>
-	                                <li><span class="address_company">#{customer.address}</span></li>
-	                                <li><span class="address_phone">#{customer.phone}</span></li>
-	                                
-	                                <!-- <li class="update-button">                                
-	                                    <a href="my-cart-step-2-info.html">Update<i class="fa fa-chevron-right"></i></a>
-	                                </li>   -->
-                                </ui:repeat>                             
-                            </ul>   
-                            <!-- DELIVERY ADDRESS END -->
-                        </h:panelGroup> 
-                        <h:outputText value="You have no address yet, please add new" rendered="#{customerBean.findCustomerByEmail(loginBean.email).address==null}"/>      
-                            <!-- DELIVERY ADDRESS END -->
-                        </div>                                              
-                    </div>
+	                <h:form prependId="false" rendered="#{cartBean.findAllDelivery(loginBean.email).size()!=0}">
+		                 <ui:repeat var="delivery" value="#{cartBean.findAllDelivery(loginBean.email)}">
+			                 <h:commandLink action="#{cartBean.takeDelivery(delivery)}">
+			                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			                        <div class="first_item primari-box">
+			                            <ul class="address">
+			                                <li>
+			                                    <h3 class="page-subheading box-subheading">
+			                                        Use this delivery address
+			                                    </h3>
+			                                </li>             
+					                                <li><span class="address_name">Receiver name: #{delivery.deliveryName}</span></li>
+					                                <li><span class="address_company">Address: #{delivery.deliveryAddress}</span></li>
+					                                <li><span class="address_phone">Receiver phone: #{delivery.deliveryPhone}</span></li>
+				                                
+				                                <!-- <li class="update-button">                                
+				                                    <a href="my-cart-step-2-info.html">Update<i class="fa fa-chevron-right"></i></a>
+				                                </li>   -->   
+			                            </ul>   
+			                        </div>                                              
+			                    </div>
+			                    </h:commandLink>
+		                    </ui:repeat>
+	                    </h:form>
+                     	<h:outputText value="You have no address yet, please add new" rendered="#{cartBean.findAllDelivery(loginBean.email).size()==0}"/>
                     <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="second_item primari-box">
                             BILLING ADDRESS START
@@ -132,93 +129,101 @@
                         <div class="add-new-address">
                             <a class="new-address-link" role="button" data-toggle="collapse" href="#addNewAddress" aria-expanded="false" aria-controls="addNewAddress">Add a new address<i class="fa fa-chevron-right"></i></a>
                             <div class="collapse" id="addNewAddress">
+                            <h:form prependId="false">
                                 <div class="form-horizontal well">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Customer name</label>
                                         <div class="col-sm-4">
-                                            <input type="email"
-                                                   class="form-control"
-                                                   id="inputEmail3"
-                                                   placeholder="Customer name"/>
+                                            <h:inputText class="form-control"
+                                                   value="#{cartBean.delivery.deliveryName}"
+                                                   placeholder="Customer name"
+                                                   required="true"
+                                                   id="name"/>
+                                            <p:message for="name"></p:message>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Phone number</label>
                                         <div class="col-sm-4">
-                                            <input type="password"
-                                                   class="form-control"
-                                                   id="inputPassword3"
-                                                   placeholder="Phone number" />
+                                            <h:inputText  class="form-control"
+                                                   		value="#{cartBean.delivery.deliveryPhone}"
+                                                   		required="true"
+                                                   		id="phone">
+                                              
+                                            </h:inputText>
+                                            <p:message for="phone"></p:message>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                         <label class="col-sm-2 control-label">City</label>
+                                         <label class="col-sm-2 control-label">City/Province</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
-                                            </select>
+                                            <h:inputText  class="form-control"
+                                                   		value="#{cartBean.address[0]}"
+                                                   		required="true"
+                                                   		id="city"/>
+                                            <p:message for="city"></p:message>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                          <label class="col-sm-2 control-label">District</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
-                                            </select>
+                                            <h:inputText  class="form-control"
+                                                   		value="#{cartBean.address[1]}"
+                                                   		required="true"
+                                                   		id="district"/>
+                                            <p:message for="district"></p:message>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                          <label class="col-sm-2 control-label">Ward</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control">
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
-                                            </select>
+                                            <h:inputText  class="form-control"
+                                                   		value="#{cartBean.address[2]}"
+                                                   		required="true"
+                                                   		id="ward"/>
+                                            <p:message for="ward"></p:message>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Address</label>
                                         <div class="col-sm-4">
-                                            <input type="password"
-                                                   class="form-control"
-                                                   id="inputPassword3"
-                                                   placeholder="Address" />
+                                            <h:inputText class="form-control"
+	                                                   value="#{cartBean.address[3]}"
+	                                                   required="true"
+	                                                   	id="address"/>
+                                            <p:message for="address"></p:message>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-default">Cancel</button>
-                                            <button type="submit" class="btn btn-primary">Accept</button>
+                                            <h:commandButton action="#{cartBean.saveDelivery(loginBean.email)}" value="Proceed checkout" styleClass="btn btn-primary">
+                                            	<f:ajax execute="@form" render="@form"></f:ajax>
+                                            </h:commandButton>
+                                            <h:commandButton value="Cancel" styleClass="btn btn-default" style="margin-left: 130px;">
+                                            	<f:ajax render="@form"></f:ajax>
+                                            </h:commandButton>
+                                            <!-- <button type="submit" class="btn btn-primary">Accept</button> -->
+                                            <!-- <button type="submit" class="btn btn-default" style="margin-left: 130px;">Cancel</button> -->
                                         </div>
                                     </div>
                                 </div>
+                              </h:form>
                             </div>
                         </div>
                         <!-- ADDRESS AREA START --> 
                         <!-- RETURNE-CONTINUE-SHOP START -->
                         <div class="returne-continue-shop ship-address">
                             <a href="index.xhtml" class="continueshoping"><i class="fa fa-chevron-left"></i>Continue shopping</a>
-                            <h:commandLink action="checkout-shipping.xhtml" class="procedtocheckout" rendered="#{customerBean.findCustomerByEmail(loginBean.email).address!=null}">Proceed to checkout<i class="fa fa-chevron-right"></i></h:commandLink>
+                            <!-- <h:commandLink action="checkout-shipping.xhtml" class="procedtocheckout" rendered="#{customerBean.findCustomerByEmail(loginBean.email).address!=null}">Proceed to checkout<i class="fa fa-chevron-right"></i></h:commandLink>
                             <h:panelGroup rendered="#{customerBean.findCustomerByEmail(loginBean.email).address==null}">
                             	<a class="procedtocheckout" role="button" data-toggle="collapse" href="#addNewAddress" aria-expanded="false" aria-controls="addNewAddress">Proceed to checkout<i class="fa fa-chevron-right"></i></a>
-                            </h:panelGroup>
+                            </h:panelGroup> -->
                         </div>  
                         <!-- RETURNE-CONTINUE-SHOP END -->      
                     </div>                  
                 </div>
-                 </h:form>
+                 </h:panelGroup>
             </div>
         </section>
         <!-- MAIN-CONTENT-SECTION END -->

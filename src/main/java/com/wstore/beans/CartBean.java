@@ -16,11 +16,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import com.wstore.DAO.CustomerDAO;
+import com.wstore.DAO.DeliveryDAO;
 import com.wstore.DAO.OrderDAO;
 import com.wstore.DAO.OrderDetailDAO;
 import com.wstore.DAO.ProductDAO;
 import com.wstore.entities.Cart;
 import com.wstore.entities.Customer;
+import com.wstore.entities.Delivery;
 import com.wstore.entities.Item;
 import com.wstore.entities.Order;
 import com.wstore.entities.OrderDetail;
@@ -35,6 +37,19 @@ public class CartBean implements Serializable {
 	private Cart cart = null;
 	private double total_amount=0;
 	private int number;
+	private boolean delivery_method = false;
+	private String[] address = new String[4];
+	private Delivery delivery = new Delivery();
+	private Delivery checkout_deli = new Delivery();
+
+
+	public Delivery getCheckout_deli() {
+		return checkout_deli;
+	}
+
+	public void setCheckout_deli(Delivery checkout_deli) {
+		this.checkout_deli = checkout_deli;
+	}
 
 	public double getTotal_amount() {
 		return total_amount;
@@ -69,6 +84,32 @@ public class CartBean implements Serializable {
 
 	public void setCheckout(boolean checkout) {
 		this.checkout = checkout;
+	}
+
+
+	public Delivery getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
+
+	public String[] getAddress() {
+		return address;
+	}
+
+	public void setAddress(String[] address) {
+		this.address = address;
+	}
+
+
+	public boolean isDelivery_method() {
+		return delivery_method;
+	}
+
+	public void setDelivery_method(boolean delivery_method) {
+		this.delivery_method = delivery_method;
 	}
 
 	public CartBean() {
@@ -181,20 +222,19 @@ public class CartBean implements Serializable {
 		return -1;
 	}
 
-	public void checkOut(Cart cart, String email) {
-
+	public String checkOut(String email) {
 		int size=0;
 		OrderDAO orderDAO = new OrderDAO();
 		OrderDetailDAO orderdetailDAO = new OrderDetailDAO();
 		ProductDAO dao = new ProductDAO();
 		CustomerDAO cusdao=new CustomerDAO();
-		boolean flag = true;
+		boolean flag = false;
 		List<Product> lProducts = new ArrayList<Product>();
+		Customer customer=cusdao.findCustomerByEmail(email);
 
 		if(getCart()!=null){
-			size=getCart().getItems().size();
-		}else{
-			flag=false;
+			size = getCart().getItems().size();
+			flag = true;
 		}
 
 		for (int i = 0; i < size; i++) {
@@ -205,7 +245,7 @@ public class CartBean implements Serializable {
 				flag = false;
 			}
 		}
-		Customer customer=cusdao.findCustomerByEmail(email);
+
 
 
 		if (flag) {
@@ -215,11 +255,18 @@ public class CartBean implements Serializable {
 
 				Order order = new Order();
 
-
-				order.setTotal_amount(this.total_amount);
+				if(delivery_method==true){
+					order.setTotal_amount(this.total_amount+2);
+				}else {
+					order.setTotal_amount(this.total_amount);
+				}
 				order.setPaid(false);
 				order.setOrderDate(dateFormat.format(date));
 				order.setCustomer(customer);
+				order.setFastDelivery(delivery_method);
+				order.setReceiver(checkout_deli.getDeliveryName());
+				order.setDelivery_address(checkout_deli.getDeliveryAddress());
+				order.setReceiver_phone(checkout_deli.getDeliveryPhone());
 				orderDAO.updateOrder(order);
 
 				for (int i = 0; i < cart.getItems().size(); i++) {
@@ -229,8 +276,9 @@ public class CartBean implements Serializable {
 
 					orderDetail.setDiscount(item.getProduct()
 							.getProductDiscount());
-					orderDetail.setPrice(item.getQuantity()
-							* item.getProduct().getProductPrice());
+					orderDetail.setPrice((item.getQuantity()
+							* item.getProduct().getProductPrice())-((item.getQuantity()
+									* item.getProduct().getProductPrice())*(item.getProduct().getProductDiscount()/100)));
 
 					orderDetail.setQuantity(item.getQuantity());
 					orderDetail.setBillDate(dateFormat.format(date));
@@ -249,17 +297,45 @@ public class CartBean implements Serializable {
 				this.cart = null;
 				this.total_amount=0;
 				this.number=0;
-
+				this.delivery_method=false;
 			} catch (Exception e) {
 			}
 		} else {
 			for (int i = 0; i < lProducts.size(); i++) {
 				FacesContext.getCurrentInstance().addMessage(
-						null,
+						"checkout",
 						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								lProducts.get(i).getProductName()+ " is out of product","Out of products"));
 			}
 		}
+		return "checkout-success.jsf?faces-redirect=true";
+	}
+
+	public String saveDelivery(String email){
+		DeliveryDAO dao = new DeliveryDAO();
+		CustomerDAO cDao = new CustomerDAO();
+
+		this.delivery.setCustomer(cDao.findCustomerByEmail(email));
+		this.delivery.setDeliveryAddress(address[3]+", "+address[2]+", "+address[1]+", "+address[0]);
+		dao.addDelivery(this.delivery);
+
+		this.checkout_deli = this.delivery;
+
+		this.delivery = new Delivery();
+		address =new String[4];
+		return "checkout-shipping.jsf?faces-redirect=true";
+	}
+	public List<Delivery> findAllDelivery(String email){
+		List<Delivery> list=new ArrayList<>();
+		DeliveryDAO dao=new DeliveryDAO();
+		CustomerDAO cDao = new CustomerDAO();
+		list = dao.findAllDeliveries(cDao.findCustomerByEmail(email).getCustomerId());
+		return list;
+	}
+
+	public String takeDelivery(Delivery delivery){
+		this.checkout_deli = delivery;
+		return "checkout-shipping.jsf?faces-redirect=true";
 	}
 
 }

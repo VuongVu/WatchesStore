@@ -44,7 +44,18 @@ public class Order implements Serializable{
 	@Column(name="isDelete")
 	private boolean isDelete;
 
-
+	@Column(name="delivery_address")
+	private String delivery_address;
+	
+	@Column(name="receiver")
+	private String receiver;
+	
+	@Column(name="receiver_phone")
+	private String receiver_phone;
+	
+	@Column(name="fastDelivery")
+	private boolean fastDelivery;
+	
 	public boolean isDelete() {
 		return isDelete;
 	}
@@ -63,6 +74,39 @@ public class Order implements Serializable{
 		this.total_amount = total_amount;
 		this.paid = paid;
 		this.customer = customer;
+	}
+
+	
+	public String getDelivery_address() {
+		return delivery_address;
+	}
+
+	public void setDelivery_address(String delivery_address) {
+		this.delivery_address = delivery_address;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
+	public String getReceiver_phone() {
+		return receiver_phone;
+	}
+
+	public void setReceiver_phone(String receiver_phone) {
+		this.receiver_phone = receiver_phone;
+	}
+
+	public boolean isFastDelivery() {
+		return fastDelivery;
+	}
+
+	public void setFastDelivery(boolean fastDelivery) {
+		this.fastDelivery = fastDelivery;
 	}
 
 	public int getOrderId() {

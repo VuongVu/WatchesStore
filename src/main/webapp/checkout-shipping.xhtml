@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 
-                <h:form prependId="false" rendered="#{loginBean.loggedIn==true and customerBean.findCustomerByEmail(loginBean.email).address!=null}">
+                <h:form prependId="false" rendered="#{loginBean.loggedIn==true and cartBean.checkout_deli.deliveryAddress!=null and cartBean.number!=0}">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <!-- PRODUCT-DELIVERY-OPTION START -->
@@ -68,7 +68,12 @@
                                 <div class="product-delivery-single-item">
                                     <div class="table-responsive">
                                         <!-- PRODUCT-DELIVERY SINGLE OPTION START -->
-                                        <table class="table table-bordered delivery-table">
+                                        <h:selectOneRadio layout="pageDirection" value="#{cartBean.delivery_method}" styleClass="table table-bordered delivery-table">
+                                        	<f:selectItem itemValue="false" itemLabel="Delivery Expected: Delivery time: 2-3 day(Free)"/>
+                                        	<f:selectItem itemValue="true" itemLabel="Fast Delivery: Delivery time: 24 hours($2.00 tax)"/>
+                                        	<f:ajax execute="@form" render="@form"></f:ajax>
+                                        </h:selectOneRadio>
+                                        <!-- <table class="table table-bordered delivery-table">
                                             <tr>
                                                 <td class="delivery-option-radio">
                                                     <div class="dalivery-radio">
@@ -88,11 +93,11 @@
                                                 </td>
                                                 <td class="carrey-cost">Free</td>
                                             </tr>
-                                        </table>
+                                        </table> -->
                                         <!-- PRODUCT-DELIVERY SINGLE OPTION END -->
                                     </div>
-                                    <div class="table-responsive">
-                                        <!-- PRODUCT-DELIVERY SINGLE OPTION START -->
+                                    <!-- <div class="table-responsive">
+                                        PRODUCT-DELIVERY SINGLE OPTION START
                                         <table class="table table-bordered delivery-table">
                                             <tr>
                                                 <td class="delivery-option-radio">
@@ -116,8 +121,8 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        <!-- PRODUCT-DELIVERY SINGLE OPTION END -->
-                                    </div>
+                                        PRODUCT-DELIVERY SINGLE OPTION END
+                                    </div> -->
                                 </div>
                             </div>
                             <!-- PRODUCT-DELIVERY-ITEM START -->

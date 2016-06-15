@@ -153,5 +153,10 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio-java-sdk</artifactId>
+			<version>7.0.0-rc-4</version>
+		</dependency>
 	</dependencies>
 </project>

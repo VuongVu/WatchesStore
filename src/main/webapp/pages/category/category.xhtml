@@ -41,7 +41,7 @@
                                 </h:form>
                                 <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
                                 <h:dataTable rendered="#{not empty categoryBean.categories}" value="#{categoryBean.categories}" var="c" id="table1" role="grid"
-                                             styleClass="table table-bordered f">
+                                             styleClass="table table-bordered table-striped">
                                      <h:column>                 
                                         <f:facet name="header">Id</f:facet>                   
                                         <h:outputText value="#{c.categoryId}" />

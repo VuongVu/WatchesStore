@@ -44,9 +44,6 @@ public class Product implements	Serializable{
 
 	@Column(name = "productDiscount")
 	private double productDiscount;
-
-	@Column(name = "productRanking")
-	private double productRanking;
 	
 	@Column(name="isDelete")
 	private boolean isDelete;
@@ -116,7 +113,6 @@ public class Product implements	Serializable{
 		this.productPrice = productPrice;
 		this.productQuantity = productQuantity;
 		this.productDiscount = productDiscount;
-		this.productRanking = productRanking;
 		this.productImage = productImage;
 		this.productDescription = productDescription;
 		this.category = category;
@@ -169,14 +165,6 @@ public class Product implements	Serializable{
 
 	public void setProductDiscount(double productDiscount) {
 		this.productDiscount = productDiscount;
-	}
-
-	public double getProductRanking() {
-		return productRanking;
-	}
-
-	public void setProductRanking(double productRanking) {
-		this.productRanking = productRanking;
 	}
 
 	public byte[] getProductImage() {

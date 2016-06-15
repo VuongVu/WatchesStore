@@ -112,15 +112,17 @@ public class LoginBean implements Serializable{
 			return currentUrl + "?faces-redirect=true";
 		}
 	}
-
+	
 	public String userLoginCheckout() throws InterruptedException {
 		CustomerDAO dao = new CustomerDAO();
 		//validate email and password to login
 		String result = dao.authenticate(email, password);
+		System.out.println(result+" "+email+" "+password);
 		//check login result
-		System.out.println(result);
+		
 		if(result == "exists"){ //check if email doesn't exists
 			loggedIn = false;
+			System.out.println("if exist");
 			// Add View Faces Message
 			FacesContext.getCurrentInstance().addMessage(
 					"loginButton",
@@ -129,6 +131,7 @@ public class LoginBean implements Serializable{
 			return null;
 		}else if(result == "fail") { //check email or password incorrect
 			loggedIn = false;
+			System.out.println("if fail");
 			// Add View Faces Message
 			FacesContext.getCurrentInstance().addMessage(
 					"loginButton",
@@ -137,6 +140,7 @@ public class LoginBean implements Serializable{
 			return null;
 		}else { // user login
 			loggedIn = true;
+			System.out.println("if success "+ loggedIn);
 			// Add View Faces Message
 			FacesContext.getCurrentInstance().addMessage(
 					"loginButton",

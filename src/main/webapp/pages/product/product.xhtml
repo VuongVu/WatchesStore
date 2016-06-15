@@ -60,7 +60,7 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                                <h:dataTable rendered="#{not empty productBean.products}" value="#{productBean.products}" var="p" id="table1" role="grid"
+                                <h:dataTable rendered="#{not empty productBean.listProducts()}" value="#{productBean.listProducts()}" var="p" id="table1" role="grid"
                                              styleClass="table table-bordered table-striped">
                                      <h:column>                 
                                         <f:facet name="header">Id</f:facet>                   
@@ -94,10 +94,7 @@
                                         <f:facet name="header">Discount</f:facet>
                                         <h:outputText value="#{p.productDiscount}" />
                                      </h:column>
-                                     <h:column>                 
-                                        <f:facet name="header">Ranking</f:facet>                   
-                                        <h:outputText value="#{p.productRanking}" />
-                                     </h:column>
+                                     
                                      <h:column>
                                         <f:facet name="header">Image</f:facet>
                                         <h:graphicImage value="/DisplayImage?productId=#{p.productId}" width="70" height="70" />
@@ -124,7 +121,7 @@
                                      </h:column>
                                 </h:dataTable>
                            
-                                <h:panelGroup rendered="#{empty productBean.products}" styleClass="table table-bordered table-striped">
+                                <h:panelGroup rendered="#{empty productBean.listProducts()}" styleClass="table table-bordered table-striped">
                                         <p>Products is empty! Please add new product.</p>
                                 </h:panelGroup>
                                 

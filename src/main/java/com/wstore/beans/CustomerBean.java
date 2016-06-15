@@ -83,11 +83,16 @@ public class CustomerBean implements Serializable{
 	
 	public String registerCheckout() throws InterruptedException {
 		CustomerDAO dao = new CustomerDAO();
+		LoginBean loginBean = new LoginBean();		
 		customer.setEmail(this.email);
-		dao.addCustomer(this.customer);		
+		dao.addCustomer(this.customer);	
+		
+		loginBean.setEmail(email);
+		loginBean.setPassword(customer.getPassword());
+		
 		this.customer = new Customer();
 		email = null;
-		return "checkout-address.jsf?faces-redirect=true";
+		return loginBean.userLoginCheckout();
 	}
 
 	/**

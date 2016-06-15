@@ -25,13 +25,23 @@ public class OrderBean implements Serializable {
 	private Order order = new Order();
 	private List<Order> orders = new ArrayList<Order>();
 	private List<SelectItem> listCustomers = new ArrayList<SelectItem>();
-
+	private Order order_detail = new Order();
+	
 	public Order getOrder() {
 		return order;
 	}
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	
+
+	public Order getOrder_detail() {
+		return order_detail;
+	}
+
+	public void setOrder_detail(Order order_detail) {
+		this.order_detail = order_detail;
 	}
 
 	/**
@@ -64,6 +74,10 @@ public class OrderBean implements Serializable {
 		this.listCustomers = listCustomers;
 	}
 
+	public String takeOrder(Order order){
+		this.order_detail=order;
+		return "order-detail.jsf?faces-redirect=true";
+	}
 	/**
 	 * add new order
 	 */

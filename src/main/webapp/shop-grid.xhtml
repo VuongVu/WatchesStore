@@ -453,18 +453,27 @@
                                                 <!-- <a href="single-product.html" class="new-mark-box">new</a> -->
                                                 <div class="overlay-content">
                                                     <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                       <li>
+                                                           <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Zoom in"><i class="fa fa-search-plus"></i>
+					                                       		<f:ajax render="productImage"></f:ajax>
+					                                       </h:commandLink>
+					                                    </li>
                                                         <li>
-	                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
-	                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
-	                                                        </h:commandLink>
-                                                        </li>
-                                                        <li>
-                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
-                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
-                                                        	</h:commandLink>
-                                                        </li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+						                                     <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-plus"></i>
+						                                          <f:ajax execute="@form" render="cartForm"></f:ajax>
+						                                	 </h:commandLink>
+					                                    </li>
+					                                    <li>
+					                                        <h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-shopping-cart"></i>
+					                                             <f:ajax execute="@form" render="cartForm"></f:ajax>
+					                                        </h:commandLink>
+					                                    </li>
+					                                                        <!-- <li><a id="detailproduct-#{product.productId}" data-toggle="modal" data-target="#detailModal" title="Quick view" data-id="#{product.productId}"><i class="fa fa-heart-o"></i></a></li> -->
+					                                    <li>
+						                                     <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-edit"></i>
+						                                          <f:ajax render="productModal"></f:ajax>
+						                                     </h:commandLink>
+					                                    </li>
                                                     </ul>
                                                 </div>
                                             </div>

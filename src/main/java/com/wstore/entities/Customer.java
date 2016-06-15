@@ -56,6 +56,8 @@ public class Customer implements Serializable{
 	@OneToMany(fetch=FetchType.LAZY,mappedBy = "id.customer",cascade=javax.persistence.CascadeType.ALL)
 	private Set<Comment> comments;
 
+	@OneToMany(mappedBy="customer")
+	private Set<Delivery> deliveries;
 	public Customer() {
 
 	}
@@ -67,6 +69,15 @@ public class Customer implements Serializable{
 		this.password = password;
 		this.fullName = fullName;
 		this.phone = phone;
+	}
+
+	
+	public Set<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(Set<Delivery> deliveries) {
+		this.deliveries = deliveries;
 	}
 
 	public Set<Comment> getComments() {

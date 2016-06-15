@@ -38,8 +38,17 @@ public class ProductBean implements Serializable{
 	private int categoryId;
 	private int sort = 0;
 	private String searchString;
-	
-	
+	private Product product_detail = new Product();
+
+
+	public Product getProduct_detail() {
+		return product_detail;
+	}
+
+	public void setProduct_detail(Product product_detail) {
+		this.product_detail = product_detail;
+	}
+
 	public String getSearchString() {
 		return searchString;
 	}
@@ -62,8 +71,8 @@ public class ProductBean implements Serializable{
 
 	public void setListProductByBrand(List<Product> listProductByBrand) {
 		this.listProductByBrand = listProductByBrand;
-	}	
-	
+	}
+
 	public List<Product> getListSearch() {
 		return listSearch;
 	}
@@ -102,7 +111,7 @@ public class ProductBean implements Serializable{
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}	
+	}
 
 	public int getSort() {
 		return sort;
@@ -111,7 +120,7 @@ public class ProductBean implements Serializable{
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
-	
+
 	public int getCategoryId() {
 		return categoryId;
 	}
@@ -120,7 +129,7 @@ public class ProductBean implements Serializable{
 		this.categoryId = categoryId;
 	}
 
-	
+
 	public Product getProductDetail() {
 		return productDetail;
 	}
@@ -128,7 +137,7 @@ public class ProductBean implements Serializable{
 	public void setProductDetail(Product productDetail) {
 		this.productDetail = productDetail;
 	}
-	
+
 	public List<SelectItem> getListCategories() {
 		CategoryDAO dao = new CategoryDAO();
 		listCategories.clear();
@@ -143,13 +152,13 @@ public class ProductBean implements Serializable{
 		List<String> list=new ArrayList<>();
 		HashSet<String> hashSet=new HashSet<>();
 		ProductDAO dao=new ProductDAO();
-		
+
 		for (int i = 0; i < dao.findAllProducts().size(); i++) {
 			hashSet.add(dao.findAllProducts().get(i).getProductBrand());
 		}
 		list.addAll(hashSet);
-		
-		return list;		
+
+		return list;
 	}
 	public void setListCategories(List<SelectItem> listCategories) {
 		this.listCategories = listCategories;
@@ -233,7 +242,7 @@ public class ProductBean implements Serializable{
 	}
 
 	public String getProductDetail(Product product) {
-		this.product = product;
+		this.product_detail = product;
 		return "product-detail.jsf?faces-redirect=true";
 	}
 
@@ -243,13 +252,13 @@ public class ProductBean implements Serializable{
 	 * @return
 	 */
 
-	public List<Product> listProducts() {		
+	public List<Product> listProducts() {
 		ProductDAO dao = new ProductDAO();
 		List<Product> list = new ArrayList<Product>();
 		list=dao.findAllProducts();
 		return list;
 	}
-	
+
 	public List<Product> listNewProduct(){
 		ProductDAO dao=new ProductDAO();
 		List<Product> list=dao.findNewProducts();
@@ -274,7 +283,7 @@ public class ProductBean implements Serializable{
 		return "/shop-grid.jsf?faces-redirect=true";
 	}
 
-	
+
 	public List<Product> productByBrand(Product product) {
 		List<Product> list=new ArrayList<>();
 		ProductDAO dao = new ProductDAO();
@@ -285,7 +294,7 @@ public class ProductBean implements Serializable{
 			// TODO: handle exception
 			System.out.println("sada"+ e);
 		}
-		
+		productDetail = product;
 		return list;
 	}
 	public List<Product> productByCategory(Product product) {
@@ -297,11 +306,11 @@ public class ProductBean implements Serializable{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return list;
 	}
 
-	
+
 	public void processValueChange(){
 		// TODO Auto-generated method stub
 		ProductDAO dao=new ProductDAO();
@@ -320,7 +329,7 @@ public class ProductBean implements Serializable{
 		}
 		return null;
 	}
-	
+
 	public void takeModalProduct(int id){
 		//Product product = new Product();
 		ProductDAO dao=new ProductDAO();

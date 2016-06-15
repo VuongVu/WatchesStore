@@ -83,7 +83,7 @@
                                 <h:outputText styleClass="old-price" value="$#{cart.product.productPrice}" rendered="#{cart.product.productDiscount!=0}"></h:outputText>
                             </p:column>
                             
-                             <p:column styleClass="cart_quantity">
+                             <p:column a:class="cart_quantity">
                             	<f:facet name="header" style="width:100px;">Quantity</f:facet>
                                 <div>
                                     <h:inputText styleClass="cart-plus-minus" value="#{cart.quantity}" readonly="true"></h:inputText>
@@ -96,12 +96,12 @@
                                 </div>
                             </p:column>
                             
-                            <p:column styleClass="cart-delete">
+                            <p:column a:class="cart-delete">
                             <f:facet name="header">Delete</f:facet>
-                               <span style="padding-left: 25px;">
+                               <span>
                                   <!-- <a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a> -->
                                   <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}" styleClass="cart_quantity_delete"><i class="fa fa-trash-o"></i>
-                                  	<f:ajax execute="@form" render="@form"></f:ajax>
+                                  	<f:ajax execute="@form" render="@form cartForm"></f:ajax>
                                   </h:commandLink>
                                </span>
                             </p:column>

@@ -1,4 +1,4 @@
-    <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -97,7 +97,7 @@
                                             <div class="sidebar-product-image">
                                                 <a href="single-product.html">
                                                 	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                    style="width:80px;height:80px"
+                                                                    style="width:80px;height:80px;border:1px solid;"
                                                                     alt="product-image"/>
                                                 </a>
                                             </div>
@@ -127,7 +127,7 @@
                                             <div class="sidebar-product-image">
                                                 <a href="single-product.html">
                                                 	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                    style="width:80px;height:80px"
+                                                                    style="width:80px;height:80px;border:1px solid;"
                                                                     alt="product-image"/>
                                                 </a>
                                             </div>
@@ -177,31 +177,31 @@
                                                                 <div class="product-image">
                                                                     <h:commandLink action="#{productBean.getProductDetail(product)}">
                                                                         <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                                        style="width:190px;height:190px"
+                                                                                        style="width:190px;height:190px;border:1px solid;"
                                                                                         alt="product-image"/>
                                                                     </h:commandLink>
                                                                     <a href="#" class="new-mark-box">new</a>
                                                                     <div class="overlay-content">
                                                                         <ul>
-                                                                            <!-- <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li> -->
+                                                                            <!-- <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#"><i class="fa fa-search"></i></a></li> -->
                                                                             <li>
-                                                                            	<h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Quick view"><i class="fa fa-heart-o"></i>
+                                                                            	<h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Zoom in"><i class="fa fa-search-plus"></i>
 					                                                        		<f:ajax render="productImage"></f:ajax>
 					                                                        	</h:commandLink>
 					                                                        </li>
                                                                             <li>
-						                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
+						                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-plus"></i>
 						                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
 						                                                        </h:commandLink>
 					                                                        </li>
 					                                                        <li>
-					                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
+					                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-shopping-cart"></i>
 					                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
 					                                                        	</h:commandLink>
 					                                                        </li>
 					                                                        <!-- <li><a id="detailproduct-#{product.productId}" data-toggle="modal" data-target="#detailModal" title="Quick view" data-id="#{product.productId}"><i class="fa fa-heart-o"></i></a></li> -->
 					                                                        <li>
-						                                                        <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-heart-o"></i>
+						                                                        <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-edit"></i>
 						                                                        	<f:ajax render="productModal"></f:ajax>
 						                                                        </h:commandLink>
 					                                                        </li>
@@ -261,7 +261,6 @@
                                         <!-- HOME2-SALE-CAROUSEL START -->
                                         <div class="home2-sale-carousel">
                                             <!-- NEW-PRODUCT SINGLE ITEM START -->
-                                          
                                             <ui:repeat var="product" value="#{productBean.listSaleProduct()}">
                                             <div class="item">
                                                 <div class="new-product">
@@ -269,24 +268,35 @@
                                                         <div class="product-image">
                                                             <h:commandLink action="#{productBean.getProductDetail(product)}">
                                                                         <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                                        style="weight:190px;height:190px"
+                                                                                        style="width:190px;height:190px;border:1px solid;"
                                                                                         alt="product-image" />
                                                             </h:commandLink>
+                                                            <a href="#" class="new-mark-box">sale</a>
                                                             <div class="overlay-content">
-                                                                <ul>
-                                                                   <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
-                                                                   <li>
-				                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
-				                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
-				                                                        </h:commandLink>
-			                                                        </li>
-			                                                        <li>
-			                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
-			                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
-			                                                        	</h:commandLink>
-			                                                        </li>
-                                                                    <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                                </ul>
+                                                                	<ul>
+                                                                   <!-- <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#"><i class="fa fa-search"></i></a></li> -->
+                                                                   			<li>
+                                                                            	<h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Zoom in"><i class="fa fa-search-plus"></i>
+					                                                        		<f:ajax render="productImage"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
+                                                                            <li>
+						                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-plus"></i>
+						                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
+					                                                        <li>
+					                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-shopping-cart"></i>
+					                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
+					                                                        	</h:commandLink>
+					                                                        </li>
+					                                                        <!-- <li><a id="detailproduct-#{product.productId}" data-toggle="modal" data-target="#detailModal" title="Quick view" data-id="#{product.productId}"><i class="fa fa-heart-o"></i></a></li> -->
+					                                                        <li>
+						                                                        <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-edit"></i>
+						                                                        	<f:ajax render="productModal"></f:ajax>
+						                                                        </h:commandLink>
+					                                                        </li>
+                                                                	</ul>
                                                             </div>
                                                         </div>
                                                         <div class="product-info">
@@ -363,23 +373,32 @@
                                             <div class="product-image">
                                                  <h:commandLink action="#{productBean.getProductDetail(product)}">
                                                                         <h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
-                                                                                        style="weight:190px;height:190px"
+                                                                                        style="height:190px;border:1px solid"
                                                                                         alt="product-image" />
                                                  </h:commandLink>
                                                 <div class="overlay-content">
                                                     <ul>
-                                                        <li><a data-toggle="modal" data-target="#myModal" title="Quick view" onclick="#{productBean.getProductDetail(product)}"><i class="fa fa-search"></i></a></li>
+                                                    	<li>
+                                                           <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#myModal" a:title="Zoom in"><i class="fa fa-search-plus"></i>
+					                                       		<f:ajax render="productImage"></f:ajax>
+					                                       </h:commandLink>
+					                                    </li>
                                                         <li>
-	                                                        <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-shopping-cart"></i>
-	                                                        	<f:ajax execute="@form" render="cartForm"></f:ajax>
-	                                                        </h:commandLink>
-                                                        </li>
-                                                        <li>
-                                                        	<h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-retweet"></i>
-                                                        		<f:ajax execute="@form" render="cartForm"></f:ajax>
-                                                        	</h:commandLink>
-                                                        </li>
-                                                        <li><a href="#modal1" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
+						                                     <h:commandLink action="#{cartBean.addToCart(product,1)}" a:title="Add to cart"> <i class="fa fa-plus"></i>
+						                                          <f:ajax execute="@form" render="cartForm"></f:ajax>
+						                                	 </h:commandLink>
+					                                    </li>
+					                                    <li>
+					                                        <h:commandLink action="#{cartBean.buyNow(product,1)}" a:title="Buy now"> <i class="fa fa-shopping-cart"></i>
+					                                             <f:ajax execute="@form" render="cartForm"></f:ajax>
+					                                        </h:commandLink>
+					                                    </li>
+					                                                        <!-- <li><a id="detailproduct-#{product.productId}" data-toggle="modal" data-target="#detailModal" title="Quick view" data-id="#{product.productId}"><i class="fa fa-heart-o"></i></a></li> -->
+					                                    <li>
+						                                     <h:commandLink action="#{productBean.takeModalProduct(product.productId)}"  a:data-toggle="modal" a:data-target="#detailModal" a:title="Quick view"><i class="fa fa-edit"></i>
+						                                          <f:ajax render="productModal"></f:ajax>
+						                                     </h:commandLink>
+					                                    </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -400,446 +419,7 @@
                                             </div>
                                         </div>                          
                                     </div>
-                                    </ui:repeat>
-                                    <!-- SINGLE-PRODUCT-ITEM END -->
-                                    <!-- SINGLE-PRODUCT-ITEM START -->
-                                    <!-- <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/1.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">sale!</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Blouse</a>
-                                                <div class="price-box">
-                                                    <span class="price">$22.95</span>
-                                                    <span class="old-price">$27.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/9.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">sale!</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$23.40</span>
-                                                    <span class="old-price">$26.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/5.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$50.99</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/12.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Summer Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$28.98</span>
-                                                    <span class="old-price">$30.51</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/13.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Summer Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$30.50</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>  
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/7.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Chiffon Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$16.40</span>
-                                                    <span class="old-price">$20.50</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/11.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$26.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/10.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$26.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/12.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Blouse</a>
-                                                <div class="price-box">
-                                                    <span class="price">$27.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/4.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Faded Short Sleeves T-shirt</a>
-                                                <div class="price-box">
-                                                    <span class="price">$16.51</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/6.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Chiffon Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$16.40</span>
-                                                    <span class="old-price">$20.50</span>
-                                                </div>
-                                            </div>
-                                        </div>                          
-                                    </div>      
-                                    SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START                              
-                                    <div class="item">
-                                        <div class="single-product-item">
-                                            <div class="product-image">
-                                                <a href="#"><h:graphicImage library="img" name="product/sale/8.jpg" alt="product-image" /></a>
-                                                <a href="#" class="new-mark-box">new</a>
-                                                <div class="overlay-content">
-                                                    <ul>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-retweet"></i></a></li>
-                                                        <li><a href="#" title="Quick view"><i class="fa fa-heart-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <div class="customar-comments-box">
-                                                    <div class="rating-box">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-half-empty"></i>
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <span>1 Review (s)</span>
-                                                    </div>
-                                                </div>
-                                                <a href="single-product.html">Printed Dress</a>
-                                                <div class="price-box">
-                                                    <span class="price">$26.00</span>
-                                                </div>
-                                            </div>
-                                        </div>                     
-                                    </div>  -->
-                                    <!-- SINGLE-PRODUCT-ITEM END
-                                    SINGLE-PRODUCT-ITEM START       -->                        
+                                    </ui:repeat>                        
                                 </div>
                                 <!-- FEARTURED-CAROUSEL END -->
                             </div>

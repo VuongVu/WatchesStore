@@ -1385,7 +1385,7 @@ div.nivo-controlNav a.active {
 
 .product-image {
 	position: relative;
-	overflow: hidden;
+	/* overflow: hidden; */
 	display: block;
 }
 
@@ -2647,7 +2647,7 @@ body.index-2 .single-facality:hover, body.index-2 .flow-us-link li a:hover
 -------------------------*/
 body.index-2 .main-content-section-full-column .single-product-item {
 	padding-bottom: 30px;
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
 body.index-2 .main-content-section-full-column .onehalf-add-shope {
@@ -4686,7 +4686,7 @@ ul.step li.step-done span a {
 20.2 cart page table
 ------------------*/
 .table {
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 }
 
 .table-bordered {
