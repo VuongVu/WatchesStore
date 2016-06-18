@@ -118,21 +118,21 @@
 											<p:messages for="cartadd" id="mess" />
 											<p:messages id="qtymessage" for="qty" />
 											<h:outputScript>	
-											        document.getElementById("j_idt141:0:qty").value = 1;								                                 	
+											        document.getElementById("j_idt145:0:qty").value = 1;								                                 	
 			                                        function plus(){        
-			                                            var a = document.getElementById("j_idt141:0:qty").value;
+			                                            var a = document.getElementById("j_idt145:0:qty").value;
 			                                            a = parseInt(a,10)+1;
-			                                            document.getElementById("j_idt141:0:qty").value = a;                                                
+			                                            document.getElementById("j_idt145:0:qty").value = a;                                                
 			                                        }
 			                                        function minus(){
-			                                            var a = document.getElementById("j_idt141:0:qty").value;
+			                                            var a = document.getElementById("j_idt145:0:qty").value;
 			                                            if(parseInt(a,10) > 1){
 			                                                a = parseInt(a,10)-1;
 			                                            }
 			                                            else{
 			                                                a = 1;
 			                                            }
-			                                            document.getElementById("j_idt141:0:qty").value = a;			                                            
+			                                            document.getElementById("j_idt145:0:qty").value = a;			                                            
 			                                        }
                                     		</h:outputScript>
 											<div class="single-product-add-cart">
@@ -141,7 +141,7 @@
 													action="#{cartBean.addToCart(product,quantity.value)}"
 													value="Add to cart" styleClass="add-cart-text">
 													<f:ajax execute="@form"
-														render="cartForm j_idt141:0:quantityStock qtymessage mess"></f:ajax>
+														render="cartForm j_idt145:0:quantityStock qtymessage mess"></f:ajax>
 												</h:commandButton>
 											</div>
 										</div>
@@ -300,7 +300,7 @@
 																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
 																	value="Send" style="float:right;"
 																	class="btn btn-default btn-add-review ">
-																	<f:ajax execute="@form" render="j_idt141:0:reviewform j_idt141:0:datasheetform j_idt141:0:productRating"></f:ajax>
+																	<f:ajax execute="@form" render="j_idt145:0:reviewform j_idt145:0:datasheetform j_idt145:0:productRating"></f:ajax>
 																</h:commandButton>
 															</h:panelGroup>
 															<h:panelGroup rendered="#{loginBean.loggedIn==false}">

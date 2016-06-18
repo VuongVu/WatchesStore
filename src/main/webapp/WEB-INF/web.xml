@@ -30,6 +30,10 @@
 		<param-value>.xhtml</param-value>
 	</context-param>
 	<context-param>
+	   <param-name>authtoken</param-name>
+	   <param-value>5tHDF6nLY5BeptvtrJLpyJfkuNRsjOWToxCLWtbIcabkjdsY5bCPzdaH19u</param-value>
+	</context-param>
+	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>

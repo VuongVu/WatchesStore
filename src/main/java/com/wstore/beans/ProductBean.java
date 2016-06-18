@@ -304,7 +304,7 @@ public class ProductBean implements Serializable{
 			list = dao.findProductByCatId(product.getCategory().getCategoryId());
 			list.remove(product);
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
 
 		return list;
