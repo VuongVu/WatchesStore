@@ -1,6 +1,7 @@
 package com.wstore.DAO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ public class CommentDAO {
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
+		Date date = new Date();
 
 		try{
 			//get Session object
@@ -34,6 +37,7 @@ public class CommentDAO {
 			comment.setProduct(product);
 			comment.setCustomer(customer);
 			comment.setIsdel(false);
+			comment.setDate_create(date);
 			//save comment object
 			if(isExist(product, customer)!=null){
 				session.update(comment);
@@ -104,6 +108,7 @@ public class CommentDAO {
 			// Starting Transaction
 			tx = session.beginTransaction();
 			//comment.setDelete(true);
+			comment.setIsdel(true);
 			session.update(comment);
 
 			//commit transaction
@@ -165,6 +170,43 @@ public class CommentDAO {
 			}
 		}
 		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Comment> findAllComments() {
+		List<Comment> comments = new ArrayList<Comment>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Comment.class);
+//			// To sort records in descening order
+//			
+			criteria.add(Restrictions.eq("isdel", false));
+			criteria.addOrder(Order.asc("date_create"));
+			comments=criteria.list();
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return comments;
 	}
 	
 }

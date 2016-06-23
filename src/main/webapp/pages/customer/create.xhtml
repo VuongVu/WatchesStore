@@ -35,25 +35,12 @@
                         <!-- form start -->
                         <div class="form-horizontal">
                             <div class="box-body">
-                                <div class="form-group">
-                                    <h:outputLabel value="First Name" styleClass="col-sm-2 control-label"/>
-                                    <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.firstName}" 
-                                                     styleClass="form-control"
-                                                     id="firstName" 
-                                                     required="true"
-                                                     requiredMessage="First name is required"                                                    
-                                                     tabindex="1">
-                                            <f:ajax event="click" render="firstName"></f:ajax>
-                                        </h:inputText>
-                                    </div>
-                                    <h:message for="firstName" styleClass="col-sm-4" style="color:red"/>
-                                </div>
+                               
                                 
                                 <div class="form-group">
-                                    <h:outputLabel value="Last Name" styleClass="col-sm-2 control-label"/>
+                                    <h:outputLabel value="Full Name" styleClass="col-sm-2 control-label"/>
                                     <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.lastName}" 
+                                        <h:inputText value="#{customerBean.customer.fullName}" 
                                                      styleClass="form-control"
                                                      id="lastName"
                                                      required="true"
@@ -81,19 +68,6 @@
                                     <h:message for="phone" styleClass="col-sm-4" style="color:red"/>
                                 </div>
                                
-                                <div class="form-group">
-                                    <h:outputLabel value="Address" styleClass="col-sm-2 control-label"/>
-                                    <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.address}" 
-                                                     styleClass="form-control"
-                                                     id="address"
-                                                     tabindex="1">
-                                            <f:ajax event="click" render="address"></f:ajax>
-                                         </h:inputText>
-                                    </div>
-                                    <h:messages for="address" styleClass="col-sm-4" style="color:red"/>
-                                </div>
-                                
                                 <div class="form-group">
                                     <h:outputLabel value="Email" styleClass="col-sm-2 control-label"/>
                                     <div class="col-sm-4">

@@ -36,11 +36,11 @@
                             <div class="box-body">
                                 <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
                                     <div align="center">
-                                        <h3>Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page</h3>
+                                        <h3>Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page</h3>
                                     </div>
                                 </h:form>
                                 <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
-                                <h:dataTable rendered="#{not empty orderDetailBean.orderDetails}" value="#{orderDetailBean.orderDetails}" var="o" id="table1" role="grid"
+                                <h:dataTable rendered="#{not empty orderDetailBean.orderDetails}" value="#{orderBean.getOderdetailByOrderId(orderBean.order_detail.orderId)}" var="o" id="table1" role="grid"
                                              styleClass="table table-bordered table-striped">
                                      <h:column>                 
                                         <f:facet name="header">Id</f:facet>                   
@@ -71,22 +71,22 @@
                                         <f:facet name="header">Order Id</f:facet>
                                         <h:outputText value="#{o.order.orderId}" />
                                      </h:column>
-                                     <h:column>
+                                     <!-- <h:column>
                                         <f:facet name="header">Options</f:facet>
                                         <h:commandButton styleClass="btn btn-block btn-info btn-flat"
                                                          style="width:95px" 
                                                          value="Edit" 
                                                          action="#{orderDetailBean.editAction(o)}" >
                                         </h:commandButton>
-                                        <!-- <h:commandButton styleClass="btn btn-block btn-danger btn-flat" 
+                                        <h:commandButton styleClass="btn btn-block btn-danger btn-flat" 
                                                          style="width:95px" 
                                                          value="Delete" 
                                                          type="submit"
                                                          onclick="return confirm('Are you sure to delete it?')" 
                                                          action="#" >
                                             <f:ajax render="@all"></f:ajax>
-                                        </h:commandButton> -->
-                                     </h:column>
+                                        </h:commandButton>
+                                     </h:column> -->
                                 </h:dataTable>
                            
                                 <h:panelGroup rendered="#{empty orderDetailBean.orderDetails}" styleClass="table table-bordered table-striped">

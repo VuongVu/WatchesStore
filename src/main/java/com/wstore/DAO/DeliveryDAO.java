@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.wstore.entities.Delivery;
@@ -62,6 +63,7 @@ public class DeliveryDAO {
 			// To sort records in descening order
 			criteria.createAlias("customer", "c");
 			criteria.add(Restrictions.eq("c.customerId", id));
+			criteria.addOrder(Order.desc("deliveryId"));
 			//get list from criteria
 			deliveries = criteria.list();
 
@@ -80,4 +82,5 @@ public class DeliveryDAO {
 		}
 		return deliveries;
 	}
+	
 }

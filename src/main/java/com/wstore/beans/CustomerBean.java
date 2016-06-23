@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
 import com.wstore.DAO.CustomerDAO;
 import com.wstore.entities.Customer;
+import com.wstore.utils.SendMail;
 import com.wstore.validator.EmailExistsConstraint;
 
 
@@ -30,7 +33,17 @@ public class CustomerBean implements Serializable{
 	private List<Customer> customers = new ArrayList<Customer>();
 	private boolean editable=false;
 	private boolean editpassword=false;
+	
+	@Email(message = "Email format is invalid")
+	private String email_reset;
 
+	
+	public String getEmail_reset() {
+		return email_reset;
+	}
+	public void setEmail_reset(String email_reset) {
+		this.email_reset = email_reset;
+	}
 	public boolean isEditpassword() {
 		return editpassword;
 	}
@@ -70,20 +83,28 @@ public class CustomerBean implements Serializable{
 	/**
 	 *
 	 * register new user
+	 * @throws InterruptedException 
 	 */
-	public String registerUser() {
+	public String registerUser() throws InterruptedException {
 		CustomerDAO dao = new CustomerDAO();
+		LoginBean loginBean = (LoginBean)FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "loginBean");
+		
 		customer.setEmail(this.email);
 		dao.addCustomer(this.customer);
+		
+		loginBean.setEmail(email);
+		loginBean.setPassword(customer.getPassword());
+		
 		customer = new Customer();
 		email = null;
 
-		return "/login.jsf?faces-redirect=true";
+		return loginBean.userLogin();
 	}
 	
 	public String registerCheckout() throws InterruptedException {
 		CustomerDAO dao = new CustomerDAO();
-		LoginBean loginBean = new LoginBean();		
+		
+		LoginBean loginBean = (LoginBean)FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "loginBean");		
 		customer.setEmail(this.email);
 		dao.addCustomer(this.customer);	
 		
@@ -161,5 +182,25 @@ public class CustomerBean implements Serializable{
 		CustomerDAO dao=new CustomerDAO();
 		this.customer=dao.findCustomerByEmail(email);
 		return this.customer;
+	}
+	
+	public String resetPassword(){
+		String currentUrl = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		SendMail sendMail = new SendMail();
+		CustomerDAO dao = new CustomerDAO();
+		Customer customer = null;
+		
+		customer = dao.findCustomerByEmail(email_reset);
+		if(customer != null){			
+			sendMail.forgotPassword(email_reset, customer.getPassword());
+			return currentUrl+"?faces-redirect=true";
+			
+		}else {
+			FacesContext.getCurrentInstance().addMessage(
+					"resetButton",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Email doesn't exists", "Please register nesw account"));
+		}
+		return null;
 	}
 }

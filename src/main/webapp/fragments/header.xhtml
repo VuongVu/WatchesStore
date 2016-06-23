@@ -40,7 +40,6 @@
                                 <ul class="list-inline dropdown">
                                     <li><a href="checkout.html">Check Out</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="wishlist.html">#{loginBean.loggedIn}</a></li>
                                     <c:if test="#{not loginBean.loggedIn}">
                                         <li><a class="cd-signin" href="#modal1">Sign in</a></li>
                                     </c:if>
@@ -124,27 +123,32 @@
                     <h:form styleClass="cd-form" prependId="false">
                         <p class="fieldset">
                             <h:outputLabel styleClass="image-replace cd-username" for="signup-username" value="Username" />
-                            <h:inputText id="signup-username" styleClass="full-width has-padding has-border" a:placeholder="Username"  value="" />
+                            <h:inputText id="signup-username" styleClass="full-width has-padding has-border" a:placeholder="Username"  value="#{customerBean.customer.fullName}" required="true" requiredMessage="User name is required"/>
+                            <p:message for="signup-username"></p:message>
                         </p>
     
                         <p class="fieldset">
                             <h:outputLabel styleClass="image-replace cd-email" for="signup-email" value="E-mail" />
-                            <h:inputText a:type="email" id="signup-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail"  value="" />
+                            <h:inputText a:type="email" id="signup-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail"  value="#{customerBean.email}" required="true" requiredMessage="Email is required"/>
+                            <p:message for="signup-email"></p:message>
                         </p>
     
                         <p class="fieldset">
                             <h:outputLabel styleClass="image-replace cd-password" for="signup-password" value="Password" />
-                            <h:inputText id="signup-password" styleClass="full-width has-padding has-border" a:placeholder="Password"  value="" />
+                            <h:inputText id="signup-password" styleClass="full-width has-padding has-border" a:placeholder="Password"  value="#{customerBean.customer.password}" required="true" requiredMessage="Password is required"/>
                             <a href="#0" class="hide-password">Hide</a>
+                            <p:message for="signup-password"></p:message>
                         </p>
     
-                        <p class="fieldset">
-                            <input type="checkbox" id="accept-terms"/>
-                            <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
-                        </p>
+                       <!--  <p class="fieldset">
+                            <input type="checkbox" id="accept-terms" required="required"/>
+                            <label for="accept-terms">I agree to the <a href="#0">Terms</a></label> 
+                        </p> -->
     
                         <p class="fieldset">
-                            <h:commandButton styleClass="full-width has-padding" type="submit" value="Create account" />
+                            <h:commandButton styleClass="full-width has-padding" type="submit" value="Create account" action="#{customerBean.registerUser()}">
+                            	<f:ajax execute="@form" render="@form"></f:ajax>
+                            </h:commandButton>
                         </p>
                     </h:form>
                 </div>
@@ -155,11 +159,15 @@
                     <h:form styleClass="cd-form" prependId="false">
                         <p class="fieldset">
                             <h:outputLabel styleClass="image-replace cd-email" for="reset-email" value="E-mail" />
-                            <h:inputText a:type="email" id="reset-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail"/>
+                            <h:inputText value="#{customerBean.email_reset}" a:type="email" id="reset-email" styleClass="full-width has-padding has-border" a:placeholder="E-mail" required="true" requiredMessage="Email is required"/>
+                            <p:messages for="resetButton"/>
+                            <p:message for="reset-email"></p:message>
                         </p>
     
                         <p class="fieldset">
-                            <h:commandButton styleClass="full-width has-padding" type="submit" value="Reset password" />
+                            <h:commandButton styleClass="full-width has-padding" type="submit" action="#{customerBean.resetPassword()}" value="Reset password" >
+                            	<f:ajax execute="@form" render="@form"></f:ajax>
+                            </h:commandButton>
                         </p>
                     </h:form>
     
@@ -223,7 +231,7 @@
                                         <!-- <span class="cross-icon"><i class="fa fa-times-circle"></i></span> -->
                                         <span class="cross-icon">
 	                                        <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}"><i class="fa fa-times-circle"></i>
-	                                        	<f:ajax execute="cartForm" render="cartForm j_idt141:0:quantityStock"></f:ajax>
+	                                        	<f:ajax execute="cartForm" render="cartForm j_idt158:0:quantityStock"></f:ajax>
 	                                        </h:commandLink>
                                         </span>
                                         <div class="shipping-item-image">
@@ -290,8 +298,7 @@
                                     <li>
                                         <a href="shop-gird.html">T-shirts</a> 
                                     </li> -->
-                                    <li><a href="#">Delivery</a></li>
-                                    <li><a href="about-us.html">About us</a></li>
+                                    <li><a href="contact.jsf?faces-redirect=true">About us</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -301,26 +308,28 @@
                 </div>
                 <div class="row">
                     <!-- MOBILE MENU START -->
+                    <h:form prependId="false">
                     <div class="col-sm-12 mobile-menu-area">
                         <div class="mobile-menu hidden-md hidden-lg" id="mob-menu">
                             <span class="mobile-menu-title">MENU</span>
                             <nav>
                                 <ul>
-                                    <li><a href="index.html">Home</a>                                                      
+                                    <li><a href="index.xhtml">Home</a>                                                      
                                     </li>                               
-                                    <li><a href="shop-gird.html">Women</a>
-                                    </li>
-                                    <li><a href="shop-gird.html">men</a>                                     
-                                    </li>
-                                    <li><a href="shop-gird.html">clothing</a></li>
+                                   <ui:repeat var="category" value="#{categoryBean.categories}">
+                                        <li><h:commandLink value="#{category.categoryName}" action="#{productBean.getCategoryId(category.categoryId)}"/>
+                                        </li>
+                                    </ui:repeat>
+                                    <!-- <li><a href="shop-gird.html">clothing</a></li>
                                     <li><a href="shop-gird.html">tops</a></li>
                                     <li><a href="shop-gird.html">T-shirts</a></li>
-                                    <li><a href="#">Delivery</a></li>
-                                    <li><a href="about-us.html">About us</a></li>
+                                    <li><a href="#">Delivery</a></li> -->
+                                    <li><a href="contact.xhtml">About us</a></li>
                                 </ul>
                             </nav>
                         </div>                      
                     </div>
+                    </h:form>
                     <!-- MOBILE MENU END -->
                 </div>              
             </div>

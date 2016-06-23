@@ -23,7 +23,7 @@ public class ProductState implements Serializable{
 	private Product product;
 	
 	@Column(name="isNew")
-	private boolean isNew;
+	private boolean isNewProduct;
 	
 	@Column(name="isSale")
 	private boolean isSale;
@@ -34,18 +34,29 @@ public class ProductState implements Serializable{
 	@Column(name="isAll")
 	private boolean isAll;
 	
+	@Column(name="isComing")
+	private boolean isComing;
 	
+	
+	
+	public boolean isComing() {
+		return isComing;
+	}
+	public void setComing(boolean isComing) {
+		this.isComing = isComing;
+	}
 	public Product getProduct() {
 		return product;
 	}
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	public boolean isNew() {
-		return isNew;
+	
+	public boolean isNewProduct() {
+		return isNewProduct;
 	}
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
+	public void setNewProduct(boolean isNewProduct) {
+		this.isNewProduct = isNewProduct;
 	}
 	public boolean isSale() {
 		return isSale;

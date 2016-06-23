@@ -25,7 +25,7 @@
                 </div>
                 <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
                     <div align="center">
-                       <h3> Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page </h3>
+                       <h3> Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page </h3>
                     </div>
                 </h:form>
                 <h:form prependId="false" enctype="multipart/form-data" rendered="#{loginBean.adminloggedIn}">
@@ -155,6 +155,25 @@
                                     </div>
                                     <br /> 
                                     <br /> 
+                                    <div class="form-group">
+                                        <h:outputLabel value="Product state" styleClass="col-sm-2 control-label"/>
+                                       
+                                        <div class="col-sm-4">
+                                         <ui:repeat var="c" value="#{productBean.list_state}">
+												#{c}
+											</ui:repeat>
+										#{productBean.list_state.size()}
+                                            <h:selectManyCheckbox value="#{productBean.list_state}" styleClass="table table-border">
+												<f:selectItem itemLabel="New" itemValue="new"/>
+												<f:selectItem itemLabel="Sale" itemValue="sale"/>
+												<f:selectItem itemLabel="Best" itemValue="best"/>
+												<f:selectItem itemLabel="Coming" itemValue="coming"/>
+												<f:ajax render="@form" execute="@form"></f:ajax>
+											</h:selectManyCheckbox>
+											
+                                        </div>
+                                        <h:messages for="productDescription" styleClass="col-sm-4" style="color:red"/>
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane " id="tab_2">

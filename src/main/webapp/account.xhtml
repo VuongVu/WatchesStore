@@ -53,7 +53,7 @@
                     </div>
                     <hr></hr>
                     <div class="col-md-12">
-                    <h3>My order</h3>
+                    <h3>My order</h3><br/>
                     	<h:dataTable var="odd" value="#{orderBean.getOrderByCusEmail(loginBean.email).size()>5?orderBean.getOrderByCusEmail(loginBean.email).subList(0,5):orderBean.getOrderByCusEmail(loginBean.email)}" styleClass="table table-bordered table-striped" id="table1" role="grid">
 		                            <p:column>
 		                            <f:facet name="header">Order number</f:facet>
@@ -72,14 +72,14 @@
 		                            
 		                            <p:column>
 		                            <f:facet name="header">Paid</f:facet>
-		                                #{odd.paid==false?No:Yes}
+		                                #{odd.paid==false?'No':'Yes'}
 		                            </p:column>
 		                            
 		                </h:dataTable>
                     </div>
                     <div class="col-md-12">
                     	<h3>My address</h3><br/>
-                    	<ui:repeat var="delivery" value="#{cartBean.findAllDelivery(loginBean.email).size()>4?cartBean.findAllDelivery(loginBean.email).subList(0,4):cartBean.findAllDelivery(loginBean.email)}">
+                    	<ui:repeat var="delivery" value="#{cartBean.findAllDelivery(loginBean.email)}">
 			                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 			                        <div class="first_item primari-box">
 			                            <ul class="address">

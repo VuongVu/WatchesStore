@@ -43,9 +43,6 @@ public class Customer implements Serializable{
 	@Column(name = "phone")
 	private String phone;
 
-	@Column(name="address")
-	private String address;
-
 	@Column(name="isDelete")
 	private boolean isDelete;
 
@@ -144,14 +141,6 @@ public class Customer implements Serializable{
 		this.orders = orders;
 	}
 
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	@Override
 	public boolean equals(Object object) {

@@ -71,7 +71,7 @@ public class Product implements	Serializable{
 	@OneToMany(fetch=FetchType.LAZY,mappedBy = "id.product",cascade=CascadeType.ALL)
 	private Set<Comment> comments;
 	
-	@OneToMany(mappedBy="product")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="product")
 	private Set<ProductState> productStates;
 	
 	

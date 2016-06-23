@@ -43,20 +43,17 @@
                                      </h:column>
                                      <h:column>
                                         <f:facet name="header">First Name</f:facet>
-                                        <h:outputText value="#{c.firstName}" />
+                                        <h:outputText value="#{c.fullName}" />
                                      </h:column>
-                                     <h:column>
-                                        <f:facet name="header">Last Name</f:facet>
-                                        <h:outputText value="#{c.lastName}" />
-                                     </h:column>
+                                     
                                      <h:column>                 
                                         <f:facet name="header">Phone</f:facet>                   
                                         <h:outputText value="#{c.phone}" />
                                      </h:column>
-                                     <h:column>
+                                     <!-- <h:column>
                                         <f:facet name="header">Address</f:facet>
                                         <h:outputText value="#{c.address}" />
-                                     </h:column>
+                                     </h:column> -->
                                      <h:column>
                                         <f:facet name="header">Email</f:facet>
                                         <h:outputText value="#{c.email}" />
@@ -117,7 +114,7 @@
                                         <div align="center">
                                             <h3>
                                                 Please <a
-                                                    href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a>
+                                                    href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a>
                                                 to access this page
                                             </h3>
                                         </div>

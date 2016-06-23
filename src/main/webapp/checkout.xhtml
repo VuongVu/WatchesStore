@@ -111,14 +111,14 @@
 		                            <!-- SINGLE-PAYMENT-METHOD START -->
 		                            <h:form prependId="false">
 			                            <div class="single-payment-method payment-method-two">
-			                                <h:commandLink action="#{cartBean.checkOut(loginBean.email)}" value="Pay by check">
+			                                <h:commandLink action="#{cartBean.checkOut(loginBean.email)}" value="Pay on delivery">
 			                                    <span> (order processing will be longer)</span><i class="fa fa-chevron-right"></i>
 			                                	<f:ajax execute="@form" render="@form"></f:ajax>
 			                                </h:commandLink>
 			                            </div>
 			                            <p:messages for="checkout"></p:messages>
 		                            </h:form>
-                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top" id="my_form">
                                         <input type="hidden" name="upload" value="1" />
 								        <input type="hidden" name="cmd" value="_cart"/>
 								        <input type="hidden" name="business" value="vuongvu333-facilitator@gmail.com"/>
@@ -133,8 +133,13 @@
 								        <input type="hidden" name="no_note" value="0"/>
 								        <input type="hidden" name="currency_code" value="USD"/>
 								        <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest"/>
-								        <input type="image" src="http://i.imgur.com/IYFJ0Mm.jpg" a:border="0" name="submit" alt="PayPal"/>
-								        <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
+								        <input type="hidden" name="return" value="http://localhost:8080/WatchesStore/checkout-success.jsf" />
+            							<input type="hidden" name="cancel_return" value="http://localhost:8080/WatchesStore/checkout.jsf" />
+								        <!-- <input type="image" src="http://i.imgur.com/IYFJ0Mm.jpg" a:border="0" name="submit" alt="PayPal"/> -->
+								        <!-- <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1"/> -->
+								        <div class="single-payment-method payment-method-three">
+		                                	<a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Pay by paypal<span> (order processing will be longer)</span><i class="fa fa-chevron-right"></i></a>
+		                            	</div>
 								    </form>
 								    
 		                            <!-- SINGLE-PAYMENT-METHOD END -->

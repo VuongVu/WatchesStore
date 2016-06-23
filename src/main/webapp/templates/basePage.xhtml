@@ -63,15 +63,19 @@
     <h:outputStylesheet library="css" name="responsive.css"></h:outputStylesheet>
         
     <!-- IE CSS -->
-    <h:outputStylesheet library="css" name="ie.css"></h:outputStylesheet>    
+    <h:outputStylesheet library="css" name="ie.css"></h:outputStylesheet>
+    
         
+    
     <!-- MODERNIZR JS -->
     <h:outputScript library="js" name="vendor/modernizr-2.6.2.min.js"></h:outputScript>
     
     <!-- JS -->
     <!-- jquery js -->
+    <h:outputScript library="js" name="jquery.min.js"></h:outputScript>
     <h:outputScript library="js" name="vendor/jquery-1.11.3.min.js"></h:outputScript>
-
+    <h:outputScript library="js" name="jQuery.paginate.js"></h:outputScript>
+	
     <!-- fancybox js -->
     <h:outputScript library="js" name="jquery.fancybox.js"></h:outputScript>
 
@@ -216,10 +220,9 @@
 											<div class="tab-content">
 												<div class="tab-pane active" id="thumbnail_1">
 													<div class="single-product-image">
-														<h:graphicImage
-															value="/DisplayImage?productId=#{product.productId}"
-															alt="single-product-image"
-															style="width:330px; height:330px" />
+														<h:graphicImage value="/DisplayImage?productId=#{product.productId}"
+																		alt="single-product-image"
+																		style="width:330px; height:330px" />
 													</div>
 												</div>
 											</div>
@@ -242,15 +245,12 @@
 											</div>
 											<div class="single-product-price">
 												<h2>$#{product.productPrice-(product.productPrice*(product.productDiscount/100))}</h2>
-												<h:outputText styleClass="old-price"
-													value="$#{product.productPrice}"
-													rendered="#{product.productDiscount!=0}" />
+												<h:outputText styleClass="old-price" value="$#{product.productPrice}" rendered="#{product.productDiscount!=0}" />
 											</div>
 											<div class="single-product-desc">
 												<!-- <p>#{product.productDescription}</p> -->
 												<h:panelGroup styleClass="product-in-stock" id="quantityStock">
-													<h:outputLabel rendered="#{product.productQuantity!=0}"
-														value="#{product.productQuantity} Items ">
+													<h:outputLabel rendered="#{product.productQuantity!=0}" value="#{product.productQuantity} Items ">
 														<span>In stock</span>
 													</h:outputLabel>
 													<h:outputLabel rendered="#{product.productQuantity==0}">														
@@ -263,37 +263,37 @@
 												<p class="small-title">Quantity</p>
 												<div class="cart-quantity">
 													<div class="single-qty-btn">
-														<h:inputText styleClass="cart-plus-minus sing-pro-qty"
-															id="qty" binding="#{input}" value="1" required="true"
-															requiredMessage="Quantity is required">
+														<h:inputText styleClass="cart-plus-minus sing-pro-qty" id="qty" 
+																	binding="#{input}" value="1" required="true"
+																	requiredMessage="Quantity is required">
 															<f:validateLongRange minimum="1"></f:validateLongRange>
 														</h:inputText>
-														<div class="dec qtybutton" onclick="minus()">-</div>
-														<div class="inc qtybutton" onclick="plus()">+</div>
+														<div class="dec qtybutton" onclick="minusModal()">-</div>
+														<div class="inc qtybutton" onclick="plusModal()">+</div>
 													</div>
 												</div>
 											</div>
 											<p:messages for="cartadd" id="mess" />
 											<p:messages id="qtymessage" for="qty" />
 											<!-- <h:outputScript>
-													document.getElementById("j_idt141:0:qty").onload = function() {onLoading()};
+													document.getElementById("j_idt235:0:qty").onload = function() {onLoading()};
 													function onLoading(){
-														document.getElementById("j_idt141:0:qty").value = 1;
+														document.getElementById("j_idt235:0:qty").value = 1;
 													}                                   	
-			                                        function plus(){        
-			                                            var a = document.getElementById("j_idt280:0:qty").value;
+			                                        function plusModal(){        
+			                                            var a = document.getElementById("j_idt235:0:qty").value;
 			                                            a = parseInt(a,10)+1;
-			                                            document.getElementById("j_idt280:0:qty").value = a;                                                
+			                                            document.getElementById("j_idt235:0:qty").value = a;                                                
 			                                        }
-			                                        function minus(){
-			                                            var a = document.getElementById("j_idt280:0:qty").value;
+			                                        function minusModal(){
+			                                            var a = document.getElementById("j_idt235:0:qty").value;
 			                                            if(parseInt(a,10) > 1){
 			                                                a = parseInt(a,10)-1;
 			                                            }
 			                                            else{
 			                                                a = 1;
 			                                            }
-			                                            document.getElementById("j_idt280:0:qty").value = a;
+			                                            document.getElementById("j_idt235:0:qty").value = a;
 			                                            
 			                                        }
                                     		</h:outputScript> -->
@@ -303,14 +303,8 @@
 													action="#{cartBean.addToCart(product,input.value)}"
 													value="Add to cart" styleClass="add-cart-text">
 													<f:ajax execute="@form"
-														render="cartForm j_idt141:0:quantityStock qtymessage mess"></f:ajax>
+														render="cartForm quantityStock qtymessage mess"></f:ajax>
 												</h:commandButton>
-												<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                            <input type="hidden" name="cmd" value="_s-xclick"/>
-                                            <input type="hidden" name="hosted_button_id" value="6R5PK87ZT85HS"/>
-                                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
-                                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"/>
-                                        </form> -->
 											</div>
 										</div>
 									</div>

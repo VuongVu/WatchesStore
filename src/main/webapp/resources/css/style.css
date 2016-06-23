@@ -6047,7 +6047,8 @@ a.write-review-btn {
 }
 
 .product-image {
-	
+	width: 190px;
+	height: 190px;
 }
 
 .product-info {

@@ -74,9 +74,8 @@ public class OrderBean implements Serializable {
 		this.listCustomers = listCustomers;
 	}
 
-	public String takeOrder(Order order){
+	public void takeOrder(Order order){
 		this.order_detail=order;
-		return "order-detail.jsf?faces-redirect=true";
 	}
 	/**
 	 * add new order
@@ -114,6 +113,11 @@ public class OrderBean implements Serializable {
 	 */
 	public void deleteOrder(Order order) {
 		OrderDAO dao = new OrderDAO();
+		OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+		List<OrderDetail> list = orderDetailDAO.findOrderDetailByOrderId(order.getOrderId());
+		for (OrderDetail orderDetail : list) {
+			orderDetailDAO.deleteOrderDetail(orderDetail);
+		}
 		dao.deleteOrder(order);
 	}
 

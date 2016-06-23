@@ -14,9 +14,11 @@ import org.primefaces.model.UploadedFile;
 
 import com.wstore.DAO.CategoryDAO;
 import com.wstore.DAO.ProductDAO;
+import com.wstore.DAO.ProductStateDAO;
 import com.wstore.DAO.SupplierDAO;
 import com.wstore.entities.Category;
 import com.wstore.entities.Product;
+import com.wstore.entities.ProductState;
 import com.wstore.entities.Supplier;
 @ManagedBean(name="productBean")
 @SessionScoped
@@ -37,10 +39,11 @@ public class ProductBean implements Serializable{
 	private String productProperty="isAll";
 	private int categoryId;
 	private int sort = 0;
-	private String searchString;
+	private String searchString = null;
 	private Product product_detail = new Product();
-
-
+	private List<String> list_state = new ArrayList<>();
+	
+	
 	public Product getProduct_detail() {
 		return product_detail;
 	}
@@ -71,8 +74,8 @@ public class ProductBean implements Serializable{
 
 	public void setListProductByBrand(List<Product> listProductByBrand) {
 		this.listProductByBrand = listProductByBrand;
-	}
-
+	}	
+	
 	public List<Product> getListSearch() {
 		return listSearch;
 	}
@@ -111,7 +114,7 @@ public class ProductBean implements Serializable{
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
+	}	
 
 	public int getSort() {
 		return sort;
@@ -120,7 +123,7 @@ public class ProductBean implements Serializable{
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
-
+	
 	public int getCategoryId() {
 		return categoryId;
 	}
@@ -129,13 +132,23 @@ public class ProductBean implements Serializable{
 		this.categoryId = categoryId;
 	}
 
-
+	
 	public Product getProductDetail() {
 		return productDetail;
 	}
 
 	public void setProductDetail(Product productDetail) {
 		this.productDetail = productDetail;
+	}
+	
+	
+
+	public List<String> getList_state() {
+		return list_state;
+	}
+
+	public void setList_state(List<String> list_state) {
+		this.list_state = list_state;
 	}
 
 	public List<SelectItem> getListCategories() {
@@ -152,13 +165,13 @@ public class ProductBean implements Serializable{
 		List<String> list=new ArrayList<>();
 		HashSet<String> hashSet=new HashSet<>();
 		ProductDAO dao=new ProductDAO();
-
+		
 		for (int i = 0; i < dao.findAllProducts().size(); i++) {
 			hashSet.add(dao.findAllProducts().get(i).getProductBrand());
 		}
 		list.addAll(hashSet);
-
-		return list;
+		
+		return list;		
 	}
 	public void setListCategories(List<SelectItem> listCategories) {
 		this.listCategories = listCategories;
@@ -198,12 +211,29 @@ public class ProductBean implements Serializable{
 	 */
 	public String addProduct() {
 		ProductDAO dao = new ProductDAO();
+		ProductStateDAO productStateDAO = new ProductStateDAO();
+		ProductState productState = new ProductState();
+		
+		for (String item : list_state) {
+			if(item == "new"){
+				productState.setNewProduct(true);
+			}else if (item == "best") {
+				productState.setBest(true);
+			}else if (item == "sale") {
+				productState.setSale(true);
+			}else if(item == "coming"){
+				productState.setComing(true);
+			}
+		}
+		productState.setAll(true);
+		
 		if (image != null) {
 			// get content of image
 			byte[] imageData = image.getContents();
 			this.product.setProductImage(imageData);
 		}
 		dao.addProduct(this.product);
+		productStateDAO.addProductState(productState, product);
 		product = new Product();
 
 		return "/pages/product/product.jsf?faces-redirect=true";
@@ -252,13 +282,17 @@ public class ProductBean implements Serializable{
 	 * @return
 	 */
 
-	public List<Product> listProducts() {
+	public List<Product> listProducts() {		
 		ProductDAO dao = new ProductDAO();
 		List<Product> list = new ArrayList<Product>();
 		list=dao.findAllProducts();
 		return list;
 	}
-
+	public List<Product> listComingProduct(){
+		ProductDAO dao=new ProductDAO();
+		List<Product> list=dao.findComingProducts();
+		return list;
+	}
 	public List<Product> listNewProduct(){
 		ProductDAO dao=new ProductDAO();
 		List<Product> list=dao.findNewProducts();
@@ -283,7 +317,7 @@ public class ProductBean implements Serializable{
 		return "/shop-grid.jsf?faces-redirect=true";
 	}
 
-
+	
 	public List<Product> productByBrand(Product product) {
 		List<Product> list=new ArrayList<>();
 		ProductDAO dao = new ProductDAO();
@@ -304,13 +338,13 @@ public class ProductBean implements Serializable{
 			list = dao.findProductByCatId(product.getCategory().getCategoryId());
 			list.remove(product);
 		} catch (Exception e) {
-
+			// TODO: handle exception
 		}
-
+		
 		return list;
 	}
 
-
+	
 	public void processValueChange(){
 		// TODO Auto-generated method stub
 		ProductDAO dao=new ProductDAO();
@@ -329,10 +363,16 @@ public class ProductBean implements Serializable{
 		}
 		return null;
 	}
-
+	
 	public void takeModalProduct(int id){
 		//Product product = new Product();
 		ProductDAO dao=new ProductDAO();
 		productDetail = dao.findOneProducts(id);
+	}
+	public ProductState findProductStateByProId(Product product){
+		ProductState productState = new ProductState();
+		ProductStateDAO dao = new ProductStateDAO();
+		productState = dao.findProductStateByProId(product.getProductId());		
+		return productState;
 	}
 }

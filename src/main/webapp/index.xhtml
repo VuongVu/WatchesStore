@@ -367,7 +367,7 @@
                                 <!-- FEARTURED-CAROUSEL START -->
                                 <div class="feartured-carousel">
                                     <!-- SINGLE-PRODUCT-ITEM START -->
-                                    <ui:repeat var="product" value="#{productBean.listProducts().subList(0,10)}">
+                                    <ui:repeat var="product" value="#{productBean.listComingProduct()}">
                                     <div class="item">
                                         <div class="single-product-item">
                                             <div class="product-image">
@@ -376,6 +376,7 @@
                                                                                         style="height:190px;border:1px solid"
                                                                                         alt="product-image" />
                                                  </h:commandLink>
+                                                 <a href="#" class="new-mark-box">in coming</a>
                                                 <div class="overlay-content">
                                                     <ul>
                                                     	<li>

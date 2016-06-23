@@ -39,7 +39,7 @@
                                         <div align="center">
                                             <h3>
                                                 Please <a
-                                                    href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a>
+                                                    href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a>
                                                 to access this page
                                             </h3>
                                         </div>
@@ -104,6 +104,16 @@
                                         <h:outputText value="#{p.productDescription}" />
                                      </h:column>
                                      <h:column>
+                                        <f:facet name="header">State</f:facet>
+	                                        <ui:repeat var="state" value="#{productBean.findProductStateByProId(p)}">
+	                                        	<h:outputText value="Best" rendered="#{state.best}"/><br/>
+	                                        	<h:outputText value="New" rendered="#{state.newProduct}"/><br/>
+	                                        	<h:outputText value="Sale" rendered="#{state.sale}"/><br/>
+	                                        	<h:outputText value="In coming" rendered="#{state.coming}"/>
+	                                        </ui:repeat>
+                                     </h:column>
+                                     <h:column>
+                                     
                                         <f:facet name="header">Options</f:facet>
                                         <h:commandButton styleClass="btn btn-block btn-info btn-flat"
                                                          style="width:95px" 

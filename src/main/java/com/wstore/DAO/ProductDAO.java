@@ -140,7 +140,7 @@ public class ProductDAO {
 			Criteria criteria = session.createCriteria(Product.class);
 			// To sort records in descening order
 			criteria.add(Restrictions.eq("isDelete",false));
-			criteria.addOrder(Order.asc("productId"));
+			criteria.addOrder(Order.asc("productId")).add(Restrictions.eq("isDelete", false));
 			//get list from criteria
 			products = criteria.list();
 
@@ -179,7 +179,47 @@ public class ProductDAO {
 			// To sort records in descening order
 			//criteria.add(Restrictions.eq("isDelete",false));
 			criteria.createAlias("productStates", "ps");
-			criteria.add(Restrictions.eq("ps.isNew", true));
+			criteria.add(Restrictions.eq("ps.isNewProduct", true)).add(Restrictions.eq("isDelete", false));
+			//criteria.addOrder(Order.asc("productId"));
+			//get list from criteria
+			products = criteria.list();
+
+			//commit transaction
+			tx.commit();
+
+		}catch(HibernateException e){
+			if (tx != null) {
+				tx.rollback();
+				LOGGER.info(e.getMessage());
+			}
+		}finally {
+			if(!sessionFactory.isClosed()){
+				session.close();
+			}
+		}
+		return products;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findComingProducts() {
+		List<Product> products = new ArrayList<Product>();
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+
+		try{
+			//get Session object
+			sessionFactory = HibernateUtil.getSessionFactory();
+			session = sessionFactory.openSession();
+			// Starting Transaction
+			tx = session.beginTransaction();
+
+			//call Criteria API
+			Criteria criteria = session.createCriteria(Product.class);
+			// To sort records in descening order
+			//criteria.add(Restrictions.eq("isDelete",false));
+			criteria.createAlias("productStates", "ps");
+			criteria.add(Restrictions.eq("ps.isComing", true)).add(Restrictions.eq("isDelete", false));
 			//criteria.addOrder(Order.asc("productId"));
 			//get list from criteria
 			products = criteria.list();
@@ -219,7 +259,7 @@ public class ProductDAO {
 			// To sort records in descening order
 			//criteria.add(Restrictions.eq("isDelete",false));
 			criteria.createAlias("productStates", "ps");
-			criteria.add(Restrictions.eq("ps.isSale", true));
+			criteria.add(Restrictions.eq("ps.isSale", true)).add(Restrictions.eq("isDelete", false));
 			//criteria.addOrder(Order.asc("productId"));
 			//get list from criteria
 			products = criteria.list();
@@ -259,7 +299,7 @@ public class ProductDAO {
 			// To sort records in descening order
 			//criteria.add(Restrictions.eq("isDelete",false));
 			criteria.createAlias("productStates", "ps");
-			criteria.add(Restrictions.eq("ps.isBest", true));
+			criteria.add(Restrictions.eq("ps.isBest", true)).add(Restrictions.eq("isDelete", false));
 			//criteria.addOrder(Order.asc("productId"));
 			//get list from criteria
 			products = criteria.list();
@@ -374,6 +414,7 @@ public class ProductDAO {
 			criteria.add(Restrictions.le("productPrice",productPrice));
 			criteria.createAlias("productStates", "ps");
 			criteria.add(Restrictions.eq("ps."+property+"", true));
+			criteria.add(Restrictions.eq("isDelete", false));
 			if(sort==0){
 				criteria.addOrder(Order.asc("productId"));
 			}else if (sort==1) {
@@ -430,9 +471,9 @@ public class ProductDAO {
 			Criterion cri5 = Restrictions.like("ca.categoryName", "%"+search+"%");
 			if (flag) {
 				Criterion cri3 = Restrictions.eq("productPrice", a);
-				criteria.add(Restrictions.or(cri1,cri2,cri3,cri4,cri5));
+				criteria.add(Restrictions.or(cri1,cri2,cri3,cri4,cri5)).add(Restrictions.eq("isDelete", false));
 			} else {
-				criteria.add(Restrictions.or(cri1,cri2,cri4,cri5));
+				criteria.add(Restrictions.or(cri1,cri2,cri4,cri5)).add(Restrictions.eq("isDelete", false));
 			}
 			
 			list=criteria.list();

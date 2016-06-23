@@ -36,7 +36,7 @@
                             <div class="box-body">
                                 <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
                                     <div align="center">
-                                        <h3>Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page</h3>
+                                        <h3>Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page</h3>
                                     </div>
                                 </h:form>
                                 <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
@@ -44,7 +44,8 @@
                                              styleClass="table table-bordered table-striped">
                                      <h:column>                 
                                         <f:facet name="header">Order Id</f:facet>                   
-                                        <h:outputText value="#{order.orderId}" />
+                                        <!-- <h:outputText value="#{order.orderId}" /> -->
+                                        <h:commandLink action="/pages/orderdetail/order-detail.jsf?faces-redirect=true" value="#{order.orderId}" onclick="#{orderBean.takeOrder(order)}"/>
                                      </h:column>
                                      <h:column>
                                         <f:facet name="header">Order Date</f:facet>
@@ -57,11 +58,27 @@
                                      </h:column>
                                      <h:column>
                                         <f:facet name="header">Paid</f:facet>
-                                        <h:outputText value="#{order.paid}" />
+                                        <h:outputText value="#{order.paid==false?'No':'Yes'}" />
                                      </h:column>
                                      <h:column>
                                         <f:facet name="header">Customer Id</f:facet>
                                         <h:outputText value="#{order.customer.customerId}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Receiver</f:facet>
+                                        <h:outputText value="#{order.receiver}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Receiver phone</f:facet>
+                                        <h:outputText value="#{order.receiver_phone}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Delivery address</f:facet>
+                                        <h:outputText value="#{order.delivery_address}" />
+                                     </h:column>
+                                     <h:column>
+                                        <f:facet name="header">Delivery method</f:facet>
+                                        <h:outputText value="#{order.fastDelivery==false?'Normal(free)':'Fast(fee $2)'}" />
                                      </h:column>
                                      <h:column>
                                         <f:facet name="header">Options</f:facet>
@@ -69,6 +86,14 @@
                                                          style="width:95px" 
                                                          value="Edit" 
                                                          action="#{orderBean.editAction(order)}" >
+                                        </h:commandButton>
+                                         <h:commandButton styleClass="btn btn-block btn-danger btn-flat" 
+                                                         style="width:95px" 
+                                                         value="Delete" 
+                                                         type="submit"
+                                                         onclick="return confirm('Are you sure to delete it?')" 
+                                                         action="#{orderBean.deleteOrder(order)}">
+                                            <f:ajax render="@all"></f:ajax>
                                         </h:commandButton>
                                      </h:column>
                                 </h:dataTable>

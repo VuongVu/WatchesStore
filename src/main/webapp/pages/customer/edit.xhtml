@@ -25,7 +25,7 @@
                 </div>
                 <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
                     <div align="center">
-                       <h3> Please <a href="http://localhost:8080/LuxuryWatches/pages/admin-login.jsf">login</a> to access this page </h3>
+                       <h3> Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page </h3>
                     </div>
                 </h:form>
                 <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
@@ -51,26 +51,11 @@
                                         </h:inputText>
                                     </div>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <h:outputLabel value="First Name" styleClass="col-sm-2 control-label"/>
-                                    <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.firstName}" 
-                                                     styleClass="form-control"
-                                                     id="firstName" 
-                                                     required="true"
-                                                     requiredMessage="First name is required"                                                    
-                                                     tabindex="1">
-                                            <f:ajax event="change" render="firstName"></f:ajax>
-                                        </h:inputText>
-                                    </div>
-                                    <h:message for="firstName" styleClass="col-sm-4" style="color:red"/>
-                                </div>
-                              
+                               
                                 <div class="form-group">
                                     <h:outputLabel value="Last Name" styleClass="col-sm-2 control-label"/>
                                     <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.lastName}" 
+                                        <h:inputText value="#{customerBean.customer.fullName}" 
                                                      styleClass="form-control"
                                                      id="lastName"
                                                      required="true"
@@ -98,18 +83,7 @@
                                     <h:message for="phone" styleClass="col-sm-4" style="color:red"/>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <h:outputLabel value="Address" styleClass="col-sm-2 control-label"/>
-                                    <div class="col-sm-4">
-                                        <h:inputText value="#{customerBean.customer.address}" 
-                                                     styleClass="form-control"
-                                                     id="address"
-                                                     tabindex="1">
-                                            <f:ajax event="change" render="address"></f:ajax>
-                                         </h:inputText>
-                                    </div>
-                                    <h:message for="address" styleClass="col-sm-4" style="color:red"/>
-                                </div>
+                              
                                
                                 <div class="form-group">
                                     <h:outputLabel value="Email" styleClass="col-sm-2 control-label"/>

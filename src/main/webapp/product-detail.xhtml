@@ -3,13 +3,17 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" template="/templates/basePage.xhtml">
+	xmlns:p="http://primefaces.org/ui" 
+	template="/templates/basePage.xhtml">
 
 	<ui:define name="title">
 		<title>Product Detail</title>
 	</ui:define>
 
 	<ui:define name="body-content">
+	
+	
+	<h:outputScript library="js" name="jquery.dataTables.js"></h:outputScript>
 		<ui:repeat var="product" value="#{productBean.product_detail}">
 			<!-- MAIN-CONTENT-SECTION START -->
 			<section class="main-content-section">
@@ -117,33 +121,33 @@
 											</div>
 											<p:messages for="cartadd" id="mess" />
 											<p:messages id="qtymessage" for="qty" />
-											<h:outputScript>	
-											        document.getElementById("j_idt145:0:qty").value = 1;								                                 	
-			                                        function plus(){        
-			                                            var a = document.getElementById("j_idt145:0:qty").value;
-			                                            a = parseInt(a,10)+1;
-			                                            document.getElementById("j_idt145:0:qty").value = a;                                                
-			                                        }
-			                                        function minus(){
-			                                            var a = document.getElementById("j_idt145:0:qty").value;
-			                                            if(parseInt(a,10) > 1){
-			                                                a = parseInt(a,10)-1;
-			                                            }
-			                                            else{
-			                                                a = 1;
-			                                            }
-			                                            document.getElementById("j_idt145:0:qty").value = a;			                                            
-			                                        }
-                                    		</h:outputScript>
 											<div class="single-product-add-cart">
 												<!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
 												<h:commandButton
 													action="#{cartBean.addToCart(product,quantity.value)}"
 													value="Add to cart" styleClass="add-cart-text">
 													<f:ajax execute="@form"
-														render="cartForm j_idt145:0:quantityStock qtymessage mess"></f:ajax>
+														render="cartForm j_idt158:0:quantityStock qtymessage mess"></f:ajax>
 												</h:commandButton>
 											</div>
+											<h:outputScript> 
+                                                    document.querySelector(".cart-plus-minus.sing-pro-qty").value = 1;                                                                  
+                                                    function plus(){        
+                                                        var a = document.querySelector(".cart-plus-minus.sing-pro-qty").value;
+                                                        a = parseInt(a,10)+1;
+                                                        document.querySelector(".cart-plus-minus.sing-pro-qty").value = a;                                                
+                                                    }
+                                                    function minus(){
+                                                        var a = document.querySelector(".cart-plus-minus.sing-pro-qty").value;
+                                                        if(parseInt(a,10) > 1){
+                                                            a = parseInt(a,10)-1;
+                                                        }
+                                                        else{
+                                                            a = 1;
+                                                        }
+                                                        document.querySelector(".cart-plus-minus.sing-pro-qty").value = a;                                                      
+                                                    }
+                                            </h:outputScript>
 										</div>
 									</div>
 								</div>
@@ -255,9 +259,10 @@
 											<div class="tab-pane" id="datasheet">
 												<h:form prependId="false" id="datasheetform">
 													<div class="deta-sheet">
-														<h:panelGroup rendered="#{commentBean.findComment(product.productId).size()!=0}">
+														<h:panelGroup  >
+														<div class="pagination_list">
 															<ui:repeat var="comment" value="#{commentBean.findComment(product.productId)}">
-																<div class="item" style="border-bottom: solid 1px aliceblue;">
+																<div class="pagination__item" style="border-bottom: solid 1px aliceblue;">
 																	<h3 class="text-primary">
 																		#{comment.customer.fullName}</h3>
 																	<b><h:outputLabel value="#{comment.title}" /></b>
@@ -266,7 +271,20 @@
 																	<br /> <br />
 																</div>
 															</ui:repeat>
+														</div>
 														</h:panelGroup>
+														<!-- <p:dataTable styleClass="table table-bordered" var="comment" value="#{commentBean.findComment(product.productId)}" scrollable="true" scrollHeight="250">
+																<p:column>
+																	<div style="border-bottom: solid 1px aliceblue;">
+																		<h3 class="text-primary">
+																			#{comment.customer.fullName}</h3>
+																		<b><h:outputLabel value="#{comment.title}" /></b>
+																		<p:rating value="#{comment.rating}" readonly="true" cancel="false"></p:rating>
+																		<br /> <span style="font-size: 15px">#{comment.content}</span>
+																		<br /> <br />
+																	</div>
+																</p:column>
+														</p:dataTable> -->
 														<!-- <h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" /> -->
 													</div>
 												</h:form>
@@ -300,7 +318,7 @@
 																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
 																	value="Send" style="float:right;"
 																	class="btn btn-default btn-add-review ">
-																	<f:ajax execute="@form" render="j_idt145:0:reviewform j_idt145:0:datasheetform j_idt145:0:productRating"></f:ajax>
+																	<f:ajax execute="@form" render="j_idt158:0:reviewform j_idt158:0:datasheetform j_idt158:0:productRating"></f:ajax>
 																</h:commandButton>
 															</h:panelGroup>
 															<h:panelGroup rendered="#{loginBean.loggedIn==false}">

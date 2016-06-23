@@ -116,7 +116,17 @@
                                     </div>
                                     
                                     <div class="forget-password">
-                                        <p><a href="#">Forgot your password?</a></p>
+                                        <p><a id="forget-password" href="#modal1">Forgot your password?</a></p>
+                                        <h:outputScript>
+                                        	$(function(){
+                                        		$('#forget-password').click(function() {
+													$('.cd-user-modal').addClass('is-visible');
+												});
+                                        		$('#forget-password').click(function() {
+                                        			$('#cd-reset-password').addClass('is-selected');
+                                        		});
+                                        	});
+                                        </h:outputScript>
                                     </div>
                                     <div class="submit-button">
                                         <h:commandLink action="#{loginBean.userLoginCheckout()}" value="" class="btn main-btn">

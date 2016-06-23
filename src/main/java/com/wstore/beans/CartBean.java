@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,6 +26,7 @@ import com.wstore.entities.Item;
 import com.wstore.entities.Order;
 import com.wstore.entities.OrderDetail;
 import com.wstore.entities.Product;
+import com.wstore.utils.SendMail;
 
 
 @ManagedBean
@@ -42,7 +42,7 @@ public class CartBean implements Serializable {
 	private Delivery delivery = new Delivery();
 	private Delivery checkout_deli = new Delivery();
 
-
+	
 	public Delivery getCheckout_deli() {
 		return checkout_deli;
 	}
@@ -86,7 +86,7 @@ public class CartBean implements Serializable {
 		this.checkout = checkout;
 	}
 
-
+	
 	public Delivery getDelivery() {
 		return delivery;
 	}
@@ -102,8 +102,8 @@ public class CartBean implements Serializable {
 	public void setAddress(String[] address) {
 		this.address = address;
 	}
-
-
+	
+	
 	public boolean isDelivery_method() {
 		return delivery_method;
 	}
@@ -111,10 +111,11 @@ public class CartBean implements Serializable {
 	public void setDelivery_method(boolean delivery_method) {
 		this.delivery_method = delivery_method;
 	}
-
+	
 	public CartBean() {
+		
 	}
-
+	
 	/* Them product vao gio hang */
 	public void addToCart(Product product,int quantity) {
 		//Product currentProduct=this.products.get(this.products.indexOf(product));
@@ -183,6 +184,7 @@ public class CartBean implements Serializable {
 					.getProductPrice()) * (item.getProduct()
 							.getProductDiscount() / 100));
 		}
+		this.total_amount = (double)Math.round(this.total_amount * 100) / 100;
 	}
 
 	public String buyNow(Product product,int quantity) throws IOException{
@@ -231,7 +233,8 @@ public class CartBean implements Serializable {
 		boolean flag = false;
 		List<Product> lProducts = new ArrayList<Product>();
 		Customer customer=cusdao.findCustomerByEmail(email);
-
+		SendMail sendMail = new SendMail();
+		
 		if(getCart()!=null){
 			size = getCart().getItems().size();
 			flag = true;
@@ -247,7 +250,6 @@ public class CartBean implements Serializable {
 		}
 
 
-
 		if (flag) {
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -259,7 +261,7 @@ public class CartBean implements Serializable {
 					order.setTotal_amount(this.total_amount+2);
 				}else {
 					order.setTotal_amount(this.total_amount);
-				}
+				}				
 				order.setPaid(false);
 				order.setOrderDate(dateFormat.format(date));
 				order.setCustomer(customer);
@@ -276,9 +278,10 @@ public class CartBean implements Serializable {
 
 					orderDetail.setDiscount(item.getProduct()
 							.getProductDiscount());
-					orderDetail.setPrice((item.getQuantity()
-							* item.getProduct().getProductPrice())-((item.getQuantity()
-									* item.getProduct().getProductPrice())*(item.getProduct().getProductDiscount()/100)));
+					orderDetail.setPrice(item.getQuantity() * item.getProduct().getProductPrice() - ((item
+							.getQuantity() * item.getProduct()
+							.getProductPrice()) * (item.getProduct()
+									.getProductDiscount() / 100)));
 
 					orderDetail.setQuantity(item.getQuantity());
 					orderDetail.setBillDate(dateFormat.format(date));
@@ -294,6 +297,7 @@ public class CartBean implements Serializable {
 					//currentItem.getProduct().setProductQuantity(currentItem.getProduct().getProductQuantity()-currentItem.getQuantity());
 					dao.updateProduct(currentItem.getProduct());
 				}
+				sendMail.send(order, customer);
 				this.cart = null;
 				this.total_amount=0;
 				this.number=0;
@@ -314,13 +318,13 @@ public class CartBean implements Serializable {
 	public String saveDelivery(String email){
 		DeliveryDAO dao = new DeliveryDAO();
 		CustomerDAO cDao = new CustomerDAO();
-
+		
 		this.delivery.setCustomer(cDao.findCustomerByEmail(email));
 		this.delivery.setDeliveryAddress(address[3]+", "+address[2]+", "+address[1]+", "+address[0]);
-		dao.addDelivery(this.delivery);
-
+		dao.addDelivery(this.delivery);		
+		
 		this.checkout_deli = this.delivery;
-
+		
 		this.delivery = new Delivery();
 		address =new String[4];
 		return "checkout-shipping.jsf?faces-redirect=true";
@@ -329,13 +333,12 @@ public class CartBean implements Serializable {
 		List<Delivery> list=new ArrayList<>();
 		DeliveryDAO dao=new DeliveryDAO();
 		CustomerDAO cDao = new CustomerDAO();
-		list = dao.findAllDeliveries(cDao.findCustomerByEmail(email).getCustomerId());
+		list = dao.findAllDeliveries(cDao.findCustomerByEmail(email).getCustomerId());	
 		return list;
 	}
-
+	
 	public String takeDelivery(Delivery delivery){
 		this.checkout_deli = delivery;
 		return "checkout-shipping.jsf?faces-redirect=true";
 	}
-
 }

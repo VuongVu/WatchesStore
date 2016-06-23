@@ -1,6 +1,7 @@
 package com.wstore.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -64,6 +65,18 @@ public class Comment implements Serializable {
 
 	@Column(name="isdel")
 	private boolean isdel;
+	
+	@Column(name="date_create")
+	private Date date_create;
+
+	
+	public Date getDate_create() {
+		return date_create;
+	}
+
+	public void setDate_create(Date date_create) {
+		this.date_create = date_create;
+	}
 
 	public boolean isIsdel() {
 		return isdel;
