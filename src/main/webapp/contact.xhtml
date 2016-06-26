@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/basePage.xhtml">
+    <ui:define name="title">
+	   <title>About</title>
+	</ui:define>
+    <ui:define name="body-content">
+    <div class="container">
+    <div class="row">
+        <!--start-breadcrumbs-->
+        <div class="bstore-breadcrumb">
+                            <a href="index.xhtml">HOME</a>
+                            <span><i class="fa fa-caret-right"></i></span>
+                            <span>About</span>
+                        </div>
+        <!--end-breadcrumbs-->
+        <!--contact-start-->
+        <div class="contact">
+                
+                <div class="contact-text">
+	                
+                    <div class="col-md-7 contact-left">
+                        <div class="primari-box">
+                            <h3>Address</h3><br/>
+                            <ul>
+	                             <li>Watches Store Co., <span>01 Võ
+	                                    Văn Ngân, Linh Chiểu, Thủ Đức, Hồ
+	                                    Chí Minh, Việt Nam,</span>
+	                            </li>
+                            </ul>
+                        </div>
+                        <div class="primari-box">
+                            <h3>Information</h3><br/>
+                           <ul>
+                                <li>Tel:+84 1642 799 221</li> 
+                                <li>Fax:190-4509-494</li>
+                                <li>Email: <a href="mailto:example@email.com">contact-lx@gmail.com</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+			            <iframe
+			                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.498474550816!2d106.77066008256419!3d10.849640121792637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0000000000000000%3A0x7a4d67bcb7e79b6a!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTxrAgcGjhuqFtIEvhu7kgdGh14bqtdCBUcC5IQ00!5e0!3m2!1svi!2s!4v1445326718433"
+			                style="border: 0;width: 450px;height: 270px;"></iframe>
+			        </div>
+                    <!-- <div class="col-md-9 contact-right">
+                        <form>
+                            <p:inputText placeholder="Name"></p:inputText>
+                            <p:inputText placeholder="Phone"></p:inputText>
+                            <p:inputText placeholder="Email"></p:inputText>
+                            <p:inputTextarea placeholder="Message" required="true"></p:inputTextarea>
+                            <div class="submit-btn">
+                                <h:commandButton type="submit" value="SUBMIT"></h:commandButton>
+                            </div>
+                        </form>
+                    </div> -->
+                    <div class="clearfix"></div>
+                </div>
+        </div>
+        <!--contact-end-->
+        <!--map-start-->
+        
+        <!--map-end-->
+       </div>
+      </div>
+    </ui:define>
+</ui:composition>
