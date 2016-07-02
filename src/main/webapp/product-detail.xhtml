@@ -3,8 +3,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui" 
-	template="/templates/basePage.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/templates/basePage.xhtml">
 
 	<ui:define name="title">
 		<title>Product Detail</title>
@@ -73,7 +72,7 @@
 											<div class="single-product-review-box">
 												<div class="rating-box">
 													<p:rating id="productRating"
-														value="#{commentBean.getRating(product)}" cancel="false"
+														value="#{product.productRanking}" cancel="false"
 														readonly="true"></p:rating>
 												</div>
 												<div class="read-reviews">
@@ -121,17 +120,8 @@
 											</div>
 											<p:messages for="cartadd" id="mess" />
 											<p:messages id="qtymessage" for="qty" />
-											<div class="single-product-add-cart">
-												<!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
-												<h:commandButton
-													action="#{cartBean.addToCart(product,quantity.value)}"
-													value="Add to cart" styleClass="add-cart-text">
-													<f:ajax execute="@form"
-														render="cartForm j_idt158:0:quantityStock qtymessage mess"></f:ajax>
-												</h:commandButton>
-											</div>
-											<h:outputScript> 
-                                                    document.querySelector(".cart-plus-minus.sing-pro-qty").value = 1;                                                                  
+											<h:outputScript>	
+											        document.querySelector(".cart-plus-minus.sing-pro-qty").value = 1;                                                                  
                                                     function plus(){        
                                                         var a = document.querySelector(".cart-plus-minus.sing-pro-qty").value;
                                                         a = parseInt(a,10)+1;
@@ -147,7 +137,16 @@
                                                         }
                                                         document.querySelector(".cart-plus-minus.sing-pro-qty").value = a;                                                      
                                                     }
-                                            </h:outputScript>
+                                    		</h:outputScript>
+											<div class="single-product-add-cart">
+												<!-- <a class="add-cart-text" title="Add to cart" href="#">Add to cart</a> -->
+												<h:commandButton
+													action="#{cartBean.addToCart(product,quantity.value)}"
+													value="Add to cart" styleClass="add-cart-text">
+													<f:ajax execute="@form"
+														render="cartForm j_idt145:0:quantityStock qtymessage mess"></f:ajax>
+												</h:commandButton>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -212,7 +211,7 @@
 																<div class="customar-comments-box">
 																	<div class="rating-box">
 																		<p:rating
-																			value="#{commentBean.getRating(productRelate)}"
+																			value="#{productRelate.productRanking}"
 																			readonly="true" cancel="false"></p:rating>
 																	</div>
 																	<div class="review-box">
@@ -259,22 +258,12 @@
 											<div class="tab-pane" id="datasheet">
 												<h:form prependId="false" id="datasheetform">
 													<div class="deta-sheet">
-														<h:panelGroup  >
-														<div class="pagination_list">
+														<input id="listsize" type="hidden" data-id="#{commentBean.findComment(product.productId).size()}"/>
+														<h:panelGroup rendered="#{commentBean.findComment(product.productId).size()!=0}">
+														<div>
+															<ul id="mylist">
 															<ui:repeat var="comment" value="#{commentBean.findComment(product.productId)}">
-																<div class="pagination__item" style="border-bottom: solid 1px aliceblue;">
-																	<h3 class="text-primary">
-																		#{comment.customer.fullName}</h3>
-																	<b><h:outputLabel value="#{comment.title}" /></b>
-																	<p:rating value="#{comment.rating}" readonly="true" cancel="false"></p:rating>
-																	<br /> <span style="font-size: 15px">#{comment.content}</span>
-																	<br /> <br />
-																</div>
-															</ui:repeat>
-														</div>
-														</h:panelGroup>
-														<!-- <p:dataTable styleClass="table table-bordered" var="comment" value="#{commentBean.findComment(product.productId)}" scrollable="true" scrollHeight="250">
-																<p:column>
+																<li id="loadmore" style="display: none;">
 																	<div style="border-bottom: solid 1px aliceblue;">
 																		<h3 class="text-primary">
 																			#{comment.customer.fullName}</h3>
@@ -283,9 +272,31 @@
 																		<br /> <span style="font-size: 15px">#{comment.content}</span>
 																		<br /> <br />
 																	</div>
-																</p:column>
-														</p:dataTable> -->
-														<!-- <h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" /> -->
+																</li>
+															</ui:repeat>
+															</ul>
+														</div>
+														<center>
+															<input type="button" id="btnloadmore" value="Load more" class="btn btn-default text-center"/>
+														</center>
+														</h:panelGroup>
+														<h:outputScript>
+							                                    $(document).ready(function(){  
+																	var current = 5;
+																	var x = $('#listsize').attr('data-id');
+																	$('#mylist li[id=loadmore]:lt(5)').show();
+																	
+																	$('#btnloadmore').on('click', function() {
+																		if(current &lt; x-5){
+																			current = current + 5;
+																		}else{
+																			current = x;
+																		}
+																		$('#mylist li[id=loadmore]:lt('+current+')').show();
+																	});
+																});
+							                            </h:outputScript>
+														<h:outputText value="There are no reviews" rendered="#{commentBean.findComment(product.productId).size()==0}" />
 													</div>
 												</h:form>
 											</div>
@@ -314,11 +325,9 @@
 																	rows="5" class="form-control input-md" id="content" />
 																<p:message for="content" />
 																<br />
-																<h:commandButton
-																	action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
-																	value="Send" style="float:right;"
-																	class="btn btn-default btn-add-review ">
-																	<f:ajax execute="@form" render="j_idt158:0:reviewform j_idt158:0:datasheetform j_idt158:0:productRating"></f:ajax>
+																<h:commandButton action="#{commentBean.addComment(product,customerBean.findCustomerByEmail(loginBean.email))}"
+																				value="Send" style="float:right;"
+																				class="btn btn-default btn-add-review ">
 																</h:commandButton>
 															</h:panelGroup>
 															<h:panelGroup rendered="#{loginBean.loggedIn==false}">
@@ -327,9 +336,7 @@
 																	 $(function(){
 																	    $('#loggin').click(function() {
 																	        $('.cd-user-modal').addClass('is-visible');
-																	    });
-																	    $('#loggin').click(function() {
-																	        $('#cd-login').addClass('is-selected');
+																	         $('#cd-login').addClass('is-selected');
 																	    });
 																	});
 																</h:outputScript>
@@ -353,14 +360,18 @@
 									<h2 class="left-title">Viewed products</h2>
 									<ul>
 										<ui:repeat var="viewProduct" value="#{productBean.productByBrand(product).size()>5?productBean.productByBrand(product).subList(0,5):productBean.productByBrand(product)}">
-											<li><a href="#"><h:graphicImage value="/DisplayImage?productId=#{viewProduct.productId}" alt="product-image" style="width:80px;height:80px"/></a>
+											<li>
+												<h:commandLink action="#{productBean.getProductDetail(viewProduct)}">
+													<h:graphicImage value="/DisplayImage?productId=#{viewProduct.productId}" alt="product-image" style="width:80px;height:80px"/>
+												</h:commandLink>
 												<div class="r-sidebar-pro-content">
 													<h5>
 														<h:commandLink action="#{productBean.getProductDetail(viewProduct)}"
 															           value="#{viewProduct.productName}" />
 													</h5>
 													<p>$#{viewProduct.productPrice}</p>
-												</div></li>
+												</div>
+											</li>
 										</ui:repeat>
 
 									</ul>

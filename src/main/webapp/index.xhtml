@@ -95,18 +95,18 @@
                                         <ui:repeat var="product" value="#{productBean.listBestProduct().subList(0,(productBean.listBestProduct().size()>5)?5:productBean.listBestProduct().size())}">
                                         <div class="single-product-item">
                                             <div class="sidebar-product-image">
-                                                <a href="single-product.html">
+                                                <h:commandLink action="#{productBean.getProductDetail(product)}">
                                                 	<h:graphicImage value="/DisplayImage?productId=#{product.productId}" 
                                                                     style="width:80px;height:80px;border:1px solid;"
                                                                     alt="product-image"/>
-                                                </a>
+                                                </h:commandLink>
                                             </div>
                                             <div class="product-info sede-pro-info">
                                                 <!-- <a href="#">#{product.productName}</a> -->
                                                 <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                       <p:rating value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>
+                                                       <p:rating value="#{product.productRanking}" cancel="false" readonly="true"></p:rating>
                                                     </div>
                                                 </div>
                                                 <div class="price-box">
@@ -136,7 +136,7 @@
                                                 <h:commandLink action="#{productBean.getProductDetail(product)}" value="#{product.productName}"></h:commandLink>
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                       <p:rating value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>
+                                                       <p:rating value="#{product.productRanking}" cancel="false" readonly="true"></p:rating>
                                                     </div>
                                                 </div>
                                                 <div class="price-box">
@@ -211,7 +211,7 @@
                                                                 <div class="product-info">
                                                                     <div class="customar-comments-box">
                                                                         <div class="rating-box">                                                                        
-                                                                        	<p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>                                                           
+                                                                        	<p:rating value="#{product.productRanking}" readonly="true" cancel="false"></p:rating>                                                           
                                                                             
                                                                         </div>
                                                                         <div class="review-box">
@@ -302,7 +302,7 @@
                                                         <div class="product-info">
                                                             <div class="customar-comments-box">
                                                                 <div class="rating-box">
-                                                                   <p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>         
+                                                                   <p:rating value="#{product.productRanking}" readonly="true" cancel="false"></p:rating>         
                                                                 </div>
                                                                 <div class="review-box">
                                                                     <!-- <span>1 Review(s)</span> -->
@@ -406,7 +406,7 @@
                                             <div class="product-info">
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                        <p:rating value="#{commentBean.getRating(product)}" readonly="true" cancel="false"></p:rating>
+                                                        <p:rating value="#{product.productRanking}" readonly="true" cancel="false"></p:rating>
                                                     </div>
                                                   <!--   <div class="review-box">
                                                         <span>1 Review (s)</span>

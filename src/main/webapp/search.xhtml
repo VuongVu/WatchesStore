@@ -11,6 +11,7 @@
     </ui:define>
         
     <ui:define name="body-content">
+    <h:outputScript library="js" name="jQuery.paginate.js"></h:outputScript>
     <h:form>
         <!-- MAIN-CONTENT-SECTION START -->
         <section class="main-content-section">
@@ -22,7 +23,7 @@
                         <div class="bstore-breadcrumb">
                             <a href="index.xhtml">HOME</a>
                             <span><i class="fa fa-caret-right"></i></span>
-                            <span>#{productBean.listFilter.size()!=0?productBean.listFilter.get(0).category.categoryName:null}</span>
+                            <span>Search</span>
                         </div>
                       
                         <!-- BSTORE-BREADCRUMB END -->
@@ -34,19 +35,19 @@
                             <!-- PRODUCT-CATEGORY-HEADER START -->
                             <div class="product-category-header">
                                 <div class="category-header-image">
-                                    <h:graphicImage style="width:100%;height:300px" library="img" name="category-header.jpg" alt="category-header"/>
-                                   <!--  <div class="category-header-text">
+                                    <h:graphicImage library="img" name="category-header.jpg" alt="category-header"/>
+                                    <div class="category-header-text">
                                         <h2>Women </h2>
                                         <strong>You will find here all woman fashion collections.</strong>
                                         <p>This category includes all the basics of your wardrobe and much more:<br /> shoes, accessories, printed t-shirts, feminine dresses, women's jeans!</p>
-                                    </div>  -->                                 
+                                    </div>                                  
                                 </div>
                             </div>
                             <!-- PRODUCT-CATEGORY-HEADER END -->
                             <div class="product-category-title">
                                 <!-- PRODUCT-CATEGORY-TITLE START -->
                                 <h1>
-                                    <span class="cat-name">#{productBean.listFilter.size()!=0?productBean.listFilter.get(0).category.categoryName:null}</span>
+                                    <span class="cat-name">Search</span>
                                     <span class="count-product">There are #{productBean.listSearch.size()} products.</span>
                                 </h1>
                                 <!-- PRODUCT-CATEGORY-TITLE END -->
@@ -76,12 +77,14 @@
                             </div>
                         </div>
                         <!-- ALL GATEGORY-PRODUCT START -->
+                        <h:panelGroup rendered="#{productBean.listSearch.size()!=0}">
                         <div class="all-gategory-product">
-                            <div class="row">
-                                <ul id="list" class="gategory-product"> 
+                            <div class="pagination_div row">
+                                <ul class="pagination__list gategory-product" id="mylist">
                                     <!-- SINGLE ITEM START -->
+                                    <input type="hidden"  id="listsize" data-id="#{productBean.listSearch.size()}" />
                                     <ui:repeat var="product" value="#{productBean.listSearch}">
-                                    <li class="gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                                    <li class="pagination__item gategory-product-list col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                         <div class="single-product-item">
                                             <div class="product-image">
                                                  <h:commandLink action="#{productBean.getProductDetail(product)}">
@@ -117,7 +120,7 @@
                                             <div class="product-info">
                                                 <div class="customar-comments-box">
                                                     <div class="rating-box">
-                                                       <p:rating value="#{commentBean.getRating(product)}" cancel="false" readonly="true"></p:rating>
+                                                       <p:rating value="#{product.productRanking}" cancel="false" readonly="true"></p:rating>
                                                     </div>
                                                     <div class="review-box">
                                                         <!-- <span>1 Review(s)</span> -->
@@ -132,31 +135,24 @@
                                             </div>
                                         </div>                                  
                                     </li>
-                                    </ui:repeat>
-                                    <center><input id="loadMore" value="Load More" type="button" /></center>
-                                    <input type="hidden" id="size" value="#{productBean.listSearch.size()}" />
-                                    <h:outputScript target="head">
-	                                        var list_size = $('#size').val();
-	                                        var x;
-	                                        if (list_size &gt;= 5) {
-										        x = 5;
-										    } else {
-										        x = list_size;
-										    };
-										    
-										    $('#list li:lt(x)').css('display','none');
-										    $('#loadMore').click(function () {
-										        if (x + 5 &lt;= list_size){
-										           x = x + 5;
-										        } else { 
-										           x = list_size;
-										        }
-										        $('#list li:lt(x)').show();
-										    });
-                                    </h:outputScript>                         
-                                </ul>   
+                                    </ui:repeat>           
+                                </ul>
                             </div>
+                            <h:outputScript>
+                                	$(document).ready(function(){
+	                                     $('.pagination__list').paginate({
+								        	items_per_page: 16
+								        });
+							        });
+                        	</h:outputScript>
                         </div>
+                        </h:panelGroup>
+                        <center>
+                        	<h:outputText value="There are no results" rendered="#{productBean.listSearch.size()==0}" styleClass="text-center"/>
+                        </center>
+                       <!--  <center>
+                        	<input type="button" id="btnloadmore" value="loadmore" class="btn btn-default"/>
+                        </center> -->
                     </div>
                 </div>
             </div>

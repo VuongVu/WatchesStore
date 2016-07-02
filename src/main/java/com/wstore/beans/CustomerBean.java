@@ -203,4 +203,27 @@ public class CustomerBean implements Serializable{
 		}
 		return null;
 	}
+	
+	public String changePassword(String old_password, String new_password, String email){
+		CustomerDAO dao = new CustomerDAO();
+		Customer customer = null;
+		String url = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+		try {
+			customer = dao.findCustomerByEmail(email);
+			if(customer.getPassword().equals(old_password)){
+				customer.setPassword(new_password);
+				dao.updateCustomer(customer);
+				return url+"?faces-redirect=true";
+			}else {
+				FacesContext.getCurrentInstance().addMessage(
+						"resetPassword",
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Current password doesn't match", "Please fill another"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+		
+	}
 }

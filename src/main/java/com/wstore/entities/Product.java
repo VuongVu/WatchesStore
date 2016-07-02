@@ -45,6 +45,9 @@ public class Product implements	Serializable{
 	@Column(name = "productDiscount")
 	private double productDiscount;
 	
+	@Column(name="productRanking")
+	private int productRanking;
+	
 	@Column(name="isDelete")
 	private boolean isDelete;
 
@@ -97,6 +100,15 @@ public class Product implements	Serializable{
 
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
+	}
+
+	
+	public int getProductRanking() {
+		return productRanking;
+	}
+
+	public void setProductRanking(int productRanking) {
+		this.productRanking = productRanking;
 	}
 
 	public Product() {

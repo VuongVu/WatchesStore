@@ -12,9 +12,12 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!-- CSS -->
-    <h:outputStylesheet library="css" name="loginStyle.css"></h:outputStylesheet> 
+    <h:outputStylesheet library="css" name="login.css"></h:outputStylesheet>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+     <h:outputStylesheet name="admin/bootstrap/css/signin.css"></h:outputStylesheet>  
 </h:head>
 <h:body>
+	<div class="container">
     <h:form prependId="false" rendered="#{loginBean.adminloggedIn}">
         <div class="main">
             <div class="login">
@@ -25,54 +28,59 @@
         </div>
     </h:form>
     <h:form prependId="false" rendered="#{not loginBean.adminloggedIn}">
-    <div class="main">
+    <div class="main form-signin">
         <div class="login">
-            <div class="login-top">
+            <!-- <div class="login-top">
                 <h:graphicImage library="images" name="p.png" />
-            </div>
+            </div> -->
             <h1>Admin Login</h1>
             <div class="login-bottom">
                 <div>
-                    <h:outputText value="User name" />
+                    <!-- <h:outputText value="User name" /> -->
+                    <h4>User name</h4>
                     <h:inputText id="userName"
                                  required="true"
                                  requiredMessage="User name is required!"
                                  placeholder="User name"
-                                 tabindex="1" 
+                                 tabindex="1"
+                                 styleClass="form-control" 
                                  value="#{loginBean.adminUsername}">    
                     <f:ajax event="click" render="userName"></f:ajax>
                     </h:inputText>
-                    <h:message for="userName"/>
-                    <br />                                         
-                    <br/>
-                    <h:outputText value="Password" /> 
+                    <p:message for="userName"/>
+                    <!-- <h:outputText value="Password" /> --> 
+                    <h4>Password</h4>
                     <h:inputSecret id="password"
                                 required="true"
                                 requiredMessage="Password is required"
                                 validatorMessage="Password should be of length from 6 to 45 chars"
                                 placeholder="Password"
                                 tabindex="2"
+                                styleClass="form-control"
                                 value="#{loginBean.adminPassword}"
                                 >
                      <f:validateLength minimum="6" maximum="45" for="password"/>
                      <f:ajax event="click" render="password"></f:ajax>
                      </h:inputSecret>
-                     <h:message for="password"/> 
-                     <br />
-                     <br />
+                     <p:message for="password"/> 
                     <h:commandButton id="loginButton"
                                      action="#{loginBean.adminLogin()}"
+                                     styleClass="btn btn-lg btn-primary btn-block"
                                      value="Login">
                     <f:ajax event="action" execute="@form" render="@form"></f:ajax>
                     </h:commandButton>
                     <p:messages for="loginButton" />                    
                 </div>
              </div>
+        </div><br/>
+        <div>
+        	<p> All rights reserved | Design by <a href="#">WatchesStore.</a></p>
         </div>
     </div>
     <div class="footer">
-        <p> All rights reserved | Design by <a href="index.jsf">LuxuryWatces.</a></p>
+        
     </div>                 
     </h:form>
+    </div>
 </h:body>
 </html>

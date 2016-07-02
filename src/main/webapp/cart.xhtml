@@ -68,7 +68,7 @@
                             
                             <p:column styleClass="cart-description"> 
                             <f:facet name="header">Description</f:facet>
-                                #{cart.product.productName}
+                                <h:commandLink action="#{productBean.getProductDetail(cart.product)}" value="#{cart.product.productName}" />
                             </p:column>
                             
                             <p:column styleClass="cart-avail text-center">
@@ -76,7 +76,7 @@
                                 <span class="label label-success">In stock</span>
                             </p:column>
                             
-                            <p:column styleClass="cart-unit text-right">
+                            <p:column a:class="cart-unit text-center">
                             <f:facet name="header">Unit Price</f:facet>
                             	$#{cart.product.productPrice-(cart.product.productPrice*(cart.product.productDiscount/100))}
                                 <br/>
@@ -100,13 +100,13 @@
                             <f:facet name="header">Delete</f:facet>
                                <span>
                                   <!-- <a href="#" class="cart_quantity_delete" title="Delete"><i class="fa fa-trash-o"></i></a> -->
-                                  <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}" styleClass="cart_quantity_delete"><i class="fa fa-trash-o"></i>
+                                  <h:commandLink action="#{cartBean.deleteFromCart(cart.product)}" styleClass="cart_quantity_delete"><i class="fa fa-trash-o" style="color: red;"></i>
                                   	<f:ajax execute="@form" render="@form cartForm"></f:ajax>
                                   </h:commandLink>
                                </span>
                             </p:column>
                             
-                            <p:column styleClass="cart-total">
+                            <p:column a:class="cart-total text-center">
                             <f:facet name="header">Total</f:facet>
                                $#{cart.product.productPrice*cart.quantity-(cart.product.productPrice*cart.quantity*(cart.product.productDiscount/100))}
                             </p:column>

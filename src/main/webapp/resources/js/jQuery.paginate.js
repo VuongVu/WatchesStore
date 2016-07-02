@@ -19,9 +19,9 @@
 		// Add a div after the #slideshow to put the navigation controls in
 		// TODO: Add class for navigation controls div
 		// TODO: The div for navigation controls should be inside the pagination element so as to have the same width.
-		obj.append(
+		$('.pagination_div').after(
 			$('<div/>').addClass(options.pagination_class + "__controls").append(
-			$('<ul/>').addClass(options.pagination_class))
+			$('<ul/>').css('float','right').addClass(options.pagination_class))
 		);
 
 		function createPaginationControls(pages) {

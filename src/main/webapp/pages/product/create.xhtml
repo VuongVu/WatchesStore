@@ -28,7 +28,7 @@
                        <h3> Please <a href="http://localhost:8080/WatchesStore/pages/admin-login.jsf">login</a> to access this page </h3>
                     </div>
                 </h:form>
-                <h:form prependId="false" enctype="multipart/form-data" rendered="#{loginBean.adminloggedIn}">
+                
                 <!-- Main content -->
                 <div class="content">
                     <!-- Horizontal Form -->
@@ -44,6 +44,7 @@
                             </ul>
                             <div class="tab-content" style="min-height:480px;">
                                 <div class="tab-pane active" id="tab_1">
+                                	<h:form prependId="false">
                                     <div class="form-group">
                                         <h:outputLabel value="Product Name" styleClass="col-sm-2 control-label"/>
                                         <div class="col-sm-4">
@@ -157,26 +158,23 @@
                                     <br /> 
                                     <div class="form-group">
                                         <h:outputLabel value="Product state" styleClass="col-sm-2 control-label"/>
-                                       
                                         <div class="col-sm-4">
-                                         <ui:repeat var="c" value="#{productBean.list_state}">
-												#{c}
-											</ui:repeat>
-										#{productBean.list_state.size()}
-                                            <h:selectManyCheckbox value="#{productBean.list_state}" styleClass="table table-border">
+                                            <h:selectManyCheckbox id="pstate" value="#{productBean.list_state}" styleClass="table table-border" required="true" requiredMessage="State is required">
 												<f:selectItem itemLabel="New" itemValue="new"/>
 												<f:selectItem itemLabel="Sale" itemValue="sale"/>
 												<f:selectItem itemLabel="Best" itemValue="best"/>
 												<f:selectItem itemLabel="Coming" itemValue="coming"/>
 												<f:ajax render="@form" execute="@form"></f:ajax>
 											</h:selectManyCheckbox>
-											
                                         </div>
-                                        <h:messages for="productDescription" styleClass="col-sm-4" style="color:red"/>
+                                        <h:messages for="pstate" styleClass="col-sm-4" style="color:red"/>
+                                        <h:outputText value="Please fill in another form first" styleClass="col-sm-4" style="color:red" rendered="#{productBean.list_state.size()==0}"/>
                                     </div>
+                                    </h:form>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane " id="tab_2">
+                                	<h:form prependId="false" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-10">
                                             <div class="form-group">                                             
@@ -187,7 +185,7 @@
                                                                       styleClass="text-box single-line form-control valid" 
                                                                       id="file"
                                                                       mode="simple" 
-                                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" > 
+                                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
                                                         </p:fileUpload>
                                                     </div>
                                                     <br />
@@ -209,24 +207,27 @@
                                             </div>
                                         </div>   
                                     </div>
+                                    </h:form>
                                 </div>
                             </div><!-- /.tab-content -->
                             <div class="box-footer">
+                            	<h:form prependId="false">
                                 <h:commandButton action="#{productBean.addProduct()}" 
                                                  value="Save" 
                                                  style="width:95px"
                                                  styleClass="btn btn-info btn-flat">
+                                     <f:ajax execute="@all"></f:ajax>
                                 </h:commandButton>
                                 <h:commandButton value="Cancel" 
                                                  action="/pages/product/product.jsf?faces-redirect=true"
                                                  style="width:95px"
-                                                 styleClass="btn btn-default btn-flat pull-right"/>   
+                                                 styleClass="btn btn-default btn-flat pull-right"/>  
+                                </h:form> 
                             </div>
                         </div>
                     </div>
                     <!-- /.box -->
                 </div>
-                </h:form>
             </div>
         </ui:define>
     </ui:composition>

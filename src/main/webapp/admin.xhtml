@@ -1,8 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:hf="http://highfaces.org">
 
 <h:body>
     <ui:composition template="/templates/adminBasePage.xhtml">
@@ -32,6 +34,9 @@
                     <div align="center">    
                         <h3>Welcome to Admin Page</h3>
                     </div>
+                    <hf:chart type="line" value="#{lineChartBean.simpleList}" var="point"
+                              point="#{point}" title="List of Integer values" 
+                              xaxisLabel="Index" yaxisLabel="Amount"/>
                 </h:form>
               </div><!-- /.content-wrapper -->
         </ui:define>

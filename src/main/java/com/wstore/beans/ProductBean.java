@@ -41,7 +41,7 @@ public class ProductBean implements Serializable{
 	private int sort = 0;
 	private String searchString = null;
 	private Product product_detail = new Product();
-	private List<String> list_state = new ArrayList<>();
+	private List<String> list_state = new ArrayList<String>();
 	
 	
 	public Product getProduct_detail() {
@@ -215,13 +215,13 @@ public class ProductBean implements Serializable{
 		ProductState productState = new ProductState();
 		
 		for (String item : list_state) {
-			if(item == "new"){
+			if(item.equals("new")){
 				productState.setNewProduct(true);
-			}else if (item == "best") {
+			}else if (item.equals("best")) {
 				productState.setBest(true);
-			}else if (item == "sale") {
+			}else if (item.equals("sale")) {
 				productState.setSale(true);
-			}else if(item == "coming"){
+			}else if(item.equals("coming")){
 				productState.setComing(true);
 			}
 		}
@@ -356,12 +356,11 @@ public class ProductBean implements Serializable{
 	}
 	public String search(){
 		ProductDAO dao=new ProductDAO();
-		if (searchString != "") {
+		if (this.searchString != "") {			
 			this.listSearch = dao.search(this.searchString);
 			this.searchString = "";
-			return "/search.jsf?faces-redirect=true";
 		}
-		return null;
+		return "/search.jsf?faces-redirect=true";
 	}
 	
 	public void takeModalProduct(int id){

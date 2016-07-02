@@ -74,7 +74,6 @@
     <!-- jquery js -->
     <h:outputScript library="js" name="jquery.min.js"></h:outputScript>
     <h:outputScript library="js" name="vendor/jquery-1.11.3.min.js"></h:outputScript>
-    <h:outputScript library="js" name="jQuery.paginate.js"></h:outputScript>
 	
     <!-- fancybox js -->
     <h:outputScript library="js" name="jquery.fancybox.js"></h:outputScript>
@@ -207,6 +206,7 @@
                 </div>
             </div>
         </div>
+		        
          <div id="detailModal" class="modal fade" a:tabindex="-1" a:role="dialog" a:aria-labelledby="myModalLabel" a:aria-hidden="true">
             <div class="modal-dialog" style="width: 550px; height: 550px">
                 <div class="modal-content">
@@ -235,7 +235,7 @@
 											<div class="single-product-review-box">
 												<div class="rating-box">
 													<p:rating id="productRating"
-														value="#{commentBean.getRating(product)}" cancel="false"
+														value="#{product.productRanking}" cancel="false"
 														readonly="true"></p:rating>
 												</div>
 											</div>

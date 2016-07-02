@@ -11,7 +11,6 @@
     </ui:define>
         
     <ui:define name="body-content">
-    <h:form>
         <!-- MAIN-CONTENT-SECTION START -->
         <section class="main-content-section">
             <div class="container">
@@ -45,7 +44,12 @@
 					                      </h3>
 				                    </li> 
 				                    <li><span>User name: #{customer.fullName}</span></li>
-				                    <li><span>Email: #{customer.email}</span></li>
+				                    <li>
+				                    	<span>Email: #{customer.email}</span>
+				                    	<h:commandLink value="change password" a:data-toggle="modal" a:data-target="#passModal" style="float:right;">
+				                    		<f:ajax render="passForm"></f:ajax>
+				                    	</h:commandLink>
+				                    </li>
 				                    <li><span></span></li>
 				               </ul>   	
 	                    	</div>
@@ -93,10 +97,59 @@
                     </div>
                 </div>
                 </h:form>
-            </div>
+		        <div id="passModal" class="modal fade" a:tabindex="-1" a:role="dialog" a:aria-labelledby="myModalLabel" a:aria-hidden="true">
+				            <div class="modal-dialog" style="width: 550px; height: 550px">
+				                <div class="modal-content">
+				                    <div class="modal-body">
+				                    	<h:form id="passForm" styleClass="cd-form" prependId="false">
+					                        <p class="fieldset">
+					                            <h:outputLabel styleClass="image-replace cd-email" for="signin-email" value="Current password" />
+					                            <h:inputSecret id="curr-pass" 
+					                                         styleClass="full-width has-padding has-border" 
+					                                         a:placeholder="Current password"  
+					                                         required="true"
+					                                         requiredMessage="Current password is required!"
+					                                         tabindex="1"
+					                                         binding="#{old_password}">
+					                                <f:ajax event="click" render="curr-pass"></f:ajax>
+					                            </h:inputSecret>
+					                            <p:message for="curr-pass"></p:message>
+					                        </p>
+					    
+					                        <p class="fieldset">
+					                            <h:outputLabel styleClass="image-replace cd-password" for="signin-password" value="New password" />
+					                            <h:inputSecret id="new-password" 
+					                                         styleClass="full-width has-padding has-border" 
+					                                         a:placeholder="New password"  
+					                                         required="true"
+					                                         requiredMessage="Password is required!"
+					                                         validatorMessage="Password should be of length from 6 to 45 chars"
+					                                         tabindex="2"
+					                                         binding="#{new_password}" >
+					                                <f:validateLength minimum="6" maximum="45" for="new-password"/>
+					                            </h:inputSecret>
+					                            <p:message for="new-password"></p:message>
+					                        </p>
+					    					<p:messages for="resetPassword" />
+					                        <p class="fieldset">
+					                            <h:commandButton id="passButton" 
+					                                             tabindex="3"
+					                                             styleClass="full-width has-padding" 
+					                                             a:update="growl"
+					                                             type="submit" 
+					                                             value="Accept change" 
+					                                             action="#{customerBean.changePassword(old_password.value, new_password.value, loginBean.email)}" >
+					                                <f:ajax event="action" execute="@form" render="@form"></f:ajax>
+					                            </h:commandButton>
+					                        </p>
+					                    </h:form>
+				                	</div> <!-- cd-login -->
+				    			</div>
+				            </div> 
+				</div>
+		    </div>
         </section>
         <!-- MAIN-CONTENT-SECTION END -->
-        </h:form>
     </ui:define>
     
 </ui:composition>

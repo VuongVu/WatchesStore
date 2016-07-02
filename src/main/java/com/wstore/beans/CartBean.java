@@ -308,7 +308,7 @@ public class CartBean implements Serializable {
 			for (int i = 0; i < lProducts.size(); i++) {
 				FacesContext.getCurrentInstance().addMessage(
 						"checkout",
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,"Checkout uncomplete, "+
 								lProducts.get(i).getProductName()+ " is out of product","Out of products"));
 			}
 		}
